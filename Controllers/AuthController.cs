@@ -1,77 +1,109 @@
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using AuthWebApi.Data;
+using AuthWebApi.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AuthWebApi.Controllers
 {
-    [Route("/api/[controller]")]
-    public class AuthController : Controller
+    [Route("[controller]/[action]")]
+    public class AuthController : ControllerBase
     {
-        private DatabaseContext _context;
-        private IPasswordHasher<User> _hasher;
+        private readonly UserManager<User> _userManager;
+        private readonly IPasswordHasher<User> _hasher;
+        private readonly IConfiguration _configuration;
+        private readonly SignInManager<User> _signInManager;
 
-        public AuthController(DatabaseContext context, IPasswordHasher<User> hasher)
+        public AuthController(UserManager<User> userManager, IPasswordHasher<User> hasher, IConfiguration configuration, SignInManager<User> signInManager)
         {
-            _context = context;
+            _userManager = userManager;
             _hasher = hasher;
+            _configuration = configuration;
+            _signInManager = signInManager;
         }
-        [HttpGet("haha")]
+
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody] RegisterDto dto)
+        {
+            var user = new User
+            {
+                UserName = dto.Username,
+                Email = dto.Email
+            };
+
+            var result = await _userManager.CreateAsync(user, dto.Password);
+
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+
+            return StatusCode(400, "ERROR");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login([FromBody] LoginDto dto)
+        {
+            var user = await _userManager.FindByNameAsync(dto.Username);
+            var result = _hasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
+
+            if (result == PasswordVerificationResult.Success)
+            {
+                var token = await GenerateJwtToken(user);
+                return Ok(token);
+            }
+            return Unauthorized();
+        }
+
+        [HttpGet]
         [Authorize]
-        public IActionResult Haha()
+        public IActionResult Protected()
         {
-            return Ok("haha");
+            return Ok("You are in");
         }
-        [HttpPost("login")]
-        public IActionResult CreateToken([FromBody]CredentialModel credentials)
+
+        [HttpGet]
+        [Authorize("admin")]
+        public IActionResult Admin()
         {
-            try
-            {
-                var user = _context.Users.FirstOrDefault(u => u.UserName.Equals(credentials.Username, StringComparison.OrdinalIgnoreCase));
-                // user.PasswordHash = _hasher.HashPassword(user, credentials.Password);
-                // _context.SaveChanges();
-                if (_hasher.VerifyHashedPassword(user, user.PasswordHash, credentials.Password) == PasswordVerificationResult.Success)
-                {
-                    var claims = new[]
-                    {
-                        new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                    };
-
-                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("mySuperSecretKey"));
-                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-                    var token = new JwtSecurityToken(issuer: "https://localhost:5001",
-                    audience: "https://localhost:5001",
-                    claims: claims,
-                    expires: DateTime.Now.AddYears(1),
-                    signingCredentials: creds);
-
-                    return Ok(new
-                    {
-                        token = new JwtSecurityTokenHandler().WriteToken(token),
-                        expiration = token.ValidTo
-                    });
-                }
-                return StatusCode(400);
-            }
-            catch (Exception)
-            {
-                return StatusCode(400);
-            }
+            return Ok("You are an admin");
         }
-    }
 
-    public class CredentialModel
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
+        private async Task<string> GenerateJwtToken(User user) //async - some db roles will be read
+        {
+            var roles = await _userManager.GetRolesAsync(user);
+            var rolesClaims = roles.Select(r => new Claim("identityRoles", r));
+            var claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                new Claim("asd", "asd")
+            };
+            claims = claims.Union(rolesClaims).ToList();
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["Jwt:ExpireDays"]));
+
+            var token = new JwtSecurityToken(
+                _configuration["Jwt:Issuer"],
+                _configuration["Jwt:Issuer"],
+                claims,
+                expires: expires,
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
     }
 }

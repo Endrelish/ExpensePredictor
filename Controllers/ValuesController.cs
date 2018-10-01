@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AuthWebApi.Data;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthWebApi.Controllers
@@ -12,17 +10,6 @@ namespace AuthWebApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        private DatabaseContext _context;
-
-        public ValuesController(DatabaseContext context)
-        {
-            _context = context;
-        }
-        [HttpGet("users")]
-        public ActionResult<IEnumerable<string>> GetUsers()
-        {
-            return _context.Users.Select(u => u.UserName).ToList();
-        }
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()

@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using AuthWebApi.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using AuthWebApi.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Net;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Authorization;
-using System.Text;
 
 namespace AuthWebApi
 {
@@ -34,53 +32,56 @@ namespace AuthWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlite("Data Source=blog.db"));
-
-            var tokenValidationParameters = new TokenValidationParameters
+            services.AddDbContext<ApplicationDbContext>(optionsBuilder =>
             {
-                ValidateIssuer = true,
-                ValidIssuer = "https://localhost:5001",
+                optionsBuilder.UseSqlite("Data Source=db.db");
+            });
 
-                ValidateAudience = true,
-                ValidAudience = "https://localhost:5001",
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                var pass = options.Password;
+                pass.RequireDigit = false;
+                pass.RequiredLength = 4;
+                pass.RequireLowercase = false;
+                pass.RequireNonAlphanumeric = false;
+                pass.RequireUppercase = false;
+            }).
+            AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
 
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("mySuperSecretKey")),
-
-                RequireExpirationTime = false,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
-            services.AddAuthentication(options =>
+            JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear(); //remove default claims
+            services
+            .AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
+            })
+            .AddJwtBearer(options =>
             {
-                options.ClaimsIssuer = "https://localhost:5001";
-                options.TokenValidationParameters = tokenValidationParameters;
+                options.RequireHttpsMetadata = true;
                 options.SaveToken = true;
-            });
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("testUser", policy => policy.RequireClaim(JwtRegisteredClaimNames.Sub, "test"));
-            });
-
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.Events.OnRedirectToLogin = c =>
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    c.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                    return Task.CompletedTask;
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
+                    ClockSkew = TimeSpan.Zero // remove delay of token when expire
                 };
             });
 
+            services.AddAuthorization(cfg =>
+            {
+                cfg.AddPolicy("admin", p => p.RequireClaim("identityRoles", "admin"));
+            });
+
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ApplicationDbContext dbContext)
         {
             if (env.IsDevelopment())
             {
@@ -91,8 +92,11 @@ namespace AuthWebApi
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            dbContext.Database.EnsureCreated();
         }
     }
 }
