@@ -78,7 +78,7 @@ namespace AuthWebApi.Controllers
             return Ok("You are an admin");
         }
 
-        private async Task<string> GenerateJwtToken(User user) //async - some db roles will be read
+        private async Task<string> GenerateJwtToken(User user)
         {
             var roles = await _userManager.GetRolesAsync(user);
             var rolesClaims = roles.Select(r => new Claim("identityRoles", r));
@@ -87,7 +87,6 @@ namespace AuthWebApi.Controllers
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim("asd", "asd")
             };
             claims = claims.Union(rolesClaims).ToList();
 
