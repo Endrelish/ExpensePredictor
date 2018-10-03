@@ -19,7 +19,8 @@ namespace AuthWebApi.Data
                         NormalizedUserName = "TEST",
                         Email = "a@a.a",
                         NormalizedEmail = "A@A.A",
-                        PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ=="
+                        PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==",
+                        PhoneNumber = "123456789"
                     },
                     new User
                     {
@@ -28,7 +29,8 @@ namespace AuthWebApi.Data
                         NormalizedUserName = "TEST2",
                         Email = "a@a.a",
                         NormalizedEmail = "A@A.A",
-                        PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ=="
+                        PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==",
+                        PhoneNumber = "123456780"
                     }
             );
 

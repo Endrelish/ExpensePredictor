@@ -15,7 +15,6 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AuthWebApi.Controllers
 {
-    [Route("[controller]/[action]")]
     public class AuthController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
@@ -51,7 +50,8 @@ namespace AuthWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginDto dto)
+        [ActionName("Get-Token")]
+        public async Task<IActionResult> GetToken([FromBody] LoginDto dto)
         {
             var user = await _userManager.FindByNameAsync(dto.Username);
             var result = _hasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
@@ -85,8 +85,8 @@ namespace AuthWebApi.Controllers
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
+                // new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
             claims = claims.Union(rolesClaims).ToList();
 

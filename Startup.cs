@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AuthWebApi.Data;
+using AuthWebApi.Dto;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -63,6 +65,8 @@ namespace AuthWebApi
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
+                    NameClaimType = JwtRegisteredClaimNames.Sub,
+                    RoleClaimType = "identityRoles",
                     ValidIssuer = Configuration["Jwt:Issuer"],
                     ValidAudience = Configuration["Jwt:Issuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
@@ -76,6 +80,13 @@ namespace AuthWebApi
             });
 
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddScoped<IMapper, Mapper>();
+
+
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<User, RegisterDto>();
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -94,7 +105,10 @@ namespace AuthWebApi
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
 
             dbContext.Database.EnsureCreated();
         }
