@@ -40,5 +40,15 @@ namespace AuthWebApi.Controllers
         {
             return Ok(_mapper.Map<User, UserDataDto>(await _userManager.FindByNameAsync(User.Identity.Name)));
         }
+        [Route("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeDto dto)
+        {
+            if (dto.NewPassword != dto.NewPasswordRepeated) return StatusCode(400, "NO_MATCH");
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var result = await _userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
+
+            if (result.Succeeded) return Ok();
+            else return StatusCode(400, "ERROR");
+        }
     }
 }
