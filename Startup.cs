@@ -80,13 +80,13 @@ namespace AuthWebApi
             });
 
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-            services.AddScoped<IMapper, Mapper>();
 
-
-            Mapper.Initialize(cfg =>
+            var mappingConfig = new MapperConfiguration(mc =>
             {
-                cfg.CreateMap<User, RegisterDto>();
+                mc.CreateMap<User, UserDataDto>();
             });
+
+            services.AddSingleton<IMapper>(mappingConfig.CreateMapper());
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

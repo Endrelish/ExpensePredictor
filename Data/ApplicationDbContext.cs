@@ -1,3 +1,4 @@
+using AuthWebApi.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ namespace AuthWebApi.Data
 {
     public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string>
     {
+        public DbSet<ActivationToken> ActivationTokens { get; set; }
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -15,6 +17,8 @@ namespace AuthWebApi.Data
                     new User
                     {
                         Id = "fa435b98-bd28-4a20-8b4a-62b124d9841b",
+                        FirstName = "test",
+                        LastName = "test",
                         UserName = "test",
                         NormalizedUserName = "TEST",
                         Email = "a@a.a",
@@ -25,6 +29,8 @@ namespace AuthWebApi.Data
                     new User
                     {
                         Id = "73dcc714-8fbc-41ac-a6af-756986ade684",
+                        FirstName = "test",
+                        LastName = "test",
                         UserName = "test2",
                         NormalizedUserName = "TEST2",
                         Email = "a@a.a",
