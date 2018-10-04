@@ -19,7 +19,14 @@ namespace AuthWebApi.Controllers
         [Authorize]
         public IActionResult GetUser()
         {
-            return Ok(User.Identity.Name);
+            return Ok(
+                new
+                {
+                    Username = User.Identity.Name,
+                    IsAdmin = User.IsInRole("admin"),
+                    IsUser = User.IsInRole("user")
+                }
+            );
         }
     }
 }

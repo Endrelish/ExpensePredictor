@@ -65,7 +65,7 @@ namespace AuthWebApi
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    NameClaimType = JwtRegisteredClaimNames.Sub,
+                    NameClaimType = "username",
                     RoleClaimType = "identityRoles",
                     ValidIssuer = Configuration["Jwt:Issuer"],
                     ValidAudience = Configuration["Jwt:Issuer"],

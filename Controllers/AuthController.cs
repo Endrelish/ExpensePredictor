@@ -84,7 +84,7 @@ namespace AuthWebApi.Controllers
             var rolesClaims = roles.Select(r => new Claim("identityRoles", r));
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                new Claim("username", user.UserName),
                 // new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
