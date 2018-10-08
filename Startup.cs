@@ -2,6 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using AuthWebApi.Data;
+using AuthWebApi.Data.Users.Entities;
 using AuthWebApi.Dto;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -31,7 +32,11 @@ namespace AuthWebApi
         {
             services.AddDbContext<ApplicationDbContext>(optionsBuilder =>
             {
-                optionsBuilder.UseSqlite("Data Source=db.db");
+                //optionsBuilder.UseSqlite("Data Source=db.db");
+                optionsBuilder.UseSqlServer(
+                    $"Server=tcp:expenses-prediction.database.windows.net,1433;" +
+                    $"Initial Catalog=expenses-prediction;Persist Security Info=False;User ID=ppurgat;Password=zL7@5B*@!H;" +
+                    $"MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             });
 
             services.AddIdentity<User, IdentityRole>(options =>
@@ -103,11 +108,7 @@ namespace AuthWebApi
             dbContext.Database.EnsureCreated();
 
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Inzynierka");
-                //c.RoutePrefix = "swagger/ui";
-            });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Inzynierka"); });
         }
     }
 }

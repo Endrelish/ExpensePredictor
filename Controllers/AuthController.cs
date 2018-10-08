@@ -5,9 +5,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using AuthWebApi.Data;
+using AuthWebApi.Data.Users.Entities;
 using AuthWebApi.Dto;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -67,7 +66,7 @@ namespace AuthWebApi.Controllers
 
             return Unauthorized();
         }
-        
+
         private async Task<string> GenerateJwtToken(User user)
         {
             var roles = await _userManager.GetRolesAsync(user);

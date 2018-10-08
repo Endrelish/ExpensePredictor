@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
 using AuthWebApi.Data;
+using AuthWebApi.Data.Users;
+using AuthWebApi.Data.Users.Entities;
 using AuthWebApi.Dto;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
@@ -47,6 +49,7 @@ namespace AuthWebApi.Controllers
         {
             if (dto.NewPassword != dto.NewPasswordRepeated)
             {
+
                 return StatusCode(400, "NO_MATCH"); //TODO Think about different code here
             }
 

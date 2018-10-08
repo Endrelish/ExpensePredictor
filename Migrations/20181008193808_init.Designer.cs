@@ -3,22 +3,97 @@ using System;
 using AuthWebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AuthWebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181008164949_init")]
+    [Migration("20181008193808_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065");
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("AuthWebApi.Data.Entities.ActivationToken", b =>
+            modelBuilder.Entity("AuthWebApi.Data.Entities.Expenses.Expense", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CategoryId");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("LinkedExpenseId");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<double>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("LinkedExpenseId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Expenses");
+                });
+
+            modelBuilder.Entity("AuthWebApi.Data.Entities.Expenses.ExpenseCategory", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExpenseCategories");
+                });
+
+            modelBuilder.Entity("AuthWebApi.Data.Entities.Expenses.Income", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CategoryId");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("UserId");
+
+                    b.Property<double>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Incomes");
+                });
+
+            modelBuilder.Entity("AuthWebApi.Data.Entities.Expenses.IncomeCategory", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IncomeCategories");
+                });
+
+            modelBuilder.Entity("AuthWebApi.Data.Entities.Users.ActivationToken", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -36,7 +111,7 @@ namespace AuthWebApi.Migrations
                     b.ToTable("ActivationTokens");
                 });
 
-            modelBuilder.Entity("AuthWebApi.Data.User", b =>
+            modelBuilder.Entity("AuthWebApi.Data.Users.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -85,13 +160,14 @@ namespace AuthWebApi.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex");
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "fa435b98-bd28-4a20-8b4a-62b124d9841b", AccessFailedCount = 0, ConcurrencyStamp = "0147870c-0609-4bd1-a99e-0394ce9c0b4d", Email = "a@a.a", EmailConfirmed = false, FirstName = "test", LastName = "test", LockoutEnabled = false, NormalizedEmail = "A@A.A", NormalizedUserName = "TEST", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456789", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "test" },
-                        new { Id = "73dcc714-8fbc-41ac-a6af-756986ade684", AccessFailedCount = 0, ConcurrencyStamp = "19c7e781-e0fe-4048-a882-eb2918034676", Email = "a@a.a", EmailConfirmed = false, FirstName = "test", LastName = "test", LockoutEnabled = false, NormalizedEmail = "A@A.A", NormalizedUserName = "TEST2", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456780", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "test2" }
+                        new { Id = "fa435b98-bd28-4a20-8b4a-62b124d9841b", AccessFailedCount = 0, ConcurrencyStamp = "7b561875-dfeb-416e-a482-f94e86250e53", Email = "a@a.a", EmailConfirmed = false, FirstName = "test", LastName = "test", LockoutEnabled = false, NormalizedEmail = "A@A.A", NormalizedUserName = "TEST", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456789", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "test" },
+                        new { Id = "73dcc714-8fbc-41ac-a6af-756986ade684", AccessFailedCount = 0, ConcurrencyStamp = "436ee784-4b94-447c-9173-59c9d1da82f9", Email = "a@a.a", EmailConfirmed = false, FirstName = "test", LastName = "test", LockoutEnabled = false, NormalizedEmail = "A@A.A", NormalizedUserName = "TEST2", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456780", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "test2" }
                     );
                 });
 
@@ -113,20 +189,22 @@ namespace AuthWebApi.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex");
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "fb435b98-bd28-4a20-ab4a-62b124d9841b", ConcurrencyStamp = "f9d6e1a2-7b02-4a3f-b9c8-47c36d39771f", Name = "admin", NormalizedName = "ADMIN" },
-                        new { Id = "fb467b98-bd28-6720-ab4a-645124d9834b", ConcurrencyStamp = "f1c7dc54-5252-47a7-94b8-b8464378238c", Name = "user", NormalizedName = "USER" }
+                        new { Id = "fb435b98-bd28-4a20-ab4a-62b124d9841b", ConcurrencyStamp = "ce3defa0-b0f7-4c09-a1e4-3071e8149576", Name = "admin", NormalizedName = "ADMIN" },
+                        new { Id = "fb467b98-bd28-6720-ab4a-645124d9834b", ConcurrencyStamp = "7d43d8c6-5e2a-4c01-b09c-d6c52213720b", Name = "user", NormalizedName = "USER" }
                     );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -145,7 +223,8 @@ namespace AuthWebApi.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClaimType");
 
@@ -213,9 +292,35 @@ namespace AuthWebApi.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("AuthWebApi.Data.Entities.ActivationToken", b =>
+            modelBuilder.Entity("AuthWebApi.Data.Entities.Expenses.Expense", b =>
                 {
-                    b.HasOne("AuthWebApi.Data.User", "User")
+                    b.HasOne("AuthWebApi.Data.Entities.Expenses.ExpenseCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("AuthWebApi.Data.Entities.Expenses.Expense", "LinkedExpense")
+                        .WithMany()
+                        .HasForeignKey("LinkedExpenseId");
+
+                    b.HasOne("AuthWebApi.Data.Users.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("AuthWebApi.Data.Entities.Expenses.Income", b =>
+                {
+                    b.HasOne("AuthWebApi.Data.Entities.Expenses.IncomeCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("AuthWebApi.Data.Users.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("AuthWebApi.Data.Entities.Users.ActivationToken", b =>
+                {
+                    b.HasOne("AuthWebApi.Data.Users.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
@@ -230,7 +335,7 @@ namespace AuthWebApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("AuthWebApi.Data.User")
+                    b.HasOne("AuthWebApi.Data.Users.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -238,7 +343,7 @@ namespace AuthWebApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("AuthWebApi.Data.User")
+                    b.HasOne("AuthWebApi.Data.Users.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -251,7 +356,7 @@ namespace AuthWebApi.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("AuthWebApi.Data.User")
+                    b.HasOne("AuthWebApi.Data.Users.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -259,7 +364,7 @@ namespace AuthWebApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("AuthWebApi.Data.User")
+                    b.HasOne("AuthWebApi.Data.Users.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

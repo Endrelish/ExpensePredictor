@@ -1,6 +1,7 @@
 using System;
+using AuthWebApi.Data.Users.Entities;
 
-namespace AuthWebApi.Data.Entities
+namespace AuthWebApi.Data.Entities.Users
 {
     public class ActivationToken
     {
