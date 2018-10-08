@@ -30,7 +30,7 @@ namespace AuthWebApi.Controllers
             user.LastName = dto.LastName;
             user.PhoneNumber = dto.PhoneNumber;
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(); //TODO check if saved
 
             return Ok();
         }
@@ -41,12 +41,13 @@ namespace AuthWebApi.Controllers
             return Ok(_mapper.Map<User, UserDataDto>(await _userManager.FindByNameAsync(User.Identity.Name)));
         }
 
+        [HttpPost]
         [Route("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeDto dto)
         {
             if (dto.NewPassword != dto.NewPasswordRepeated)
             {
-                return StatusCode(400, "NO_MATCH");
+                return StatusCode(400, "NO_MATCH"); //TODO Think about different code here
             }
 
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -57,7 +58,7 @@ namespace AuthWebApi.Controllers
                 return Ok();
             }
 
-            return StatusCode(400, "ERROR");
+            return StatusCode(400, "ERROR"); //TODO Return different codes
         }
     }
 }

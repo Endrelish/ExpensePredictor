@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace AuthWebApi
 {
@@ -79,6 +80,8 @@ namespace AuthWebApi
             services.AddSingleton(mappingConfig.CreateMapper());
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "Inzynierka API", Version = "v1"}); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,9 +98,16 @@ namespace AuthWebApi
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
-            app.UseMvc(routes => { routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}"); });
+            app.UseMvc();
 
             dbContext.Database.EnsureCreated();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Inzynierka");
+                //c.RoutePrefix = "swagger/ui";
+            });
         }
     }
 }

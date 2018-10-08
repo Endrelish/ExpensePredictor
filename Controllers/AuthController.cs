@@ -15,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AuthWebApi.Controllers
 {
+    [Route("api/[controller]/[action]")]
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -32,30 +33,31 @@ namespace AuthWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody] RegisterDto dto)
+        public async Task<IActionResult> Register([FromBody] RegisterDto registrationData)
         {
             var user = new User
             {
-                UserName = dto.Username,
-                Email = dto.Email
+                UserName = registrationData.Username,
+                Email = registrationData.Email
             };
 
-            var result = await _userManager.CreateAsync(user, dto.Password);
+            var result = await _userManager.CreateAsync(user, registrationData.Password);
 
             if (result.Succeeded)
             {
-                return Ok();
+                var token = await GenerateJwtToken(user);
+                return Ok(token);
             }
 
-            return StatusCode(400, "ERROR");
+            return StatusCode(400, "ERROR"); //TODO custom error codes
         }
 
         [HttpPost]
         [ActionName("Get-Token")]
-        public async Task<IActionResult> GetToken([FromBody] LoginDto dto)
+        public async Task<IActionResult> GetToken([FromBody] LoginDto loginData)
         {
-            var user = await _userManager.FindByNameAsync(dto.Username);
-            var result = _hasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
+            var user = await _userManager.FindByNameAsync(loginData.Username);
+            var result = _hasher.VerifyHashedPassword(user, user.PasswordHash, loginData.Password);
 
             if (result == PasswordVerificationResult.Success)
             {
@@ -65,21 +67,7 @@ namespace AuthWebApi.Controllers
 
             return Unauthorized();
         }
-
-        [HttpGet]
-        [Authorize]
-        public IActionResult Protected()
-        {
-            return Ok("You are in");
-        }
-
-        [HttpGet]
-        [Authorize("admin")]
-        public IActionResult Admin()
-        {
-            return Ok("You are an admin");
-        }
-
+        
         private async Task<string> GenerateJwtToken(User user)
         {
             var roles = await _userManager.GetRolesAsync(user);
