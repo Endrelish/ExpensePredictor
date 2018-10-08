@@ -17,12 +17,13 @@ namespace AuthWebApi.Controllers
 {
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<User> _userManager;
-        private readonly IPasswordHasher<User> _hasher;
         private readonly IConfiguration _configuration;
+        private readonly IPasswordHasher<User> _hasher;
         private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
 
-        public AuthController(UserManager<User> userManager, IPasswordHasher<User> hasher, IConfiguration configuration, SignInManager<User> signInManager)
+        public AuthController(UserManager<User> userManager, IPasswordHasher<User> hasher, IConfiguration configuration,
+            SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _hasher = hasher;
@@ -61,6 +62,7 @@ namespace AuthWebApi.Controllers
                 var token = await GenerateJwtToken(user);
                 return Ok(token);
             }
+
             return Unauthorized();
         }
 
