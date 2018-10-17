@@ -8,10 +8,8 @@ namespace AuthWebApi.Data.Entities.Expenses
     {
         public string Id { get; set; }
         public User User { get; set; }
-        //public string UserId { get; set; }
         public double Value { get; set; }
         public T Category { get; set; }
-        //public string CategoryId { get; set; }
         public DateTime Date { get; set; }
     }
 }

@@ -14,7 +14,6 @@ namespace AuthWebApi.Data
         }
 
         public DbSet<ActivationToken> ActivationTokens { get; set; }
-
         public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
         public DbSet<IncomeCategory> IncomeCategories { get; set; }
         public DbSet<Expense> Expenses { get; set; }
@@ -23,6 +22,7 @@ namespace AuthWebApi.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<User>().HasData(
                 new User
                 {

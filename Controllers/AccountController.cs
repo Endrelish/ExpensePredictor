@@ -4,6 +4,7 @@ using AuthWebApi.Data.Users;
 using AuthWebApi.Data.Users.Entities;
 using AuthWebApi.Dto;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,13 +25,14 @@ namespace AuthWebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit([FromBody] UserEditDto dto)
+        [Authorize]
+        public async Task<IActionResult> Edit([FromBody] UserEditDto userEditData)
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            user.FirstName = dto.FirstName;
-            user.LastName = dto.LastName;
-            user.PhoneNumber = dto.PhoneNumber;
+            user.FirstName = userEditData.FirstName;
+            user.LastName = userEditData.LastName;
+            user.PhoneNumber = userEditData.PhoneNumber;
 
             await _context.SaveChangesAsync(); //TODO check if saved
 
@@ -45,16 +47,16 @@ namespace AuthWebApi.Controllers
 
         [HttpPost]
         [Route("change-password")]
-        public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeDto dto)
+        public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeDto passwordChangeData)
         {
-            if (dto.NewPassword != dto.NewPasswordRepeated)
+            if (passwordChangeData.NewPassword != passwordChangeData.NewPasswordRepeated)
             {
 
                 return StatusCode(400, "NO_MATCH"); //TODO Think about different code here
             }
 
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var result = await _userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
+            var result = await _userManager.ChangePasswordAsync(user, passwordChangeData.CurrentPassword, passwordChangeData.NewPassword);
 
             if (result.Succeeded)
             {

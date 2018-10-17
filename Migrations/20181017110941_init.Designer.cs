@@ -3,14 +3,16 @@ using System;
 using AuthWebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AuthWebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181017110941_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,8 +162,8 @@ namespace AuthWebApi.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "fa435b98-bd28-4a20-8b4a-62b124d9841b", AccessFailedCount = 0, ConcurrencyStamp = "d9acc76f-a88a-4496-b426-d8e4b336304b", Email = "a@a.a", EmailConfirmed = false, FirstName = "test", LastName = "test", LockoutEnabled = false, NormalizedEmail = "A@A.A", NormalizedUserName = "TEST", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456789", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "test" },
-                        new { Id = "73dcc714-8fbc-41ac-a6af-756986ade684", AccessFailedCount = 0, ConcurrencyStamp = "42f9f354-19bc-41ab-a977-6ac4443afb84", Email = "a@a.a", EmailConfirmed = false, FirstName = "test", LastName = "test", LockoutEnabled = false, NormalizedEmail = "A@A.A", NormalizedUserName = "TEST2", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456780", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "test2" }
+                        new { Id = "fa435b98-bd28-4a20-8b4a-62b124d9841b", AccessFailedCount = 0, ConcurrencyStamp = "69581dbd-ae21-4c7e-a1d7-c816701bdf1e", Email = "a@a.a", EmailConfirmed = false, FirstName = "test", LastName = "test", LockoutEnabled = false, NormalizedEmail = "A@A.A", NormalizedUserName = "TEST", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456789", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "test" },
+                        new { Id = "73dcc714-8fbc-41ac-a6af-756986ade684", AccessFailedCount = 0, ConcurrencyStamp = "e49acff7-6c9e-4ff2-ba43-2873e4505935", Email = "a@a.a", EmailConfirmed = false, FirstName = "test", LastName = "test", LockoutEnabled = false, NormalizedEmail = "A@A.A", NormalizedUserName = "TEST2", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456780", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "test2" }
                     );
                 });
 
@@ -188,8 +190,8 @@ namespace AuthWebApi.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "fb435b98-bd28-4a20-ab4a-62b124d9841b", ConcurrencyStamp = "1a214b2b-5ef3-47c3-9954-a98fede9c766", Name = "admin", NormalizedName = "ADMIN" },
-                        new { Id = "fb467b98-bd28-6720-ab4a-645124d9834b", ConcurrencyStamp = "34e64141-7d81-449a-9e86-cb6864726809", Name = "user", NormalizedName = "USER" }
+                        new { Id = "fb435b98-bd28-4a20-ab4a-62b124d9841b", ConcurrencyStamp = "fc41cd81-8928-48ba-a110-fccd66ec5127", Name = "admin", NormalizedName = "ADMIN" },
+                        new { Id = "fb467b98-bd28-6720-ab4a-645124d9834b", ConcurrencyStamp = "bd8e1147-5ce3-421b-8621-12f24454c7a1", Name = "user", NormalizedName = "USER" }
                     );
                 });
 

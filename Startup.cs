@@ -32,11 +32,11 @@ namespace AuthWebApi
         {
             services.AddDbContext<ApplicationDbContext>(optionsBuilder =>
             {
-                //optionsBuilder.UseSqlite("Data Source=db.db");
-                optionsBuilder.UseSqlServer(
-                    $"Server=tcp:expenses-prediction.database.windows.net,1433;" +
-                    $"Initial Catalog=expenses-prediction;Persist Security Info=False;User ID=ppurgat;Password=zL7@5B*@!H;" +
-                    $"MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                optionsBuilder.UseSqlite("Data Source=db.db");
+                // optionsBuilder.UseSqlServer(
+                //     $"Server=tcp:expenses-prediction.database.windows.net,1433;" +
+                //     $"Initial Catalog=expenses-prediction;Persist Security Info=False;User ID=ppurgat;Password=zL7@5B*@!H;" +
+                //     $"MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             });
 
             services.AddIdentity<User, IdentityRole>(options =>
@@ -79,6 +79,7 @@ namespace AuthWebApi
             });
 
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddScoped(typeof(IApplicationRepository<>), typeof(ApplicationRepository<>));
 
             var mappingConfig = new MapperConfiguration(mc => { mc.CreateMap<User, UserDataDto>(); });
 
@@ -86,7 +87,7 @@ namespace AuthWebApi
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "Inzynierka API", Version = "v1"}); });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info { Title = "Inzynierka API", Version = "v1" }); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

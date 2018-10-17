@@ -3,23 +3,20 @@ using System;
 using AuthWebApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AuthWebApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181008193808_init")]
-    partial class init
+    [Migration("20181017121101_addTokenTable")]
+    partial class addTokenTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
 
             modelBuilder.Entity("AuthWebApi.Data.Entities.Expenses.Expense", b =>
                 {
@@ -111,6 +108,16 @@ namespace AuthWebApi.Migrations
                     b.ToTable("ActivationTokens");
                 });
 
+            modelBuilder.Entity("AuthWebApi.Data.Entities.Users.ValidToken", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ValidTokens");
+                });
+
             modelBuilder.Entity("AuthWebApi.Data.Users.Entities.User", b =>
                 {
                     b.Property<string>("Id")
@@ -160,14 +167,13 @@ namespace AuthWebApi.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "fa435b98-bd28-4a20-8b4a-62b124d9841b", AccessFailedCount = 0, ConcurrencyStamp = "7b561875-dfeb-416e-a482-f94e86250e53", Email = "a@a.a", EmailConfirmed = false, FirstName = "test", LastName = "test", LockoutEnabled = false, NormalizedEmail = "A@A.A", NormalizedUserName = "TEST", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456789", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "test" },
-                        new { Id = "73dcc714-8fbc-41ac-a6af-756986ade684", AccessFailedCount = 0, ConcurrencyStamp = "436ee784-4b94-447c-9173-59c9d1da82f9", Email = "a@a.a", EmailConfirmed = false, FirstName = "test", LastName = "test", LockoutEnabled = false, NormalizedEmail = "A@A.A", NormalizedUserName = "TEST2", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456780", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "test2" }
+                        new { Id = "fa435b98-bd28-4a20-8b4a-62b124d9841b", AccessFailedCount = 0, ConcurrencyStamp = "1870040a-8b43-45d3-8a02-d73c488af52b", Email = "a@a.a", EmailConfirmed = false, FirstName = "test", LastName = "test", LockoutEnabled = false, NormalizedEmail = "A@A.A", NormalizedUserName = "TEST", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456789", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "test" },
+                        new { Id = "73dcc714-8fbc-41ac-a6af-756986ade684", AccessFailedCount = 0, ConcurrencyStamp = "6f577187-ded8-4c7f-8a00-db0840a4a29f", Email = "a@a.a", EmailConfirmed = false, FirstName = "test", LastName = "test", LockoutEnabled = false, NormalizedEmail = "A@A.A", NormalizedUserName = "TEST2", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456780", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "test2" }
                     );
                 });
 
@@ -189,22 +195,20 @@ namespace AuthWebApi.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "fb435b98-bd28-4a20-ab4a-62b124d9841b", ConcurrencyStamp = "ce3defa0-b0f7-4c09-a1e4-3071e8149576", Name = "admin", NormalizedName = "ADMIN" },
-                        new { Id = "fb467b98-bd28-6720-ab4a-645124d9834b", ConcurrencyStamp = "7d43d8c6-5e2a-4c01-b09c-d6c52213720b", Name = "user", NormalizedName = "USER" }
+                        new { Id = "fb435b98-bd28-4a20-ab4a-62b124d9841b", ConcurrencyStamp = "ae95948a-da99-4ca9-806d-bb8a5b00fd7a", Name = "admin", NormalizedName = "ADMIN" },
+                        new { Id = "fb467b98-bd28-6720-ab4a-645124d9834b", ConcurrencyStamp = "9f8628ea-1259-4e6c-ba30-534a4508ab44", Name = "user", NormalizedName = "USER" }
                     );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -223,8 +227,7 @@ namespace AuthWebApi.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 

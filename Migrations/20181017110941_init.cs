@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AuthWebApi.Migrations
@@ -78,7 +77,7 @@ namespace AuthWebApi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -119,7 +118,7 @@ namespace AuthWebApi.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -263,20 +262,22 @@ namespace AuthWebApi.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { "fb435b98-bd28-4a20-ab4a-62b124d9841b", "ce3defa0-b0f7-4c09-a1e4-3071e8149576", "admin", "ADMIN" },
-                    { "fb467b98-bd28-6720-ab4a-645124d9834b", "7d43d8c6-5e2a-4c01-b09c-d6c52213720b", "user", "USER" }
-                });
+                values: new object[] { "fb435b98-bd28-4a20-ab4a-62b124d9841b", "fc41cd81-8928-48ba-a110-fccd66ec5127", "admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "fb467b98-bd28-6720-ab4a-645124d9834b", "bd8e1147-5ce3-421b-8621-12f24454c7a1", "user", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[,]
-                {
-                    { "fa435b98-bd28-4a20-8b4a-62b124d9841b", 0, "7b561875-dfeb-416e-a482-f94e86250e53", "a@a.a", false, "test", "test", false, null, "A@A.A", "TEST", "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", "123456789", false, null, false, "test" },
-                    { "73dcc714-8fbc-41ac-a6af-756986ade684", 0, "436ee784-4b94-447c-9173-59c9d1da82f9", "a@a.a", false, "test", "test", false, null, "A@A.A", "TEST2", "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", "123456780", false, null, false, "test2" }
-                });
+                values: new object[] { "fa435b98-bd28-4a20-8b4a-62b124d9841b", 0, "69581dbd-ae21-4c7e-a1d7-c816701bdf1e", "a@a.a", false, "test", "test", false, null, "A@A.A", "TEST", "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", "123456789", false, null, false, "test" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "73dcc714-8fbc-41ac-a6af-756986ade684", 0, "e49acff7-6c9e-4ff2-ba43-2873e4505935", "a@a.a", false, "test", "test", false, null, "A@A.A", "TEST2", "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", "123456780", false, null, false, "test2" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -307,8 +308,7 @@ namespace AuthWebApi.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -334,8 +334,7 @@ namespace AuthWebApi.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Expenses_CategoryId",
