@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AuthWebApi.Controllers
 {
-    [Route("/api/[controller]")]
+    [Route("/api/expense")]
     public class ExpenseController : Controller
     {
         private IApplicationRepository<Expense> _expenseRepository;
@@ -21,9 +21,15 @@ namespace AuthWebApi.Controllers
             _userManager = userManager;
         }
 
-        [HttpPost("Add-Expense")]
+        /// <summary>
+        /// Adds an expense.
+        /// </summary>
+        /// <consumes>application/json</consumes>
+        /// <param name="expenseData">The expense data.</param>
+        /// <returns>Link to the created expense</returns>
+        [HttpPost("add-expense")]
         [Authorize]
-        public async Task<IActionResult> AddExpense(ExpenseDto expenseData)
+        public async Task<IActionResult> AddExpense([FromBody]ExpenseDto expenseData)
         {
             //TODO create
             await _expenseRepository.SaveAsync(); //TODO catch sth I guess
@@ -32,11 +38,16 @@ namespace AuthWebApi.Controllers
             return CreatedAtAction("GetExpense", id, newObject);
         }
 
-        [HttpGet("Get-Expense/{id}", Name = "GetExpense")]
+        /// <summary>
+        /// Gets the expense data.
+        /// </summary>
+        /// <param name="id">The expense identifier.</param>
+        /// <returns></returns>
+        [HttpGet("get-expense/{id}", Name = "GetExpense")]
         [Authorize]
-        public async Task<IActionResult> GetExpense([FromRoute] string id)
+        public async Task<IActionResult> GetExpense([FromRoute] string expenseId)
         {
-            return Ok(await _expenseRepository.FindByIdAsync(id));
+            return Ok(await _expenseRepository.FindByIdAsync(expenseId));
         }
 
     }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AuthWebApi.Data.Users.Entities;
 using AuthWebApi.Dto;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -14,31 +15,40 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AuthWebApi.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/auth")]
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _configuration;
         private readonly IPasswordHasher<User> _hasher;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly IMapper _mapper;
 
         public AuthController(UserManager<User> userManager, IPasswordHasher<User> hasher, IConfiguration configuration,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager, IMapper mapper)
         {
             _userManager = userManager;
             _hasher = hasher;
             _configuration = configuration;
             _signInManager = signInManager;
+            _mapper = mapper;
         }
 
-        [HttpPost]
+        /// <summary>
+        /// Registers a new user with specified data.
+        /// </summary>
+        /// <param name="registrationData">The registration data.</param>
+        /// <returns></returns>
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registrationData)
         {
-            var user = new User
-            {
-                UserName = registrationData.Username,
-                Email = registrationData.Email
-            };
+            //var user = new User
+            //{
+            //    UserName = registrationData.Username,
+            //    Email = registrationData.Email
+            //};
+
+            var user = _mapper.Map<User>(registrationData);
 
             var result = await _userManager.CreateAsync(user, registrationData.Password);
 
@@ -51,8 +61,12 @@ namespace AuthWebApi.Controllers
             return StatusCode(400, "ERROR"); //TODO custom error codes
         }
 
-        [HttpPost]
-        [ActionName("Get-Token")]
+        /// <summary>
+        /// Gets the token for specified user.
+        /// </summary>
+        /// <param name="loginData">The login data.</param>
+        /// <returns>The token.</returns>
+        [HttpPost("get-token")]
         public async Task<IActionResult> GetToken([FromBody] LoginDto loginData)
         {
             var user = await _userManager.FindByNameAsync(loginData.Username);

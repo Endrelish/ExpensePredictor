@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AuthWebApi.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/account")]
     public class AccountController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -24,6 +24,11 @@ namespace AuthWebApi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Edits current user's data.
+        /// </summary>
+        /// <param name="userEditData">The user data.</param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Edit([FromBody] UserEditDto userEditData)
@@ -39,12 +44,21 @@ namespace AuthWebApi.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Gets current user.
+        /// </summary>
+        /// <returns>Current user data.</returns>
         [HttpGet]
         public async Task<IActionResult> GetUser()
         {
             return Ok(_mapper.Map<User, UserDataDto>(await _userManager.FindByNameAsync(User.Identity.Name)));
         }
 
+        /// <summary>
+        /// Changes the password.
+        /// </summary>
+        /// <param name="passwordChangeData">The data for password change.</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("change-password")]
         public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeDto passwordChangeData)
