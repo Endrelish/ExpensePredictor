@@ -4,4 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ExpensePrediction.DataAccessLayer.Entities\ExpensePrediction.DataAccessLayer.Entities.csproj" />
+    <ProjectReference Include="..\ExpensePrediction.DataTransferObjects\ExpensePrediction.DataTransferObjects.csproj" />
+  </ItemGroup>
+
 </Project>

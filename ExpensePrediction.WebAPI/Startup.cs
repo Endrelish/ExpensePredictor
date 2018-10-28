@@ -5,6 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using AutoMapper;
+using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
+using ExpensePrediction.BusinessLogicLayer.Services;
 using ExpensePrediction.DataAccessLayer;
 using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataAccessLayer.Repositories;
@@ -92,16 +94,21 @@ namespace ExpensePrediction.WebAPI
 
             services.AddAuthorization(cfg =>
             {
-                cfg.AddPolicy("admin", p => p.RequireClaim("identityRoles", "admin"));
+                var policies = Configuration.GetSection("Policies").AsEnumerable(makePathsRelative:true)
+                    .ToDictionary(p => p.Key, p => p.Value.Split(';'));
+                foreach (var policy in policies)
+                {
+                    cfg.AddPolicy(policy.Key, p => p.RequireRole(policy.Value));
+                }
             });
 
             //===============================Services===============================
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped(typeof(IApplicationRepository<>), typeof(ApplicationRepository<>));
             services.AddScoped<IApplicationRepository<Expense>, ExpenseRepository>();
-
-            var mappingConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile()); });
-            services.AddSingleton(mappingConfig.CreateMapper());
+            services.AddScoped(typeof(ICategoryService<>), typeof(CategoryService<>));
+            
+            services.AddSingleton(MapperService.Mapper);
 
 
             //============================MVC and Swagger============================

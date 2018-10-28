@@ -42,9 +42,9 @@ namespace ExpensePrediction.DataAccessLayer.Repositories
             return await _dbContext.Set<TEntity>().FindAsync(id);
         }
 
-        public virtual async Task SaveAsync()
+        public virtual Task<int> SaveAsync()
         {
-            await _dbContext.SaveChangesAsync();
+            return _dbContext.SaveChangesAsync();
         }
 
         public virtual void Update(TEntity entity)

@@ -1,6 +1,6 @@
 using System;
 
-namespace ExpensePrediction.DataTransferObjects.Expense
+namespace ExpensePrediction.DataTransferObjects
 {
     public class ExpenseDto
     {
