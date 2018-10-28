@@ -6,7 +6,9 @@ using System.Reflection;
 using System.Text;
 using AutoMapper;
 using ExpensePrediction.DataAccessLayer;
+using ExpensePrediction.DataAccessLayer.Entities.Expenses;
 using ExpensePrediction.DataAccessLayer.Entities.Users;
+using ExpensePrediction.DataAccessLayer.Repositories;
 using ExpensePrediction.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -16,6 +18,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -26,9 +30,16 @@ namespace ExpensePrediction.WebAPI
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            LoggerFactory = new LoggerFactory(new[]
+            {
+                new ConsoleLoggerProvider((category, level)
+                    => category == DbLoggerCategory.Database.Command.Name
+                       && level == LogLevel.Information, true)
+            });
         }
 
         public IConfiguration Configuration { get; }
+        public readonly LoggerFactory LoggerFactory;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -37,10 +48,13 @@ namespace ExpensePrediction.WebAPI
             {
                 //optionsBuilder.UseSqlite("Data Source=db.db");
                 optionsBuilder.UseSqlServer(
-                    $"Server=tcp:expenses-prediction.database.windows.net,1433;" +
-                    $"Initial Catalog=expenses-prediction;Persist Security Info=False;User ID=ppurgat;Password=zL7@5B*@!H;" +
-                    $"MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
-                    b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+                        $"Server=tcp:expenses-prediction.database.windows.net,1433;" +
+                        $"Initial Catalog=expenses-prediction;Persist Security Info=False;User ID=ppurgat;Password=zL7@5B*@!H;" +
+                        $"MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
+                        b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName))
+                    .UseLazyLoadingProxies()
+                    .UseLoggerFactory(LoggerFactory)
+                    .EnableSensitiveDataLogging();
             });
 
             services.AddIdentity<User, IdentityRole>(options =>
@@ -82,14 +96,17 @@ namespace ExpensePrediction.WebAPI
                 cfg.AddPolicy("admin", p => p.RequireClaim("identityRoles", "admin"));
             });
 
+            //===============================Services===============================
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped(typeof(IApplicationRepository<>), typeof(ApplicationRepository<>));
+            services.AddScoped<IApplicationRepository<Expense>, ExpenseRepository>();
 
             var mappingConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile()); });
             services.AddSingleton(mappingConfig.CreateMapper());
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            //============================MVC and Swagger============================
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info {Title = "Inzynierka API", Version = "v1"});

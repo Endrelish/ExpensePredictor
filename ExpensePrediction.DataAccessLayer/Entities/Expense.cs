@@ -2,6 +2,6 @@
 {
     public class Expense : Transaction<ExpenseCategory>
     {
-        public Expense LinkedExpense { get; set; }
+        public virtual Expense LinkedExpense { get; set; }
     }
 }
