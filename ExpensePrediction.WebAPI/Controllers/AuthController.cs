@@ -41,6 +41,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// <param name="registrationData">The registration data.</param>
         /// <returns></returns>
         [HttpPost("register")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registrationData)
         {
             var user = _mapper.Map<User>(registrationData);
@@ -50,7 +52,7 @@ namespace ExpensePrediction.WebAPI.Controllers
             if (result.Succeeded)
             {
                 var token = await GenerateJwtToken(user);
-                return Ok(token);
+                return Ok(new { Token = token});
             }
 
             return StatusCode(400, "ERROR"); //TODO custom error codes
@@ -62,6 +64,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// <param name="loginData">The login data.</param>
         /// <returns>The token.</returns>
         [HttpPost("get-token")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> GetToken([FromBody] LoginDto loginData)
         {
             var user = await _userManager.FindByNameAsync(loginData.Username);
@@ -70,7 +74,7 @@ namespace ExpensePrediction.WebAPI.Controllers
             if (result == PasswordVerificationResult.Success)
             {
                 var token = await GenerateJwtToken(user);
-                return Ok(token);
+                return Ok(new { Token = token });
             }
 
             return Unauthorized();

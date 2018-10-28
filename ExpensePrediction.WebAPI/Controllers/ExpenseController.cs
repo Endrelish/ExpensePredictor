@@ -59,6 +59,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// <returns></returns>
         [HttpGet("get-expense/{expenseId}", Name = "GetExpense")]
         [Authorize]
+        [Produces("application/json")]
         public async Task<IActionResult> GetExpense([FromRoute] string expenseId)
         {
             var expense = await _expenseRepository.FindByIdAsync(expenseId);

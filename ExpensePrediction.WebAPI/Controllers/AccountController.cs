@@ -27,6 +27,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> Edit([FromBody] UserEditDto userEditData)
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -37,7 +39,7 @@ namespace ExpensePrediction.WebAPI.Controllers
 
             await _userManager.UpdateAsync(user); //TODO check if saved
 
-            return Ok();
+            return Ok(_mapper.Map<UserDataDto>(user));
         }
 
         /// <summary>
@@ -46,6 +48,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// <returns>Current user data.</returns>
         [HttpGet]
         [Authorize]
+        [Produces("application/json")]
         public async Task<IActionResult> GetUser()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -60,6 +63,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("change-password")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
         public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeDto passwordChangeData)
         {
             if (passwordChangeData.NewPassword != passwordChangeData.NewPasswordRepeated)
