@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using AutoMapper;
-using ExpensePrediction.DataAccessLayer.Entities.Users;
+using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataTransferObjects.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

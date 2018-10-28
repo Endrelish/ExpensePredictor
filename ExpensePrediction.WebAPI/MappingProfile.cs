@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using ExpensePrediction.DataAccessLayer.Entities.Expenses;
-using ExpensePrediction.DataAccessLayer.Entities.Users;
+using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataTransferObjects.Expense;
 using ExpensePrediction.DataTransferObjects.User;
 

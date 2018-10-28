@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using ExpensePrediction.DataAccessLayer.Entities.Expenses;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using ExpensePrediction.DataAccessLayer.Entities;
 
 namespace ExpensePrediction.DataAccessLayer.Repositories
 {

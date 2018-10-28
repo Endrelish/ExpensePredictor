@@ -1,5 +1,4 @@
-using ExpensePrediction.DataAccessLayer.Entities.Expenses;
-using ExpensePrediction.DataAccessLayer.Entities.Users;
+using ExpensePrediction.DataAccessLayer.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

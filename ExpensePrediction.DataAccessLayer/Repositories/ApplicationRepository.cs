@@ -7,7 +7,7 @@ using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.Shared;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExpensePrediction.DataAccessLayer
+namespace ExpensePrediction.DataAccessLayer.Repositories
 {
     public class ApplicationRepository<TEntity> : IApplicationRepository<TEntity> where TEntity : class, IEntity
     {

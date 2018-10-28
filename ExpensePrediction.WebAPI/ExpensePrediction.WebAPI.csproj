@@ -22,6 +22,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExpensePrediction.DataAccessLayer.Entities\ExpensePrediction.DataAccessLayer.Entities.csproj" />
     <ProjectReference Include="..\ExpensePrediction.DataAccessLayer\ExpensePrediction.DataAccessLayer.csproj" />
     <ProjectReference Include="..\ExpensePrediction.DataTransferObjects\ExpensePrediction.DataTransferObjects.csproj" />
     <ProjectReference Include="..\ExpensePrediction.Shared\ExpensePrediction.Shared.csproj" />

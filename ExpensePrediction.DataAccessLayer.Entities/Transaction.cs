@@ -1,7 +1,6 @@
 ﻿using System;
-using ExpensePrediction.DataAccessLayer.Entities.Users;
 
-namespace ExpensePrediction.DataAccessLayer.Entities.Expenses
+namespace ExpensePrediction.DataAccessLayer.Entities
 {
     public class Transaction<T> : IEntity where T : Category
     {

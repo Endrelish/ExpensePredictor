@@ -1,4 +1,4 @@
-﻿namespace ExpensePrediction.DataAccessLayer.Entities.Expenses
+﻿namespace ExpensePrediction.DataAccessLayer.Entities
 {
     public class Expense : Transaction<ExpenseCategory>
     {

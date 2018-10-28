@@ -1,6 +1,6 @@
 using System;
 
-namespace ExpensePrediction.DataAccessLayer.Entities.Users
+namespace ExpensePrediction.DataAccessLayer.Entities
 {
     public class ActivationToken : IEntity
     {

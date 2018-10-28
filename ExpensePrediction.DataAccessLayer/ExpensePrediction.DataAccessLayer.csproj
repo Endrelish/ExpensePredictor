@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ExpensePrediction.DataAccessLayer.Entities\ExpensePrediction.DataAccessLayer.Entities.csproj" />
     <ProjectReference Include="..\ExpensePrediction.Shared\ExpensePrediction.Shared.csproj" />
   </ItemGroup>
 

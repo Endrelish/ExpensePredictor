@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace ExpensePrediction.DataAccessLayer.Entities.Users
+namespace ExpensePrediction.DataAccessLayer.Entities
 {
     public class User : IdentityUser, IEntity
     {

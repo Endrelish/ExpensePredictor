@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AuthWebApi.Dto;
 using AutoMapper;
-using ExpensePrediction.DataAccessLayer.Entities.Users;
+using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataTransferObjects.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
