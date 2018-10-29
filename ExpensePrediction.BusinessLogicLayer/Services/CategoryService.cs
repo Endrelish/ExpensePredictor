@@ -21,27 +21,30 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<TCategory> AddCategory(CategoryDto categoryDto)
+        public async Task<CategoryDto> AddCategory(CategoryDto categoryDto)
         {
             categoryDto.Id = string.Empty;
             var category = _mapper.Map<TCategory>(categoryDto);
             await _categoryRepository.CreateAsync(category);
 
             if (await _categoryRepository.SaveAsync() > 0)
-                return category;
-            throw new Exception("nie da sie"); //TODO custom exception
+                return _mapper.Map<CategoryDto>(category);
+            throw new Exception("nie da sie"); //TODO custom exceptions
         }
 
-        public Task<TCategory> EditCategory(CategoryDto categoryDto)
+        public async Task<CategoryDto> EditCategory(CategoryDto categoryDto)
         {
+            var category = _mapper.Map<TCategory>(categoryDto);
+            _categoryRepository.Update(category);
 
+            if (await _categoryRepository.SaveAsync() > 0)
+            {
+                return _mapper.Map<CategoryDto>(category);
+            }
+            throw new Exception(); //TODO custom exceptions
         }
 
-        public Task<IEnumerable<TCategory>> GetCategories()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<TCategory> GetCategory(string categoryId) => _categoryRepository.FindByIdAsync(categoryId);
+        public async Task<IEnumerable<CategoryDto>> GetCategories() => _mapper.Map<IEnumerable<CategoryDto>>(await _categoryRepository.FindAllAsync());
+        public async Task<CategoryDto> GetCategory(string categoryId) => _mapper.Map<CategoryDto>(await _categoryRepository.FindByIdAsync(categoryId));
     }
 }
