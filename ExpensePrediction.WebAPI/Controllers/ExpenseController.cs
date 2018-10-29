@@ -1,31 +1,35 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AutoMapper;
+using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataTransferObjects;
 using ExpensePrediction.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ExpensePrediction.WebAPI.Controllers
 {
     [Route("/api/expense")]
+    [ApiController]
     public class ExpenseController : Controller
     {
         private readonly IMapper _mapper;
+        private readonly User _user;
         private readonly UserManager<User> _userManager;
         private readonly IApplicationRepository<ExpenseCategory> _expenseCategoryRepository;
-        private readonly IApplicationRepository<Expense> _expenseRepository;
+        private readonly IExpenseService _expenseService;
 
         public ExpenseController(UserManager<User> userManager,
-            IMapper mapper, IApplicationRepository<ExpenseCategory> expenseCategoryRepository, IApplicationRepository<Expense> expenseRepository)
+            IMapper mapper, IApplicationRepository<ExpenseCategory> expenseCategoryRepository, IExpenseService expenseService)
         {
             _userManager = userManager;
             _mapper = mapper;
             _expenseCategoryRepository = expenseCategoryRepository;
-            _expenseRepository = expenseRepository;
+            _expenseService = expenseService;
+            _user = userManager.FindByNameAsync(User.Identity.Name);
         }
 
         /// <summary>
@@ -52,7 +56,7 @@ namespace ExpensePrediction.WebAPI.Controllers
             await _expenseRepository.CreateAsync(expense);
             await _expenseRepository.SaveAsync(); //TODO catch sth I guess
 
-            return CreatedAtRoute("GetExpense", new {expenseId = expense.Id}, _mapper.Map<ExpenseDto>(expense));
+            return CreatedAtRoute("GetExpense", new { expenseId = expense.Id }, _mapper.Map<ExpenseDto>(expense));
         }
 
         /// <summary>
@@ -65,10 +69,15 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         public async Task<IActionResult> GetExpense([FromRoute] string expenseId)
         {
-            var expense = await _expenseRepository.FindByIdAsync(expenseId);
-            if (expense == null) return NotFound();
-            var dto = _mapper.Map<ExpenseDto>(expense);
-            return Ok(dto);
+            try
+            {
+                var expense = _expenseService.GetExpense(expenseId, (await _userManager.FindByNameAsync(User.Identity.Name)).Id);
+                return Ok(expense);
+            }
+            catch (Exception) //TODO Custom exceptions
+            {
+                return StatusCode(400, "ERROR"); //TODO Custom error codes
+            }
         }
 
         [HttpGet]
@@ -76,6 +85,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         public async Task<IActionResult> GetExpenses()
         {
+            var expenses = _expenseService.GetExpenses(_user.Id);
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             var expenses = _expenseRepository.FindByConditionAync(e => e.User.Id == user.Id);
 
