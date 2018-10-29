@@ -1,14 +1,13 @@
-﻿using System;
-using System.Net.Mime;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataTransferObjects;
 using ExpensePrediction.DataTransferObjects.Category;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ExpensePrediction.WebAPI.Controllers
 {
@@ -38,21 +37,30 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Authorize("AddCategory")]
         public async Task<IActionResult> AddCategory([FromRoute] CategoryType categoryType, [FromBody] CategoryDto categoryDto)
         {
-            Category category;
-            switch (categoryType)
+            try
             {
-                case CategoryType.ExpenseCategory:
-                    category = await _expenseCategoryService.AddCategory(categoryDto);
-                    break;
-                case CategoryType.IncomeCategory:
-                    category = await _incomeCategoryService.AddCategory(categoryDto);
-                    break;
-                default:
-                    category = null;
-                    break;
-            }
+                CategoryDto category;
+                switch (categoryType)
+                {
+                    case CategoryType.ExpenseCategory:
+                        category = await _expenseCategoryService.AddCategory(categoryDto);
+                        break;
 
-            return CreatedAtRoute("GetCategory", new {CategoryId = category?.Id, CategoryType = categoryType}, _mapper.Map<CategoryDto>(category));
+                    case CategoryType.IncomeCategory:
+                        category = await _incomeCategoryService.AddCategory(categoryDto);
+                        break;
+
+                    default:
+                        category = null;
+                        break;
+                }
+
+                return CreatedAtRoute("GetCategory", new { CategoryId = category?.Id, CategoryType = categoryType }, category);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "ERROR");
+            }
         }
 
         [HttpGet("{categoryType}/{categoryId}", Name = "GetCategory")]
@@ -61,32 +69,82 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Authorize("GetCategory")]
         public async Task<IActionResult> GetCategory([FromRoute] string categoryId, [FromRoute] CategoryType categoryType)
         {
-            Category category;
-            switch (categoryType)
+            try
             {
-                case CategoryType.ExpenseCategory:
-                    category = await _expenseCategoryService.GetCategory(categoryId);
-                    break;
-                case CategoryType.IncomeCategory:
-                    category = await _expenseCategoryService.GetCategory(categoryId);
-                    break;
-                default:
-                    category = null;
-                    break;
-            }
+                CategoryDto category = null;
+                switch (categoryType)
+                {
+                    case CategoryType.ExpenseCategory:
+                        category = await _expenseCategoryService.GetCategory(categoryId);
+                        break;
 
-            return Ok(_mapper.Map<CategoryDto>(category));
+                    case CategoryType.IncomeCategory:
+                        category = await _expenseCategoryService.GetCategory(categoryId);
+                        break;
+                }
+
+                return Ok(category);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "ERROR");
+            }
         }
 
         [HttpPost("edit/{categoryType}")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [Authorize("EditCategory")]
-        public async Task<IActionResult> EditCategory([FromBody] CategoryDto categoryDto)
+        public async Task<IActionResult> EditCategory([FromRoute] CategoryType categoryType, [FromBody] CategoryDto categoryDto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                CategoryDto category = null;
+                switch (categoryType)
+                {
+                    case CategoryType.ExpenseCategory:
+                        category = await _expenseCategoryService.EditCategory(categoryDto);
+                        break;
+
+                    case CategoryType.IncomeCategory:
+                        category = await _incomeCategoryService.EditCategory(categoryDto);
+                        break;
+                }
+
+                return Ok(category);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "ERROR");
+            }
         }
 
-        //GetCategories
+        [HttpGet("{categoryType}")]
+        [Consumes(Constants.ApplicationJson)]
+        [Produces(Constants.ApplicationJson)]
+        [Authorize("GetCategories")]
+        public async Task<IActionResult> GetCategories([FromRoute] CategoryType categoryType)
+        {
+            try
+            {
+                IEnumerable<CategoryDto> categories = null;
+                switch (categoryType)
+                {
+                    case CategoryType.ExpenseCategory:
+                        categories = await _expenseCategoryService.GetCategories();
+                        break;
+
+                    case CategoryType.IncomeCategory:
+                        categories = await _expenseCategoryService.GetCategories();
+                        break;
+                }
+
+                return Ok(categories);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "ERROR");
+            }
+        }
     }
 }

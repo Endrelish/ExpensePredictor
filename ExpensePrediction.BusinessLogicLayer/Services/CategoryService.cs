@@ -32,6 +32,16 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             throw new Exception("nie da sie"); //TODO custom exception
         }
 
+        public Task<TCategory> EditCategory(CategoryDto categoryDto)
+        {
+
+        }
+
+        public Task<IEnumerable<TCategory>> GetCategories()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<TCategory> GetCategory(string categoryId) => _categoryRepository.FindByIdAsync(categoryId);
     }
 }
