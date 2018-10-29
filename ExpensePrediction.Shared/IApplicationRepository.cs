@@ -13,7 +13,7 @@ namespace ExpensePrediction.Shared
         Task CreateAsync(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);
-        Task SaveAsync();
+        Task<int> SaveAsync();
         Task<bool> HasKey(string key);
     }
 }

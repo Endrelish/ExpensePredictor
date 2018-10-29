@@ -56,5 +56,6 @@ namespace ExpensePrediction.DataAccessLayer.Repositories
         {
             return await _dbContext.Set<TEntity>().CountAsync(e => e.Id == key) > 0;
         }
+        
     }
 }

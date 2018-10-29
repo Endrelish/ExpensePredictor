@@ -5,15 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ExpensePrediction.BusinessLogicLayer.Interfaces\ExpensePrediction.BusinessLogicLayer.Interfaces.csproj" />
-    <ProjectReference Include="..\ExpensePrediction.DataAccessLayer.Entities\ExpensePrediction.DataAccessLayer.Entities.csproj" />
-    <ProjectReference Include="..\ExpensePrediction.DataAccessLayer.Interfaces\ExpensePrediction.DataAccessLayer.Interfaces.csproj" />
+    <PackageReference Include="AutoMapper" Version="7.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="AutoMapper">
-      <HintPath>C:\Users\purga\.nuget\packages\automapper\7.0.1\lib\netstandard2.0\AutoMapper.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\ExpensePrediction.BusinessLogicLayer.Interfaces\ExpensePrediction.BusinessLogicLayer.Interfaces.csproj" />
+    <ProjectReference Include="..\ExpensePrediction.DataAccessLayer.Entities\ExpensePrediction.DataAccessLayer.Entities.csproj" />
+    <ProjectReference Include="..\ExpensePrediction.DataAccessLayer.Interfaces\ExpensePrediction.DataAccessLayer.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>
