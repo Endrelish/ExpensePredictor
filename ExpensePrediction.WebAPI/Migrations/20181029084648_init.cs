@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ExpensePrediction.WebAPI.Migrations
@@ -78,7 +77,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -119,7 +118,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -263,35 +262,37 @@ namespace ExpensePrediction.WebAPI.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[,]
-                {
-                    { "fb435b98-bd28-4a20-ab4a-62b124d9841b", "fc1a33ab-d94d-46f4-b480-5915b0720e32", "admin", "ADMIN" },
-                    { "fb467b98-bd28-6720-ab4a-645124d9834b", "522863e8-bede-42ff-a2db-70e6a508991d", "user", "USER" }
-                });
+                values: new object[] { "2fdbec88-4aa9-430c-8359-8b27756cf1ca", "3de77c30-2fb6-48c8-8cf2-0f43927909a9", "admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "307d5d07-87cf-49a0-9cd4-b925b5380963", "f4355521-8fdb-4127-9209-d771bdf004fb", "user", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "d95be18c-eb08-40fb-a082-e4073546c7d4", 0, "e0f03621-7509-410b-8b95-098f32e546f5", "user@user.com", false, "User", "User", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", "123456780", false, null, false, "user" });
+                values: new object[] { "830f0d08-6a56-4a57-83c9-329c094f184b", 0, "60db5c5a-07c9-4b0f-8d56-1cc3d3f378e4", "user@user.com", false, "User", "User", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", "123456780", false, null, false, "user" });
 
             migrationBuilder.InsertData(
                 table: "ExpenseCategories",
                 columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { "27a62b11-7765-473d-a1b6-7ecda9915dd5", "Żarcie" },
-                    { "7edeb282-6172-49b1-9a8f-5c3b25b7d0b8", "Alkohol" }
-                });
+                values: new object[] { "27a62b11-7765-473d-a1b6-7ecda9915dd5", "Żarcie" });
+
+            migrationBuilder.InsertData(
+                table: "ExpenseCategories",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { "7edeb282-6172-49b1-9a8f-5c3b25b7d0b8", "Alkohol" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { "d95be18c-eb08-40fb-a082-e4073546c7d4", "fb435b98-bd28-4a20-ab4a-62b124d9841b" });
+                values: new object[] { "830f0d08-6a56-4a57-83c9-329c094f184b", "2fdbec88-4aa9-430c-8359-8b27756cf1ca" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "UserId", "RoleId" },
-                values: new object[] { "d95be18c-eb08-40fb-a082-e4073546c7d4", "fb467b98-bd28-6720-ab4a-645124d9834b" });
+                values: new object[] { "830f0d08-6a56-4a57-83c9-329c094f184b", "307d5d07-87cf-49a0-9cd4-b925b5380963" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ActivationTokens_UserId",
@@ -307,8 +308,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -334,8 +334,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Expenses_CategoryId",

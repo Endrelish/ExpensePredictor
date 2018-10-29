@@ -22,11 +22,11 @@ namespace ExpensePrediction.BusinessLogicLayer.Mapper
                 .ReverseMap()
                 .ForMember(dest => dest.LinkedExpenseId, opt => opt.MapFrom(src => src.LinkedExpense.Id))
                 .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.Id));
-
+            
             CreateMap<CategoryDto, ExpenseCategory>();
             CreateMap<CategoryDto, IncomeCategory>();
-            CreateMap<NewCategoryDto, IncomeCategory>();
-            CreateMap<NewCategoryDto, ExpenseCategory>();
+            CreateMap<CategoryDto, IncomeCategory>();
+            CreateMap<CategoryDto, ExpenseCategory>();
         }
     }
 }

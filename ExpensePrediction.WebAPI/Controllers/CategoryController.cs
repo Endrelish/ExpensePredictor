@@ -1,4 +1,5 @@
-﻿using System.Net.Mime;
+﻿using System;
+using System.Net.Mime;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -6,6 +7,7 @@ using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataTransferObjects;
 using ExpensePrediction.DataTransferObjects.Category;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpensePrediction.WebAPI.Controllers
@@ -28,21 +30,22 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// Adds the category.
         /// </summary>
         /// <param name="categoryType">Type of the category.</param>
-        /// <param name="categoryData">The category data.</param>
+        /// <param name="categoryDto">The category data.</param>
         /// <returns>Newly created category.</returns>
         [HttpPost("add/{categoryType}")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        public async Task<IActionResult> AddCategory([FromRoute] CategoryType categoryType, [FromBody] NewCategoryDto categoryData)
+        [Consumes(Constants.ApplicationJson)]
+        [Produces(Constants.ApplicationJson)]
+        [Authorize("AddCategory")]
+        public async Task<IActionResult> AddCategory([FromRoute] CategoryType categoryType, [FromBody] CategoryDto categoryDto)
         {
             Category category;
             switch (categoryType)
             {
                 case CategoryType.ExpenseCategory:
-                    category = await _expenseCategoryService.AddCategory(categoryData);
+                    category = await _expenseCategoryService.AddCategory(categoryDto);
                     break;
                 case CategoryType.IncomeCategory:
-                    category = await _incomeCategoryService.AddCategory(categoryData);
+                    category = await _incomeCategoryService.AddCategory(categoryDto);
                     break;
                 default:
                     category = null;
@@ -53,8 +56,9 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         [HttpGet("{categoryType}/{categoryId}", Name = "GetCategory")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
+        [Consumes(Constants.ApplicationJson)]
+        [Produces(Constants.ApplicationJson)]
+        [Authorize("GetCategory")]
         public async Task<IActionResult> GetCategory([FromRoute] string categoryId, [FromRoute] CategoryType categoryType)
         {
             Category category;
@@ -73,5 +77,16 @@ namespace ExpensePrediction.WebAPI.Controllers
 
             return Ok(_mapper.Map<CategoryDto>(category));
         }
+
+        [HttpPost("edit/{categoryType}")]
+        [Consumes(Constants.ApplicationJson)]
+        [Produces(Constants.ApplicationJson)]
+        [Authorize("EditCategory")]
+        public async Task<IActionResult> EditCategory([FromBody] CategoryDto categoryDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        //GetCategories
     }
 }

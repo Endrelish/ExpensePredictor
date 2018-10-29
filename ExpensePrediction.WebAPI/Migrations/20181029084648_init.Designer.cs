@@ -3,25 +3,40 @@ using System;
 using ExpensePrediction.DataAccessLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ExpensePrediction.WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181028140928_init")]
+    [Migration("20181029084648_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
 
-            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.Expenses.Expense", b =>
+            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.ActivationToken", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("ExpirationDate");
+
+                    b.Property<string>("Token");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ActivationTokens");
+                });
+
+            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.Expense", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -47,7 +62,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                     b.ToTable("Expenses");
                 });
 
-            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.Expenses.ExpenseCategory", b =>
+            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.ExpenseCategory", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -64,7 +79,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                     );
                 });
 
-            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.Expenses.Income", b =>
+            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.Income", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -86,7 +101,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                     b.ToTable("Incomes");
                 });
 
-            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.Expenses.IncomeCategory", b =>
+            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.IncomeCategory", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -98,25 +113,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                     b.ToTable("IncomeCategories");
                 });
 
-            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.Users.ActivationToken", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("ExpirationDate");
-
-                    b.Property<string>("Token");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("ActivationTokens");
-                });
-
-            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.Users.User", b =>
+            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -165,13 +162,12 @@ namespace ExpensePrediction.WebAPI.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "d95be18c-eb08-40fb-a082-e4073546c7d4", AccessFailedCount = 0, ConcurrencyStamp = "e0f03621-7509-410b-8b95-098f32e546f5", Email = "user@user.com", EmailConfirmed = false, FirstName = "User", LastName = "User", LockoutEnabled = false, NormalizedEmail = "USER@USER.COM", NormalizedUserName = "USER", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456780", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "user" }
+                        new { Id = "830f0d08-6a56-4a57-83c9-329c094f184b", AccessFailedCount = 0, ConcurrencyStamp = "60db5c5a-07c9-4b0f-8d56-1cc3d3f378e4", Email = "user@user.com", EmailConfirmed = false, FirstName = "User", LastName = "User", LockoutEnabled = false, NormalizedEmail = "USER@USER.COM", NormalizedUserName = "USER", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456780", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "user" }
                     );
                 });
 
@@ -193,22 +189,20 @@ namespace ExpensePrediction.WebAPI.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "fb435b98-bd28-4a20-ab4a-62b124d9841b", ConcurrencyStamp = "fc1a33ab-d94d-46f4-b480-5915b0720e32", Name = "admin", NormalizedName = "ADMIN" },
-                        new { Id = "fb467b98-bd28-6720-ab4a-645124d9834b", ConcurrencyStamp = "522863e8-bede-42ff-a2db-70e6a508991d", Name = "user", NormalizedName = "USER" }
+                        new { Id = "2fdbec88-4aa9-430c-8359-8b27756cf1ca", ConcurrencyStamp = "3de77c30-2fb6-48c8-8cf2-0f43927909a9", Name = "admin", NormalizedName = "ADMIN" },
+                        new { Id = "307d5d07-87cf-49a0-9cd4-b925b5380963", ConcurrencyStamp = "f4355521-8fdb-4127-9209-d771bdf004fb", Name = "user", NormalizedName = "USER" }
                     );
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -227,8 +221,7 @@ namespace ExpensePrediction.WebAPI.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -275,8 +268,8 @@ namespace ExpensePrediction.WebAPI.Migrations
                     b.ToTable("AspNetUserRoles");
 
                     b.HasData(
-                        new { UserId = "d95be18c-eb08-40fb-a082-e4073546c7d4", RoleId = "fb435b98-bd28-4a20-ab4a-62b124d9841b" },
-                        new { UserId = "d95be18c-eb08-40fb-a082-e4073546c7d4", RoleId = "fb467b98-bd28-6720-ab4a-645124d9834b" }
+                        new { UserId = "830f0d08-6a56-4a57-83c9-329c094f184b", RoleId = "2fdbec88-4aa9-430c-8359-8b27756cf1ca" },
+                        new { UserId = "830f0d08-6a56-4a57-83c9-329c094f184b", RoleId = "307d5d07-87cf-49a0-9cd4-b925b5380963" }
                     );
                 });
 
@@ -295,35 +288,35 @@ namespace ExpensePrediction.WebAPI.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.Expenses.Expense", b =>
+            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.ActivationToken", b =>
                 {
-                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.Expenses.ExpenseCategory", "Category")
+                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.Expense", b =>
+                {
+                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.ExpenseCategory", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId");
 
-                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.Expenses.Expense", "LinkedExpense")
+                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.Expense", "LinkedExpense")
                         .WithMany()
                         .HasForeignKey("LinkedExpenseId");
 
-                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.Users.User", "User")
+                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.Expenses.Income", b =>
+            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.Income", b =>
                 {
-                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.Expenses.IncomeCategory", "Category")
+                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.IncomeCategory", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId");
 
-                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.Users.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.Users.ActivationToken", b =>
-                {
-                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.Users.User", "User")
+                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
@@ -338,7 +331,7 @@ namespace ExpensePrediction.WebAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.Users.User")
+                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -346,7 +339,7 @@ namespace ExpensePrediction.WebAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.Users.User")
+                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -359,7 +352,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.Users.User")
+                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -367,7 +360,7 @@ namespace ExpensePrediction.WebAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.Users.User")
+                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

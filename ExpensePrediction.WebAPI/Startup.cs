@@ -42,31 +42,38 @@ namespace ExpensePrediction.WebAPI
         public IConfiguration Configuration { get; }
         public readonly LoggerFactory LoggerFactory;
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        private void SetUpDbContext(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(optionsBuilder =>
             {
-                //optionsBuilder.UseSqlite("Data Source=db.db");
-                optionsBuilder.UseSqlServer(
-                        $"Server=tcp:expenses-prediction.database.windows.net,1433;" +
-                        $"Initial Catalog=expenses-prediction;Persist Security Info=False;User ID=ppurgat;Password=zL7@5B*@!H;" +
-                        $"MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;",
-                        b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName))
+                if (Configuration["UseSqlite"].Equals("true", StringComparison.OrdinalIgnoreCase))
+                {
+                    optionsBuilder.UseSqlite(Configuration["ConnectionStrings:Sqlite"],
+                            b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+                }
+                else
+                {
+                    optionsBuilder.UseSqlServer(Configuration["ConnectionStrings:SqlServer"],
+                            b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+                }
+                optionsBuilder
                     .UseLazyLoadingProxies()
                     .UseLoggerFactory(LoggerFactory)
                     .EnableSensitiveDataLogging();
             });
+        }
 
+        private void SetUpSecurity(IServiceCollection services)
+        {
             services.AddIdentity<User, IdentityRole>(options =>
-                {
-                    var pass = options.Password;
-                    pass.RequireDigit = false;
-                    pass.RequiredLength = 4;
-                    pass.RequireLowercase = false;
-                    pass.RequireNonAlphanumeric = false;
-                    pass.RequireUppercase = false;
-                }).AddEntityFrameworkStores<ApplicationDbContext>()
+            {
+                var pass = options.Password;
+                pass.RequireDigit = false;
+                pass.RequiredLength = 4;
+                pass.RequireLowercase = false;
+                pass.RequireNonAlphanumeric = false;
+                pass.RequireUppercase = false;
+            }).AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear(); //remove default claims
@@ -94,28 +101,33 @@ namespace ExpensePrediction.WebAPI
 
             services.AddAuthorization(cfg =>
             {
-                var policies = Configuration.GetSection("Policies").AsEnumerable(makePathsRelative:true)
+                var policies = Configuration.GetSection("Policies").AsEnumerable(makePathsRelative: true)
                     .ToDictionary(p => p.Key, p => p.Value.Split(';'));
                 foreach (var policy in policies)
                 {
                     cfg.AddPolicy(policy.Key, p => p.RequireRole(policy.Value));
                 }
             });
+        }
 
+        private void AddServices(IServiceCollection services)
+        {
             //===============================Services===============================
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped(typeof(IApplicationRepository<>), typeof(ApplicationRepository<>));
             services.AddScoped<IApplicationRepository<Expense>, ExpenseRepository>();
+
             services.AddScoped(typeof(ICategoryService<>), typeof(CategoryService<>));
-            
+            services.AddScoped<IAuthService, AuthService>();
+
             services.AddSingleton(MapperService.Mapper);
+        }
 
-
-            //============================MVC and Swagger============================
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+        private void AddSwagger(IServiceCollection services)
+        {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info {Title = "Inzynierka API", Version = "v1"});
+                c.SwaggerDoc("v1", new Info { Title = "Inzynierka API", Version = "v1" });
                 c.IncludeXmlComments(string.Format(@"{0}\SwaggerApiDescription.xml",
                     AppDomain.CurrentDomain.BaseDirectory));
                 c.AddSecurityDefinition("Bearer",
@@ -124,13 +136,24 @@ namespace ExpensePrediction.WebAPI
                         In = "header",
                         Description = "Please enter JWT with Bearer into field",
                         Name = "Authorization",
-                        Type = "apiKey"
+                        Type = "apiKey",
                     });
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
                 {
                     {"Bearer", Enumerable.Empty<string>()}
                 });
             });
+        }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            SetUpDbContext(services);
+            SetUpSecurity(services);
+            AddServices(services);
+            AddSwagger(services);
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

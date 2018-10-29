@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using ExpensePrediction.DataAccessLayer.Entities;
@@ -30,20 +32,21 @@ namespace ExpensePrediction.WebAPI.Controllers
         ///     Adds an expense.
         /// </summary>
         /// <consumes>application/json</consumes>
-        /// <param name="expenseData">The expense data.</param>
+        /// <param name="expenseDto">The expense data.</param>
         /// <returns>Link to the created expense</returns>
         [HttpPost("add-expense")]
-        [Authorize]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        public async Task<IActionResult> AddExpense([FromBody] ExpenseDto expenseData)
+        [Authorize("AddExpense")]
+        [Consumes(Constants.ApplicationJson)]
+        [Produces(Constants.ApplicationJson)]
+        public async Task<IActionResult> AddExpense([FromBody] ExpenseDto expenseDto)
         {
-            var expense = _mapper.Map<Expense>(expenseData);
+            expenseDto.Id = string.Empty;
+            var expense = _mapper.Map<Expense>(expenseDto);
             expense.User = await _userManager.FindByNameAsync(User.Identity.Name);
-            expense.Category = await _expenseCategoryRepository.FindByIdAsync(expenseData.CategoryId);
-            if (!string.IsNullOrEmpty(expenseData.LinkedExpenseId))
+            expense.Category = await _expenseCategoryRepository.FindByIdAsync(expenseDto.CategoryId);
+            if (!string.IsNullOrEmpty(expenseDto.LinkedExpenseId))
             {
-                expense.LinkedExpense = await _expenseRepository.FindByIdAsync(expenseData.LinkedExpenseId);
+                expense.LinkedExpense = await _expenseRepository.FindByIdAsync(expenseDto.LinkedExpenseId);
             }
 
             await _expenseRepository.CreateAsync(expense);
@@ -58,13 +61,34 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// <param name="expenseId">The expense identifier.</param>
         /// <returns></returns>
         [HttpGet("{expenseId}", Name = "GetExpense")]
-        [Authorize]
-        [Produces("application/json")]
+        [Authorize("GetExpense")]
+        [Produces(Constants.ApplicationJson)]
         public async Task<IActionResult> GetExpense([FromRoute] string expenseId)
         {
             var expense = await _expenseRepository.FindByIdAsync(expenseId);
+            if (expense == null) return NotFound();
             var dto = _mapper.Map<ExpenseDto>(expense);
             return Ok(dto);
+        }
+
+        [HttpGet]
+        [Authorize("GetExpenses")]
+        [Produces(Constants.ApplicationJson)]
+        public async Task<IActionResult> GetExpenses()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var expenses = _expenseRepository.FindByConditionAync(e => e.User.Id == user.Id);
+
+            return Ok(_mapper.Map<IEnumerable<ExpenseDto>>(expenses));
+        }
+
+        [HttpPut("edit")]
+        [Authorize("EditExpense")]
+        [Consumes(Constants.ApplicationJson)]
+        [Produces(Constants.ApplicationJson)]
+        public async Task<IActionResult> EditExpense([FromBody] ExpenseDto expenseDto)
+        {
+            throw new NotImplementedException();
         }
     }
 }

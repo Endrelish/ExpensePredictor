@@ -23,19 +23,19 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// <summary>
         /// Edits current user's data.
         /// </summary>
-        /// <param name="userEditData">The user data.</param>
+        /// <param name="userEditDto">The user data.</param>
         /// <returns></returns>
         [HttpPost]
         [Authorize]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        public async Task<IActionResult> Edit([FromBody] UserEditDto userEditData)
+        [Consumes(Constants.ApplicationJson)]
+        [Produces(Constants.ApplicationJson)]
+        public async Task<IActionResult> Edit([FromBody] UserEditDto userEditDto)
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            user.FirstName = userEditData.FirstName;
-            user.LastName = userEditData.LastName;
-            user.PhoneNumber = userEditData.PhoneNumber;
+            user.FirstName = userEditDto.FirstName;
+            user.LastName = userEditDto.LastName;
+            user.PhoneNumber = userEditDto.PhoneNumber;
 
             await _userManager.UpdateAsync(user); //TODO check if saved
 
@@ -48,7 +48,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// <returns>Current user data.</returns>
         [HttpGet]
         [Authorize]
-        [Produces("application/json")]
+        [Produces(Constants.ApplicationJson)]
         public async Task<IActionResult> GetUser()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -59,22 +59,22 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// <summary>
         /// Changes the password.
         /// </summary>
-        /// <param name="passwordChangeData">The data for password change.</param>
+        /// <param name="passwordChangeDto">The data for password change.</param>
         /// <returns></returns>
         [HttpPost]
         [Route("change-password")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeDto passwordChangeData)
+        [Consumes(Constants.ApplicationJson)]
+        [Produces(Constants.ApplicationJson)]
+        public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeDto passwordChangeDto)
         {
-            if (passwordChangeData.NewPassword != passwordChangeData.NewPasswordRepeated)
+            if (passwordChangeDto.NewPassword != passwordChangeDto.NewPasswordRepeated)
             {
 
                 return StatusCode(400, "NO_MATCH"); //TODO Think about different code here
             }
 
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var result = await _userManager.ChangePasswordAsync(user, passwordChangeData.CurrentPassword, passwordChangeData.NewPassword);
+            var result = await _userManager.ChangePasswordAsync(user, passwordChangeDto.CurrentPassword, passwordChangeDto.NewPassword);
 
             if (result.Succeeded)
             {

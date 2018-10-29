@@ -21,8 +21,9 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<TCategory> AddCategory(NewCategoryDto categoryDto)
+        public async Task<TCategory> AddCategory(CategoryDto categoryDto)
         {
+            categoryDto.Id = string.Empty;
             var category = _mapper.Map<TCategory>(categoryDto);
             await _categoryRepository.CreateAsync(category);
 

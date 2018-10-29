@@ -7,7 +7,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Interfaces.Services
 {
     public interface ICategoryService<TCategory> where TCategory : Category
     {
-        Task<TCategory> AddCategory(NewCategoryDto categoryDto);
+        Task<TCategory> AddCategory(CategoryDto categoryDto);
         Task<TCategory> GetCategory(string categoryId);
     }
 }

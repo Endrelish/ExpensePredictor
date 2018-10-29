@@ -1,7 +1,8 @@
 ﻿namespace ExpensePrediction.DataTransferObjects.Category
 {
-    public class CategoryDto : NewCategoryDto
+    public class CategoryDto
     {
         public string Id { get; set; }
+        public string Name { get; set; }
     }
 }
