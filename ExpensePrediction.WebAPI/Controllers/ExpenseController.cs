@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using ExpensePrediction.DataAccessLayer.Entities;
-using ExpensePrediction.DataTransferObjects.Expense;
+using ExpensePrediction.DataTransferObjects;
 using ExpensePrediction.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -57,7 +57,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// </summary>
         /// <param name="expenseId">The expense identifier.</param>
         /// <returns></returns>
-        [HttpGet("get-expense/{expenseId}", Name = "GetExpense")]
+        [HttpGet("{expenseId}", Name = "GetExpense")]
         [Authorize]
         [Produces("application/json")]
         public async Task<IActionResult> GetExpense([FromRoute] string expenseId)
