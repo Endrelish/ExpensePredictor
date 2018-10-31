@@ -135,8 +135,10 @@ namespace ExpensePrediction.WebAPI.Controllers
                         break;
 
                     case CategoryType.IncomeCategory:
-                        categories = await _expenseCategoryService.GetCategories();
+                        categories = await _incomeCategoryService.GetCategories();
                         break;
+                    case CategoryType.Undefined:
+                        return StatusCode(400, "UNDEFINED_CATEGORY"); //TODO dto with error code and description
                 }
 
                 return Ok(categories);

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text;
-using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.BusinessLogicLayer.Services;
 using ExpensePrediction.DataAccessLayer;
@@ -47,14 +46,14 @@ namespace ExpensePrediction.WebAPI
         {
             services.AddDbContext<ApplicationDbContext>(optionsBuilder =>
             {
-                if (Configuration["UseSqlite"].Equals("true", StringComparison.OrdinalIgnoreCase))
+                if (Configuration["UseLocalDb"].Equals("true", StringComparison.OrdinalIgnoreCase))
                 {
-                    optionsBuilder.UseSqlite(Configuration["ConnectionStrings:Sqlite"],
+                    optionsBuilder.UseSqlServer(Configuration["ConnectionStrings:Local"],
                             b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
                 }
                 else
                 {
-                    optionsBuilder.UseSqlServer(Configuration["ConnectionStrings:SqlServer"],
+                    optionsBuilder.UseSqlServer(Configuration["ConnectionStrings:Remote"],
                             b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
                 }
                 optionsBuilder

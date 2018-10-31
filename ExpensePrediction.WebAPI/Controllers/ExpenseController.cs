@@ -42,19 +42,15 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         public async Task<IActionResult> AddExpense([FromBody] ExpenseDto expenseDto)
         {
-            expenseDto.Id = string.Empty;
-            var expense = _mapper.Map<Expense>(expenseDto);
-            expense.User = await _userManager.FindByIdAsync(User.Identity.Name);
-            expense.Category = await _expenseCategoryRepository.FindByIdAsync(expenseDto.CategoryId);
-            if (!string.IsNullOrEmpty(expenseDto.LinkedExpenseId))
+            try
             {
-                //expense.LinkedExpense = await _expenseService.GetExpense(expenseDto.LinkedExpenseId, expense.User.Id);
+                var expense = await _expenseService.AddExpense(expenseDto, User.Identity.Name);
+                return CreatedAtRoute("GetExpense", new { expenseId = expense.Id }, _mapper.Map<ExpenseDto>(expense));
             }
-
-            //await _expenseRepository.CreateAsync(expense);
-            //await _expenseRepository.SaveAsync(); //TODO catch sth I guess
-
-            return CreatedAtRoute("GetExpense", new { expenseId = expense.Id }, _mapper.Map<ExpenseDto>(expense));
+            catch (Exception e)
+            {
+                return StatusCode(400, e); //TODO custom error codes and exceptions
+            }
         }
 
         /// <summary>

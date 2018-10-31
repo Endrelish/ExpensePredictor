@@ -16,17 +16,10 @@ namespace ExpensePrediction.BusinessLogicLayer.Mapper
             CreateMap<RegisterDto, User>();
             CreateMap<UserDataDto, User>();
 
-            CreateMap<ExpenseDto, Expense>()
-                .ForSourceMember(src => src.LinkedExpenseId, opt => opt.Ignore())
-                .ForSourceMember(src => src.CategoryId, opt => opt.Ignore())
-                .ReverseMap()
-                .ForMember(dest => dest.LinkedExpenseId, opt => opt.MapFrom(src => src.LinkedExpense.Id))
-                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.Id));
+            CreateMap<ExpenseDto, Expense>();
             
             CreateMap<CategoryDto, ExpenseCategory>();
             CreateMap<CategoryDto, IncomeCategory>();
-            CreateMap<CategoryDto, IncomeCategory>();
-            CreateMap<CategoryDto, ExpenseCategory>();
         }
     }
 }

@@ -3,6 +3,7 @@ using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataAccessLayer.Interfaces;
 using ExpensePrediction.DataTransferObjects;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,18 +15,29 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
     {
         private readonly IApplicationRepository<Expense> _expenseRepository;
         private readonly IMapper _mapper;
+        private readonly UserManager<User> _userManager;
+        private readonly IApplicationRepository<ExpenseCategory> _categoryRepository;
 
-        public ExpenseService(IApplicationRepository<Expense> expenseRepository, IMapper mapper)
+        public ExpenseService(IApplicationRepository<Expense> expenseRepository, IMapper mapper, UserManager<User> userManager, IApplicationRepository<ExpenseCategory> categoryRepository)
         {
             _expenseRepository = expenseRepository;
             _mapper = mapper;
+            _userManager = userManager;
+            _categoryRepository = categoryRepository;
         }
-        public async Task<ExpenseDto> AddExpense(ExpenseDto expense)
+        public async Task<ExpenseDto> AddExpense(ExpenseDto expenseDto, string userId)
         {
-            throw new NotImplementedException();
+            var expense = _mapper.Map<Expense>(expenseDto);
+            expense.Id = null;
+            //TODO check if specified keys exist in the db
+            expense.UserId = userId;
+            await _expenseRepository.CreateAsync(expense);
+            var result = await _expenseRepository.SaveAsync(); //TODO Check if saved
+            //if(result == 0) throw sth;
+            return _mapper.Map<ExpenseDto>(expense);
         }
 
-        public async Task<ExpenseDto> EditExpense(ExpenseDto expense)
+        public async Task<ExpenseDto> EditExpense(ExpenseDto expenseDto, string userId)
         {
             throw new NotImplementedException();
         }
@@ -34,7 +46,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         {
             var expense = await _expenseRepository.FindByIdAsync(expenseId);
             if (expense == null) throw new Exception(); //TODO throw not found sth
-            if (expense.User.Id == userId) return _mapper.Map<ExpenseDto>(expense);
+            if (expense.UserId == userId) return _mapper.Map<ExpenseDto>(expense);
             throw new Exception(); //TODO custom exceptions
         }
 

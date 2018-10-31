@@ -10,8 +10,8 @@ namespace ExpensePrediction.BusinessLogicLayer.Interfaces.Services
     {
         Task<ExpenseDto> GetExpense(string expenseId, string userId);
         Task<IEnumerable<ExpenseDto>> GetExpenses(string userId);
-        Task<ExpenseDto> AddExpense(ExpenseDto expense);
-        Task<ExpenseDto> EditExpense(ExpenseDto expense);
+        Task<ExpenseDto> AddExpense(ExpenseDto expense, string userId);
+        Task<ExpenseDto> EditExpense(ExpenseDto expense, string userId);
 
     }
 }

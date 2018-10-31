@@ -2,6 +2,7 @@
 {
     public enum CategoryType
     {
+        Undefined,
         IncomeCategory,
         ExpenseCategory
     }
