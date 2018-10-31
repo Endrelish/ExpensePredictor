@@ -134,8 +134,8 @@ namespace ExpensePrediction.WebAPI.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "2fdbec88-4aa9-430c-8359-8b27756cf1ca", ConcurrencyStamp = "88844539-1ca5-44bd-b722-70ca243a9b63", Name = "admin", NormalizedName = "ADMIN" },
-                        new { Id = "307d5d07-87cf-49a0-9cd4-b925b5380963", ConcurrencyStamp = "194b4299-114b-4f06-9318-3022d24317b1", Name = "user", NormalizedName = "USER" }
+                        new { Id = "2fdbec88-4aa9-430c-8359-8b27756cf1ca", ConcurrencyStamp = "daab4dbb-85e9-4e5d-8709-12b23689abba", Name = "admin", NormalizedName = "ADMIN" },
+                        new { Id = "307d5d07-87cf-49a0-9cd4-b925b5380963", ConcurrencyStamp = "b9599d8c-5441-48d3-a59e-66a5125e5ce1", Name = "user", NormalizedName = "USER" }
                     );
                 });
 
@@ -193,7 +193,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "830f0d08-6a56-4a57-83c9-329c094f184b", AccessFailedCount = 0, ConcurrencyStamp = "be36be31-bf9b-4dee-9b3c-54fd2d8a51bc", Email = "user@user.com", EmailConfirmed = false, FirstName = "User", LastName = "User", LockoutEnabled = false, NormalizedEmail = "USER@USER.COM", NormalizedUserName = "USER", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456780", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "user" }
+                        new { Id = "830f0d08-6a56-4a57-83c9-329c094f184b", AccessFailedCount = 0, ConcurrencyStamp = "8bc49ec0-656f-4618-907a-a45e8cee2eaa", Email = "user@user.com", EmailConfirmed = false, FirstName = "User", LastName = "User", LockoutEnabled = false, NormalizedEmail = "USER@USER.COM", NormalizedUserName = "USER", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456780", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "user" }
                     );
                 });
 
