@@ -1,23 +1,19 @@
-using System.Threading.Tasks;
-using AutoMapper;
-using ExpensePrediction.DataAccessLayer.Entities;
+using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataTransferObjects.User;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace ExpensePrediction.WebAPI.Controllers
 {
     [Route("api/account")]
     public class AccountController : ControllerBase
     {
-        private readonly IMapper _mapper;
-        private readonly UserManager<User> _userManager;
+        private IAccountService _accountService;
 
-        public AccountController(UserManager<User> userManager, IMapper mapper)
+        public AccountController(IAccountService accountService)
         {
-            _userManager = userManager;
-            _mapper = mapper;
+            _accountService = accountService;
         }
 
         /// <summary>
@@ -31,15 +27,15 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         public async Task<IActionResult> Edit([FromBody] UserEditDto userEditDto)
         {
-            var user = await _userManager.FindByIdAsync(User.Identity.Name);
-
-            user.FirstName = userEditDto.FirstName;
-            user.LastName = userEditDto.LastName;
-            user.PhoneNumber = userEditDto.PhoneNumber;
-
-            await _userManager.UpdateAsync(user); //TODO check if saved
-
-            return Ok(_mapper.Map<UserDataDto>(user));
+            try
+            {
+                var user = await _accountService.EditUserData(userEditDto, User.Identity.Name);
+                return Ok(user);
+            }
+            catch (System.Exception e)
+            {
+                return StatusCode(400, e.Message);
+            }
         }
 
         /// <summary>
@@ -51,9 +47,15 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         public async Task<IActionResult> GetUser()
         {
-            var user = await _userManager.FindByIdAsync(User.Identity.Name);
-            var dto = _mapper.Map<UserDataDto>(user);
-            return Ok(dto);
+            try
+            {
+                var user = await _accountService.GetUserData(User.Identity.Name);
+                return Ok(user);
+            }
+            catch (System.Exception e)
+            {
+                return StatusCode(400, e.Message); //TODO custom exceptions
+            }
         }
 
         /// <summary>
@@ -67,21 +69,15 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeDto passwordChangeDto)
         {
-            if (passwordChangeDto.NewPassword != passwordChangeDto.NewPasswordRepeated)
+            try
             {
-
-                return StatusCode(400, "NO_MATCH"); //TODO Think about different code here
-            }
-
-            var user = await _userManager.FindByIdAsync(User.Identity.Name);
-            var result = await _userManager.ChangePasswordAsync(user, passwordChangeDto.CurrentPassword, passwordChangeDto.NewPassword);
-
-            if (result.Succeeded)
-            {
+                await _accountService.ChangePassword(passwordChangeDto, User.Identity.Name);
                 return Ok();
             }
-
-            return StatusCode(400, "ERROR"); //TODO Return different codes
+            catch (System.Exception e)
+            {
+                return StatusCode(400, e.Message); //TODO custom exceptions
+            }
         }
     }
 }
