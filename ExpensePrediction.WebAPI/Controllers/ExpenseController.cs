@@ -1,8 +1,8 @@
 using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
+using ExpensePrediction.DataAccessLayer.Interfaces;
 using ExpensePrediction.DataTransferObjects;
-using ExpensePrediction.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +17,6 @@ namespace ExpensePrediction.WebAPI.Controllers
     public class ExpenseController : Controller
     {
         private readonly IMapper _mapper;
-        private readonly User _user;
         private readonly UserManager<User> _userManager;
         private readonly IApplicationRepository<ExpenseCategory> _expenseCategoryRepository;
         private readonly IExpenseService _expenseService;
@@ -29,7 +28,6 @@ namespace ExpensePrediction.WebAPI.Controllers
             _mapper = mapper;
             _expenseCategoryRepository = expenseCategoryRepository;
             _expenseService = expenseService;
-            _user = userManager.FindByNameAsync(User.Identity.Name);
         }
 
         /// <summary>
@@ -46,15 +44,15 @@ namespace ExpensePrediction.WebAPI.Controllers
         {
             expenseDto.Id = string.Empty;
             var expense = _mapper.Map<Expense>(expenseDto);
-            expense.User = await _userManager.FindByNameAsync(User.Identity.Name);
+            expense.User = await _userManager.FindByIdAsync(User.Identity.Name);
             expense.Category = await _expenseCategoryRepository.FindByIdAsync(expenseDto.CategoryId);
             if (!string.IsNullOrEmpty(expenseDto.LinkedExpenseId))
             {
-                expense.LinkedExpense = await _expenseRepository.FindByIdAsync(expenseDto.LinkedExpenseId);
+                //expense.LinkedExpense = await _expenseService.GetExpense(expenseDto.LinkedExpenseId, expense.User.Id);
             }
 
-            await _expenseRepository.CreateAsync(expense);
-            await _expenseRepository.SaveAsync(); //TODO catch sth I guess
+            //await _expenseRepository.CreateAsync(expense);
+            //await _expenseRepository.SaveAsync(); //TODO catch sth I guess
 
             return CreatedAtRoute("GetExpense", new { expenseId = expense.Id }, _mapper.Map<ExpenseDto>(expense));
         }
@@ -71,7 +69,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         {
             try
             {
-                var expense = _expenseService.GetExpense(expenseId, (await _userManager.FindByNameAsync(User.Identity.Name)).Id);
+                var expense = _expenseService.GetExpense(expenseId, (await _userManager.FindByIdAsync(User.Identity.Name)).Id);
                 return Ok(expense);
             }
             catch (Exception) //TODO Custom exceptions
@@ -85,9 +83,9 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         public async Task<IActionResult> GetExpenses()
         {
-            var expenses = _expenseService.GetExpenses(_user.Id);
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var expenses = _expenseRepository.FindByConditionAync(e => e.User.Id == user.Id);
+            var expenses = await _expenseService.GetExpenses(User.Identity.Name);
+            //var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            //var expenses = _expenseRepository.FindByConditionAync(e => e.User.Id == user.Id);
 
             return Ok(_mapper.Map<IEnumerable<ExpenseDto>>(expenses));
         }

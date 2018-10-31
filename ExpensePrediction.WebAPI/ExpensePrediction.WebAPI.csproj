@@ -18,11 +18,14 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.1" />
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExpensePrediction.BusinessLogicLayer.Interfaces\ExpensePrediction.BusinessLogicLayer.Interfaces.csproj" />
     <ProjectReference Include="..\ExpensePrediction.BusinessLogicLayer\ExpensePrediction.BusinessLogicLayer.csproj" />
     <ProjectReference Include="..\ExpensePrediction.DataAccessLayer.Entities\ExpensePrediction.DataAccessLayer.Entities.csproj" />
+    <ProjectReference Include="..\ExpensePrediction.DataAccessLayer.Interfaces\ExpensePrediction.DataAccessLayer.Interfaces.csproj" />
     <ProjectReference Include="..\ExpensePrediction.DataAccessLayer\ExpensePrediction.DataAccessLayer.csproj" />
     <ProjectReference Include="..\ExpensePrediction.DataTransferObjects\ExpensePrediction.DataTransferObjects.csproj" />
     <ProjectReference Include="..\ExpensePrediction.Shared\ExpensePrediction.Shared.csproj" />

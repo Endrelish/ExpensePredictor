@@ -31,7 +31,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         public async Task<IActionResult> Edit([FromBody] UserEditDto userEditDto)
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var user = await _userManager.FindByIdAsync(User.Identity.Name);
 
             user.FirstName = userEditDto.FirstName;
             user.LastName = userEditDto.LastName;
@@ -51,7 +51,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         public async Task<IActionResult> GetUser()
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var user = await _userManager.FindByIdAsync(User.Identity.Name);
             var dto = _mapper.Map<UserDataDto>(user);
             return Ok(dto);
         }
@@ -73,7 +73,7 @@ namespace ExpensePrediction.WebAPI.Controllers
                 return StatusCode(400, "NO_MATCH"); //TODO Think about different code here
             }
 
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var user = await _userManager.FindByIdAsync(User.Identity.Name);
             var result = await _userManager.ChangePasswordAsync(user, passwordChangeDto.CurrentPassword, passwordChangeDto.NewPassword);
 
             if (result.Succeeded)

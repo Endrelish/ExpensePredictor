@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Reflection;
+using System.Security.Claims;
 using System.Text;
 using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.BusinessLogicLayer.Services;
 using ExpensePrediction.DataAccessLayer;
 using ExpensePrediction.DataAccessLayer.Entities;
+using ExpensePrediction.DataAccessLayer.Interfaces;
 using ExpensePrediction.DataAccessLayer.Repositories;
-using ExpensePrediction.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -65,7 +66,7 @@ namespace ExpensePrediction.WebAPI
 
         private void SetUpSecurity(IServiceCollection services)
         {
-            services.AddIdentity<User, IdentityRole>(options =>
+            services.AddIdentity<User, Role>(options =>
             {
                 var pass = options.Password;
                 pass.RequireDigit = false;
@@ -90,7 +91,7 @@ namespace ExpensePrediction.WebAPI
                     options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        NameClaimType = "username",
+                        NameClaimType = ClaimTypes.NameIdentifier,
                         RoleClaimType = "identityRoles",
                         ValidIssuer = Configuration["Jwt:Issuer"],
                         ValidAudience = Configuration["Jwt:Issuer"],
@@ -119,6 +120,7 @@ namespace ExpensePrediction.WebAPI
 
             services.AddScoped(typeof(ICategoryService<>), typeof(CategoryService<>));
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IExpenseService, ExpenseService>();
 
             services.AddSingleton(MapperService.Mapper);
         }
@@ -148,12 +150,12 @@ namespace ExpensePrediction.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             SetUpDbContext(services);
             SetUpSecurity(services);
             AddServices(services);
             AddSwagger(services);
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

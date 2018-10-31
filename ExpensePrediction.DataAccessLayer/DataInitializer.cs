@@ -37,14 +37,14 @@ namespace ExpensePrediction.DataAccessLayer
                 }
             );
 
-            modelBuilder.Entity<IdentityRole>().HasData(
-                new IdentityRole
+            modelBuilder.Entity<Role>().HasData(
+                new Role
                 {
                     Id = "2fdbec88-4aa9-430c-8359-8b27756cf1ca",
                     Name = "admin",
                     NormalizedName = "ADMIN"
                 },
-                new IdentityRole
+                new Role
                 {
                     Id = "307d5d07-87cf-49a0-9cd4-b925b5380963",
                     Name = "user",

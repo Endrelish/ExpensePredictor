@@ -2,7 +2,6 @@
 using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
-using ExpensePrediction.DataAccessLayer.Interfaces;
 using ExpensePrediction.DataTransferObjects.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -23,22 +22,16 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
         private readonly IPasswordHasher<User> _hasher;
-        private readonly IApplicationRepository<IdentityRole> _roleRepository;
-        private readonly IApplicationRepository<IdentityUserRole<string>> _userRoleRepository;
 
         public AuthService(IMapper mapper,
             UserManager<User> userManager,
             IConfiguration configuration,
-            IPasswordHasher<User> hasher,
-            IApplicationRepository<IdentityUserRole<string>> userRoleRepository,
-            IApplicationRepository<IdentityRole> roleRepository)
+            IPasswordHasher<User> hasher)
         {
             _mapper = mapper;
             _userManager = userManager;
             _configuration = configuration;
             _hasher = hasher;
-            _roleRepository = roleRepository;
-            _userRoleRepository = userRoleRepository;
         }
 
         public async Task<string> GetToken(LoginDto loginData)
@@ -102,22 +95,9 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         private async Task<bool> SetDefaultRoles(User user)
         {
             var roleNames = _configuration.GetSection("DefaultRoles").Get<List<string>>();
-            var roles = await _roleRepository.FindByConditionAync(r => roleNames.Contains(r.Name, StringComparer.OrdinalIgnoreCase));
-
-            var tasks = new List<Task>();
-            foreach(var role in roles)
-            {
-                var userRole = new IdentityUserRole<string>
-                {
-                    UserId = user.Id,
-                    RoleId = role.Id
-                };
-                tasks.Add(_userRoleRepository.CreateAsync(userRole));
-            }
-
-            await Task.WhenAll(tasks);
-
-            return await _userRoleRepository.SaveAsync() > 0;
+            
+            var result = await _userManager.AddToRolesAsync(user, roleNames);
+            return result.Succeeded;
         }
     }
 }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpensePrediction.WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181029084648_init")]
+    [Migration("20181031104734_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -113,6 +113,34 @@ namespace ExpensePrediction.WebAPI.Migrations
                     b.ToTable("IncomeCategories");
                 });
 
+            modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.Role", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new { Id = "2fdbec88-4aa9-430c-8359-8b27756cf1ca", ConcurrencyStamp = "88844539-1ca5-44bd-b722-70ca243a9b63", Name = "admin", NormalizedName = "ADMIN" },
+                        new { Id = "307d5d07-87cf-49a0-9cd4-b925b5380963", ConcurrencyStamp = "194b4299-114b-4f06-9318-3022d24317b1", Name = "user", NormalizedName = "USER" }
+                    );
+                });
+
             modelBuilder.Entity("ExpensePrediction.DataAccessLayer.Entities.User", b =>
                 {
                     b.Property<string>("Id")
@@ -167,35 +195,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                     b.ToTable("AspNetUsers");
 
                     b.HasData(
-                        new { Id = "830f0d08-6a56-4a57-83c9-329c094f184b", AccessFailedCount = 0, ConcurrencyStamp = "60db5c5a-07c9-4b0f-8d56-1cc3d3f378e4", Email = "user@user.com", EmailConfirmed = false, FirstName = "User", LastName = "User", LockoutEnabled = false, NormalizedEmail = "USER@USER.COM", NormalizedUserName = "USER", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456780", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "user" }
-                    );
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex");
-
-                    b.ToTable("AspNetRoles");
-
-                    b.HasData(
-                        new { Id = "2fdbec88-4aa9-430c-8359-8b27756cf1ca", ConcurrencyStamp = "3de77c30-2fb6-48c8-8cf2-0f43927909a9", Name = "admin", NormalizedName = "ADMIN" },
-                        new { Id = "307d5d07-87cf-49a0-9cd4-b925b5380963", ConcurrencyStamp = "f4355521-8fdb-4127-9209-d771bdf004fb", Name = "user", NormalizedName = "USER" }
+                        new { Id = "830f0d08-6a56-4a57-83c9-329c094f184b", AccessFailedCount = 0, ConcurrencyStamp = "be36be31-bf9b-4dee-9b3c-54fd2d8a51bc", Email = "user@user.com", EmailConfirmed = false, FirstName = "User", LastName = "User", LockoutEnabled = false, NormalizedEmail = "USER@USER.COM", NormalizedUserName = "USER", PasswordHash = "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", PhoneNumber = "123456780", PhoneNumberConfirmed = false, TwoFactorEnabled = false, UserName = "user" }
                     );
                 });
 
@@ -323,7 +323,7 @@ namespace ExpensePrediction.WebAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -347,7 +347,7 @@ namespace ExpensePrediction.WebAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);

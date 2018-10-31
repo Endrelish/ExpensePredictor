@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ExpensePrediction.DataAccessLayer.Entities;
-using ExpensePrediction.Shared;
+using ExpensePrediction.DataAccessLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExpensePrediction.DataAccessLayer.Repositories

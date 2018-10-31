@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExpensePrediction.DataAccessLayer.Entities\ExpensePrediction.DataAccessLayer.Entities.csproj" />
+    <ProjectReference Include="..\ExpensePrediction.DataAccessLayer.Interfaces\ExpensePrediction.DataAccessLayer.Interfaces.csproj" />
     <ProjectReference Include="..\ExpensePrediction.Shared\ExpensePrediction.Shared.csproj" />
   </ItemGroup>
 

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace ExpensePrediction.WebAPI.Controllers
 {
     [Route("api/category")]
-    public class CategoryController : Controller
+    public class CategoryController : ControllerBase
     {
         private readonly ICategoryService<IncomeCategory> _incomeCategoryService;
         private readonly ICategoryService<ExpenseCategory> _expenseCategoryService;

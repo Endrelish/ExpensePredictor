@@ -262,17 +262,17 @@ namespace ExpensePrediction.WebAPI.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "2fdbec88-4aa9-430c-8359-8b27756cf1ca", "3de77c30-2fb6-48c8-8cf2-0f43927909a9", "admin", "ADMIN" });
+                values: new object[] { "2fdbec88-4aa9-430c-8359-8b27756cf1ca", "88844539-1ca5-44bd-b722-70ca243a9b63", "admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "307d5d07-87cf-49a0-9cd4-b925b5380963", "f4355521-8fdb-4127-9209-d771bdf004fb", "user", "USER" });
+                values: new object[] { "307d5d07-87cf-49a0-9cd4-b925b5380963", "194b4299-114b-4f06-9318-3022d24317b1", "user", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "830f0d08-6a56-4a57-83c9-329c094f184b", 0, "60db5c5a-07c9-4b0f-8d56-1cc3d3f378e4", "user@user.com", false, "User", "User", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", "123456780", false, null, false, "user" });
+                values: new object[] { "830f0d08-6a56-4a57-83c9-329c094f184b", 0, "be36be31-bf9b-4dee-9b3c-54fd2d8a51bc", "user@user.com", false, "User", "User", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", "123456780", false, null, false, "user" });
 
             migrationBuilder.InsertData(
                 table: "ExpenseCategories",
