@@ -6,7 +6,6 @@ using ExpensePrediction.DataTransferObjects;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ExpensePrediction.BusinessLogicLayer.Services
@@ -25,6 +24,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             _userManager = userManager;
             _categoryRepository = categoryRepository;
         }
+
         public async Task<ExpenseDto> AddExpense(ExpenseDto expenseDto, string userId)
         {
             var expense = _mapper.Map<Expense>(expenseDto);
@@ -39,7 +39,19 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
 
         public async Task<ExpenseDto> EditExpense(ExpenseDto expenseDto, string userId)
         {
-            throw new NotImplementedException();
+            var expense = await _expenseRepository.FindByIdAsync(expenseDto.Id);
+            if (!expense.UserId.Equals(userId, StringComparison.OrdinalIgnoreCase)) throw new Exception("NOT_YOUR_EXPENSE_YOU_DAMN_HACKER"); //TODO throw custom exceptions
+
+            //TODO check if specified keys exist
+            expense.Value = expenseDto.Value;
+            expense.Date = expenseDto.Date;
+            expense.CategoryId = expenseDto.CategoryId;
+            expense.LinkedExpenseId = expenseDto.LinkedExpenseId;
+
+            var result = await _expenseRepository.SaveAsync();
+            if (result < 1) throw new Exception("SOMETHING_WENT_WRONG"); //TODO throw custom exceptions
+
+            return _mapper.Map<ExpenseDto>(expense);
         }
 
         public async Task<ExpenseDto> GetExpense(string expenseId, string userId)
@@ -54,6 +66,15 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         {
             var expenses = await _expenseRepository.FindByConditionAync(e => e.User.Id == userId);
             return _mapper.Map<IEnumerable<ExpenseDto>>(expenses);
+        }
+
+        public async Task<IEnumerable<ExpenseDto>> GetLinkedExpenses(string expenseId, string userId)
+        {
+            var expense = await _expenseRepository.FindByIdAsync(expenseId);
+            if (!string.Equals(expense.UserId, userId)) throw new Exception("NOT_YOUR_EXPENSE_YOU_DAMN_HACKER"); //TODO throw custom exceptions
+
+            var linkedExpenses = await _expenseRepository.FindByConditionAync(e => e.LinkedExpenseId == expenseId);
+            return _mapper.Map<IEnumerable<ExpenseDto>>(linkedExpenses);
         }
     }
 }

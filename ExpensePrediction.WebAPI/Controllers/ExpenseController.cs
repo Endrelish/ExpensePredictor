@@ -18,15 +18,13 @@ namespace ExpensePrediction.WebAPI.Controllers
     {
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
-        private readonly IApplicationRepository<ExpenseCategory> _expenseCategoryRepository;
         private readonly IExpenseService _expenseService;
 
         public ExpenseController(UserManager<User> userManager,
-            IMapper mapper, IApplicationRepository<ExpenseCategory> expenseCategoryRepository, IExpenseService expenseService)
+            IMapper mapper, IExpenseService expenseService)
         {
             _userManager = userManager;
             _mapper = mapper;
-            _expenseCategoryRepository = expenseCategoryRepository;
             _expenseService = expenseService;
         }
 
@@ -49,7 +47,7 @@ namespace ExpensePrediction.WebAPI.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(400, e); //TODO custom error codes and exceptions
+                return StatusCode(400, e.Message); //TODO custom error codes and exceptions
             }
         }
 
@@ -80,19 +78,42 @@ namespace ExpensePrediction.WebAPI.Controllers
         public async Task<IActionResult> GetExpenses()
         {
             var expenses = await _expenseService.GetExpenses(User.Identity.Name);
-            //var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            //var expenses = _expenseRepository.FindByConditionAync(e => e.User.Id == user.Id);
 
             return Ok(_mapper.Map<IEnumerable<ExpenseDto>>(expenses));
         }
 
-        [HttpPut("edit")]
+        [HttpPost("edit")]
         [Authorize("EditExpense")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         public async Task<IActionResult> EditExpense([FromBody] ExpenseDto expenseDto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = await _expenseService.EditExpense(expenseDto, User.Identity.Name);
+                return Ok(result);
+            }
+            catch (Exception e) //TODO Custom exceptions
+            {
+                return StatusCode(400, e.Message);
+            }
+        }
+
+        [HttpGet("linked/{expenseId}")]
+        [Authorize("GetExpenses")]
+        [Produces(Constants.ApplicationJson)]
+        public async Task<IActionResult> GetLinkedExpenses([FromRoute] string expenseId)
+        {
+            try
+            {
+                var expenses = await _expenseService.GetLinkedExpenses(expenseId, User.Identity.Name);
+                return Ok(expenses);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(400, e.Message); //TODO custom exceptions
+            }
+            
         }
     }
 }
