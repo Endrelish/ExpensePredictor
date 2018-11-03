@@ -1,9 +1,6 @@
-﻿using AuthWebApi.Dto;
+﻿using System.Threading.Tasks;
+using AuthWebApi.Dto;
 using ExpensePrediction.DataTransferObjects.User;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExpensePrediction.BusinessLogicLayer.Interfaces.Services
 {

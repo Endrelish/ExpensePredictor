@@ -1,8 +1,5 @@
-﻿using ExpensePrediction.DataTransferObjects.User;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using ExpensePrediction.DataTransferObjects.User;
 
 namespace ExpensePrediction.BusinessLogicLayer.Interfaces.Services
 {

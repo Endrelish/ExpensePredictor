@@ -5,7 +5,6 @@ using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataAccessLayer.Interfaces;
-using ExpensePrediction.DataTransferObjects;
 using ExpensePrediction.DataTransferObjects.Category;
 
 namespace ExpensePrediction.BusinessLogicLayer.Services
@@ -23,12 +22,15 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
 
         public async Task<CategoryDto> AddCategory(CategoryDto categoryDto)
         {
-            categoryDto.Id = string.Empty;
+            categoryDto.Id = null;
             var category = _mapper.Map<TCategory>(categoryDto);
             await _categoryRepository.CreateAsync(category);
 
             if (await _categoryRepository.SaveAsync() > 0)
+            {
                 return _mapper.Map<CategoryDto>(category);
+            }
+
             throw new Exception("nie da sie"); //TODO custom exceptions
         }
 
@@ -41,10 +43,18 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             {
                 return _mapper.Map<CategoryDto>(category);
             }
+
             throw new Exception(); //TODO custom exceptions
         }
 
-        public async Task<IEnumerable<CategoryDto>> GetCategories() => _mapper.Map<IEnumerable<CategoryDto>>(await _categoryRepository.FindAllAsync());
-        public async Task<CategoryDto> GetCategory(string categoryId) => _mapper.Map<CategoryDto>(await _categoryRepository.FindByIdAsync(categoryId));
+        public async Task<IEnumerable<CategoryDto>> GetCategories()
+        {
+            return _mapper.Map<IEnumerable<CategoryDto>>(await _categoryRepository.FindAllAsync());
+        }
+
+        public async Task<CategoryDto> GetCategory(string categoryId)
+        {
+            return _mapper.Map<CategoryDto>(await _categoryRepository.FindByIdAsync(categoryId));
+        }
     }
 }

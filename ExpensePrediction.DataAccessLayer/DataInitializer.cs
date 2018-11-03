@@ -9,12 +9,12 @@ namespace ExpensePrediction.DataAccessLayer
         public static void Initialize(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ExpenseCategory>().HasData(
-                new ExpenseCategory()
+                new ExpenseCategory
                 {
                     Id = "27a62b11-7765-473d-a1b6-7ecda9915dd5",
                     Name = "Żarcie"
                 },
-                new ExpenseCategory()
+                new ExpenseCategory
                 {
                     Id = "7edeb282-6172-49b1-9a8f-5c3b25b7d0b8",
                     Name = "Alkohol"

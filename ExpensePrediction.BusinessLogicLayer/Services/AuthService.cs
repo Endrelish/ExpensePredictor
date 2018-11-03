@@ -1,4 +1,11 @@
-﻿using AuthWebApi.Dto;
+﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
+using AuthWebApi.Dto;
 using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
@@ -6,22 +13,15 @@ using ExpensePrediction.DataTransferObjects.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExpensePrediction.BusinessLogicLayer.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly IMapper _mapper;
-        private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
         private readonly IPasswordHasher<User> _hasher;
+        private readonly IMapper _mapper;
+        private readonly UserManager<User> _userManager;
 
         public AuthService(IMapper mapper,
             UserManager<User> userManager,
@@ -95,7 +95,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         private async Task<bool> SetDefaultRoles(User user)
         {
             var roleNames = _configuration.GetSection("DefaultRoles").Get<List<string>>();
-            
+
             var result = await _userManager.AddToRolesAsync(user, roleNames);
             return result.Succeeded;
         }

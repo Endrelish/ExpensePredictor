@@ -1,10 +1,10 @@
+using System;
+using System.Threading.Tasks;
 using AuthWebApi.Dto;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataTransferObjects.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Threading.Tasks;
 
 namespace ExpensePrediction.WebAPI.Controllers
 {
@@ -21,7 +21,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Registers a new user with specified data.
+        ///     Registers a new user with specified data.
         /// </summary>
         /// <param name="registerDto">The registration data.</param>
         /// <returns></returns>
@@ -33,7 +33,7 @@ namespace ExpensePrediction.WebAPI.Controllers
             try
             {
                 var token = await _authService.Register(registerDto);
-                return Ok(new { Token = token });
+                return Ok(new {Token = token});
             }
             catch (Exception)
             {
@@ -42,7 +42,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Gets the token for specified user.
+        ///     Gets the token for specified user.
         /// </summary>
         /// <param name="loginDto">The login data.</param>
         /// <returns>The token.</returns>
@@ -54,7 +54,7 @@ namespace ExpensePrediction.WebAPI.Controllers
             try
             {
                 var token = await _authService.GetToken(loginDto);
-                return Ok(new { Token = token });
+                return Ok(new {Token = token});
             }
             catch (Exception) //TODO custom exception
             {

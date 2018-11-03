@@ -1,8 +1,6 @@
-﻿using ExpensePrediction.DataTransferObjects;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ExpensePrediction.DataTransferObjects;
 
 namespace ExpensePrediction.BusinessLogicLayer.Interfaces.Services
 {
@@ -13,6 +11,5 @@ namespace ExpensePrediction.BusinessLogicLayer.Interfaces.Services
         Task<ExpenseDto> AddExpense(ExpenseDto expense, string userId);
         Task<ExpenseDto> EditExpense(ExpenseDto expense, string userId);
         Task<IEnumerable<ExpenseDto>> GetLinkedExpenses(string expenseId, string userId);
-
     }
 }

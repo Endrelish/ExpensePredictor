@@ -1,15 +1,16 @@
+using System;
+using System.Threading.Tasks;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataTransferObjects.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace ExpensePrediction.WebAPI.Controllers
 {
     [Route("api/account")]
     public class AccountController : ControllerBase
     {
-        private IAccountService _accountService;
+        private readonly IAccountService _accountService;
 
         public AccountController(IAccountService accountService)
         {
@@ -17,7 +18,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Edits current user's data.
+        ///     Edits current user's data.
         /// </summary>
         /// <param name="userEditDto">The user data.</param>
         /// <returns></returns>
@@ -32,14 +33,14 @@ namespace ExpensePrediction.WebAPI.Controllers
                 var user = await _accountService.EditUserData(userEditDto, User.Identity.Name);
                 return Ok(user);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 return StatusCode(400, e.Message);
             }
         }
 
         /// <summary>
-        /// Gets current user.
+        ///     Gets current user.
         /// </summary>
         /// <returns>Current user data.</returns>
         [HttpGet]
@@ -52,14 +53,14 @@ namespace ExpensePrediction.WebAPI.Controllers
                 var user = await _accountService.GetUserData(User.Identity.Name);
                 return Ok(user);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 return StatusCode(400, e.Message); //TODO custom exceptions
             }
         }
 
         /// <summary>
-        /// Changes the password.
+        ///     Changes the password.
         /// </summary>
         /// <param name="passwordChangeDto">The data for password change.</param>
         /// <returns></returns>
@@ -74,7 +75,7 @@ namespace ExpensePrediction.WebAPI.Controllers
                 await _accountService.ChangePassword(passwordChangeDto, User.Identity.Name);
                 return Ok();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 return StatusCode(400, e.Message); //TODO custom exceptions
             }

@@ -11,12 +11,13 @@ namespace ExpensePrediction.DataAccessLayer.Repositories
 {
     public class ApplicationRepository<TEntity> : IApplicationRepository<TEntity> where TEntity : class, IEntity
     {
-        protected ApplicationDbContext _dbContext;
+        protected readonly ApplicationDbContext _dbContext;
 
         public ApplicationRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
+
         public virtual async Task CreateAsync(TEntity entity)
         {
             await _dbContext.Set<TEntity>().AddAsync(entity);
@@ -56,6 +57,5 @@ namespace ExpensePrediction.DataAccessLayer.Repositories
         {
             return await _dbContext.Set<TEntity>().CountAsync(e => e.Id == key) > 0;
         }
-        
     }
 }

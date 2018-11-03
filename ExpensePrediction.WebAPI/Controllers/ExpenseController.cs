@@ -1,14 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
-using ExpensePrediction.DataAccessLayer.Interfaces;
 using ExpensePrediction.DataTransferObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ExpensePrediction.WebAPI.Controllers
 {
@@ -16,9 +15,9 @@ namespace ExpensePrediction.WebAPI.Controllers
     [ApiController]
     public class ExpenseController : Controller
     {
+        private readonly IExpenseService _expenseService;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
-        private readonly IExpenseService _expenseService;
 
         public ExpenseController(UserManager<User> userManager,
             IMapper mapper, IExpenseService expenseService)
@@ -43,7 +42,7 @@ namespace ExpensePrediction.WebAPI.Controllers
             try
             {
                 var expense = await _expenseService.AddExpense(expenseDto, User.Identity.Name);
-                return CreatedAtRoute("GetExpense", new { expenseId = expense.Id }, _mapper.Map<ExpenseDto>(expense));
+                return CreatedAtRoute("GetExpense", new {expenseId = expense.Id}, _mapper.Map<ExpenseDto>(expense));
             }
             catch (Exception e)
             {
@@ -63,7 +62,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         {
             try
             {
-                var expense = _expenseService.GetExpense(expenseId, (await _userManager.FindByIdAsync(User.Identity.Name)).Id);
+                var expense = await _expenseService.GetExpense(expenseId,
+                    (await _userManager.FindByIdAsync(User.Identity.Name)).Id);
                 return Ok(expense);
             }
             catch (Exception) //TODO Custom exceptions
@@ -113,7 +113,6 @@ namespace ExpensePrediction.WebAPI.Controllers
             {
                 return StatusCode(400, e.Message); //TODO custom exceptions
             }
-            
         }
     }
 }

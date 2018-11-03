@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+﻿using System.Threading.Tasks;
 using ExpensePrediction.DataAccessLayer.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpensePrediction.DataAccessLayer.Repositories
 {
@@ -12,7 +8,6 @@ namespace ExpensePrediction.DataAccessLayer.Repositories
     {
         public ExpenseRepository(ApplicationDbContext context) : base(context)
         {
-
         }
 
         public override async Task<Expense> FindByIdAsync(string id)

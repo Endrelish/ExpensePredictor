@@ -28,6 +28,8 @@ namespace ExpensePrediction.WebAPI
 {
     public class Startup
     {
+        public readonly LoggerFactory LoggerFactory;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -40,7 +42,6 @@ namespace ExpensePrediction.WebAPI
         }
 
         public IConfiguration Configuration { get; }
-        public readonly LoggerFactory LoggerFactory;
 
         private void SetUpDbContext(IServiceCollection services)
         {
@@ -49,13 +50,14 @@ namespace ExpensePrediction.WebAPI
                 if (Configuration["UseLocalDb"].Equals("true", StringComparison.OrdinalIgnoreCase))
                 {
                     optionsBuilder.UseSqlServer(Configuration["ConnectionStrings:Local"],
-                            b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+                        b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
                 }
                 else
                 {
                     optionsBuilder.UseSqlServer(Configuration["ConnectionStrings:Remote"],
-                            b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
+                        b => b.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName));
                 }
+
                 optionsBuilder
                     .UseLazyLoadingProxies()
                     .UseLoggerFactory(LoggerFactory)
@@ -66,14 +68,14 @@ namespace ExpensePrediction.WebAPI
         private void SetUpSecurity(IServiceCollection services)
         {
             services.AddIdentity<User, Role>(options =>
-            {
-                var pass = options.Password;
-                pass.RequireDigit = false;
-                pass.RequiredLength = 4;
-                pass.RequireLowercase = false;
-                pass.RequireNonAlphanumeric = false;
-                pass.RequireUppercase = false;
-            }).AddEntityFrameworkStores<ApplicationDbContext>()
+                {
+                    var pass = options.Password;
+                    pass.RequireDigit = false;
+                    pass.RequiredLength = 4;
+                    pass.RequireLowercase = false;
+                    pass.RequireNonAlphanumeric = false;
+                    pass.RequireUppercase = false;
+                }).AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             JwtSecurityTokenHandler.DefaultOutboundClaimTypeMap.Clear(); //remove default claims
@@ -101,7 +103,7 @@ namespace ExpensePrediction.WebAPI
 
             services.AddAuthorization(cfg =>
             {
-                var policies = Configuration.GetSection("Policies").AsEnumerable(makePathsRelative: true)
+                var policies = Configuration.GetSection("Policies").AsEnumerable(true)
                     .ToDictionary(p => p.Key, p => p.Value.Split(';'));
                 foreach (var policy in policies)
                 {
@@ -120,6 +122,7 @@ namespace ExpensePrediction.WebAPI
             services.AddScoped(typeof(ICategoryService<>), typeof(CategoryService<>));
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IExpenseService, ExpenseService>();
+            services.AddScoped<IAccountService, AccountService>();
 
             services.AddSingleton(MapperService.Mapper);
         }
@@ -128,7 +131,7 @@ namespace ExpensePrediction.WebAPI
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Inzynierka API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info {Title = "Inzynierka API", Version = "v1"});
                 c.IncludeXmlComments(string.Format(@"{0}\SwaggerApiDescription.xml",
                     AppDomain.CurrentDomain.BaseDirectory));
                 c.AddSecurityDefinition("Bearer",
@@ -137,7 +140,7 @@ namespace ExpensePrediction.WebAPI
                         In = "header",
                         Description = "Please enter JWT with Bearer into field",
                         Name = "Authorization",
-                        Type = "apiKey",
+                        Type = "apiKey"
                     });
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>>
                 {

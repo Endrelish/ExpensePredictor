@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ExpensePrediction.DataAccessLayer.Entities;
-using ExpensePrediction.DataTransferObjects;
 using ExpensePrediction.DataTransferObjects.Category;
 
 namespace ExpensePrediction.BusinessLogicLayer.Interfaces.Services

@@ -1,32 +1,30 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataTransferObjects;
 using ExpensePrediction.DataTransferObjects.Category;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ExpensePrediction.WebAPI.Controllers
 {
     [Route("api/category")]
     public class CategoryController : ControllerBase
     {
-        private readonly ICategoryService<IncomeCategory> _incomeCategoryService;
         private readonly ICategoryService<ExpenseCategory> _expenseCategoryService;
-        private readonly IMapper _mapper;
+        private readonly ICategoryService<IncomeCategory> _incomeCategoryService;
 
-        public CategoryController(IMapper mapper, ICategoryService<ExpenseCategory> expenseCategoryService, ICategoryService<IncomeCategory> incomeCategoryService)
+        public CategoryController(ICategoryService<ExpenseCategory> expenseCategoryService,
+            ICategoryService<IncomeCategory> incomeCategoryService)
         {
-            _mapper = mapper;
             _expenseCategoryService = expenseCategoryService;
             _incomeCategoryService = incomeCategoryService;
         }
 
         /// <summary>
-        /// Adds the category.
+        ///     Adds the category.
         /// </summary>
         /// <param name="categoryType">Type of the category.</param>
         /// <param name="categoryDto">The category data.</param>
@@ -35,7 +33,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [Authorize("AddCategory")]
-        public async Task<IActionResult> AddCategory([FromRoute] CategoryType categoryType, [FromBody] CategoryDto categoryDto)
+        public async Task<IActionResult> AddCategory([FromRoute] CategoryType categoryType,
+            [FromBody] CategoryDto categoryDto)
         {
             try
             {
@@ -55,9 +54,10 @@ namespace ExpensePrediction.WebAPI.Controllers
                         break;
                 }
 
-                return CreatedAtRoute("GetCategory", new { CategoryId = category?.Id, CategoryType = categoryType }, category);
+                return CreatedAtRoute("GetCategory", new {CategoryId = category?.Id, CategoryType = categoryType},
+                    category);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return StatusCode(400, "ERROR");
             }
@@ -67,7 +67,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [Authorize("GetCategory")]
-        public async Task<IActionResult> GetCategory([FromRoute] string categoryId, [FromRoute] CategoryType categoryType)
+        public async Task<IActionResult> GetCategory([FromRoute] string categoryId,
+            [FromRoute] CategoryType categoryType)
         {
             try
             {
@@ -79,8 +80,13 @@ namespace ExpensePrediction.WebAPI.Controllers
                         break;
 
                     case CategoryType.IncomeCategory:
-                        category = await _expenseCategoryService.GetCategory(categoryId);
+                        category = await _incomeCategoryService.GetCategory(categoryId);
                         break;
+                }
+
+                if (category == null)
+                {
+                    return NotFound();
                 }
 
                 return Ok(category);
@@ -95,7 +101,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [Authorize("EditCategory")]
-        public async Task<IActionResult> EditCategory([FromRoute] CategoryType categoryType, [FromBody] CategoryDto categoryDto)
+        public async Task<IActionResult> EditCategory([FromRoute] CategoryType categoryType,
+            [FromBody] CategoryDto categoryDto)
         {
             try
             {
