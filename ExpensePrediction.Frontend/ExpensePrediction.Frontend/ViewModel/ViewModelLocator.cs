@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ExpensePrediction.Frontend.ViewModel
+﻿namespace ExpensePrediction.Frontend.ViewModel
 {
     public class ViewModelLocator
     {
-        private static MainViewModel _mainViewModel;
+        private static readonly MainViewModel MainViewModelInstance = new MainViewModel();
 
-        public MainViewModel MainViewModel { get => _mainViewModel; }
+        public MainViewModel MainViewModel => MainViewModelInstance;
     }
 }
