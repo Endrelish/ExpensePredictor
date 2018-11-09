@@ -59,7 +59,7 @@ namespace ExpensePrediction.WebAPI.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(400, "ERROR");
+                return StatusCode(400, e.Message);
             }
         }
 

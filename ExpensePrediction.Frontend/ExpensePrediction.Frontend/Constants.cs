@@ -4,37 +4,37 @@ namespace ExpensePrediction.Frontend
 {
     public static class Constants
     {
-        private static readonly string BaseUrl = "http://localhost:50458/api/";
+        private static readonly string BaseUri = "http://localhost:50458/api/";
 
         #region auth
-        private static readonly string AuthControllerUrl = "auth/";
-        public static readonly string RegisterUrl = AuthControllerUrl + "register";
-        public static readonly string GetTokenUrl = AuthControllerUrl + "get-token";
+        private static readonly string AuthControllerUri = "auth/";
+        public static readonly string RegisterUri = AuthControllerUri + "register";
+        public static readonly string GetTokenUri = AuthControllerUri + "get-token";
         #endregion
 
         #region account
-        private static readonly string AccountControllerUrl = "account/";
-        public static readonly string GetUserUrl = AccountControllerUrl;
-        public static readonly string EditUserUrl = AccountControllerUrl;
-        public static readonly string ChangePasswordUrl = AccountControllerUrl + "change-password";
+        private static readonly string AccountControllerUri = "account/";
+        public static readonly string GetUserUri = AccountControllerUri;
+        public static readonly string EditUserUri = AccountControllerUri;
+        public static readonly string ChangePasswordUri = AccountControllerUri + "change-password";
         #endregion
 
         #region category
-        private static readonly string CategoryControllerUrl = "category/";
+        private static readonly string CategoryControllerUri = "category/";
 
-        public static string GetCategoryUrl(CategoryType type, string id) => CategoryControllerUrl + type + '/' + id;
-        public static string EditCategoryUrl(CategoryType type) => CategoryControllerUrl + "edit/" + type;
-        public static string GetCategoriesUrl(CategoryType type) => CategoryControllerUrl + type;
+        public static string GetCategoryUri(CategoryType type, string id) => CategoryControllerUri + type + '/' + id;
+        public static string EditCategoryUri(CategoryType type) => CategoryControllerUri + "edit/" + type;
+        public static string GetCategoriesUri(CategoryType type) => CategoryControllerUri + type;
         #endregion
 
         #region expense
-        public static readonly string ExpenseControllerUrl = "expense/";
+        public static readonly string ExpenseControllerUri = "expense/";
 
-        public static readonly string GetExpensesUrl = ExpenseControllerUrl;
-        public static readonly string AddExpenseUrl = ExpenseControllerUrl + "add";
-        public static readonly string EditExpenseUrl = ExpenseControllerUrl + "edit";
-        public static string GetExpense(string id) => ExpenseControllerUrl + id;
-        public static string GetLinkedExpensesUrl(string id) => ExpenseControllerUrl + "linked/" + id;
+        public static readonly string GetExpensesUri = ExpenseControllerUri;
+        public static readonly string AddExpenseUri = ExpenseControllerUri + "add";
+        public static readonly string EditExpenseUri = ExpenseControllerUri + "edit";
+        public static string GetExpense(string id) => ExpenseControllerUri + id;
+        public static string GetLinkedExpensesUri(string id) => ExpenseControllerUri + "linked/" + id;
         #endregion
     }
 }
