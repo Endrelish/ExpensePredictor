@@ -33,7 +33,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// <consumes>application/json</consumes>
         /// <param name="expenseDto">The expense data.</param>
         /// <returns>Link to the created expense</returns>
-        [HttpPost("add-expense")]
+        [HttpPost("add")]
         [Authorize("AddExpense")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]

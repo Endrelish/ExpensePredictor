@@ -9,9 +9,11 @@
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
         <Button Text="Sign up" HorizontalOptions="Center"
-                VerticalOptions="CenterAndExpand" />
+                VerticalOptions="CenterAndExpand"
+                Clicked="SignIn" />
         <Button Text="Sign in" HorizontalOptions="Center"
-                VerticalOptions="CenterAndExpand" />
+                VerticalOptions="CenterAndExpand"
+                Clicked="SignUp" />
     </StackLayout>
 
 </ContentPage>

@@ -13,5 +13,15 @@ namespace ExpensePrediction.Frontend
         {
             InitializeComponent();
         }
+
+        private void SignIn(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SignUp(object sender, EventArgs e)
+        {
+
+        }
     }
 }
