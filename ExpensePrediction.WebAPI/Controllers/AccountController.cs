@@ -30,7 +30,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         {
             try
             {
-                var user = await _accountService.EditUserData(userEditDto, User.Identity.Name);
+                var user = await _accountService.EditUserDataAsync(userEditDto, User.Identity.Name);
                 return Ok(user);
             }
             catch (Exception e)
@@ -50,7 +50,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         {
             try
             {
-                var user = await _accountService.GetUserData(User.Identity.Name);
+                var user = await _accountService.GetUserDataAsync(User.Identity.Name);
                 return Ok(user);
             }
             catch (Exception e)
@@ -72,7 +72,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         {
             try
             {
-                await _accountService.ChangePassword(passwordChangeDto, User.Identity.Name);
+                await _accountService.ChangePasswordAsync(passwordChangeDto, User.Identity.Name);
                 return Ok();
             }
             catch (Exception e)

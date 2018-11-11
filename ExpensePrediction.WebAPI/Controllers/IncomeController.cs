@@ -11,38 +11,38 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExpensePrediction.WebAPI.Controllers
 {
-    [Route("/api/expense")]
+    [Route("/api/income")]
     [ApiController]
-    public class ExpenseController : Controller
+    public class IncomeController : ControllerBase
     {
-        private readonly IExpenseService _expenseService;
+        private readonly IIncomeService _incomeService;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
 
-        public ExpenseController(UserManager<User> userManager,
-            IMapper mapper, IExpenseService expenseService)
+        public IncomeController(UserManager<User> userManager,
+            IMapper mapper, IIncomeService incomeService)
         {
             _userManager = userManager;
             _mapper = mapper;
-            _expenseService = expenseService;
+            _incomeService = incomeService;
         }
 
         /// <summary>
         ///     Adds an expense.
         /// </summary>
         /// <consumes>application/json</consumes>
-        /// <param name="expenseDto">The expense data.</param>
+        /// <param name="incomeDto">The expense data.</param>
         /// <returns>Link to the created expense</returns>
         [HttpPost("add")]
-        [Authorize("AddExpense")]
+        [Authorize("AddIncome")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
-        public async Task<IActionResult> AddExpense([FromBody] ExpenseDto expenseDto)
+        public async Task<IActionResult> AddIncome([FromBody] IncomeDto incomeDto)
         {
             try
             {
-                var expense = await _expenseService.AddExpenseAsync(expenseDto, User.Identity.Name);
-                return CreatedAtRoute("GetExpense", new {expenseId = expense.Id}, expense);
+                var income = await _incomeService.AddIncomeAsync(incomeDto, User.Identity.Name);
+                return CreatedAtRoute("GetIncome", new {incomeId = income.Id}, income);
             }
             catch (Exception e)
             {
@@ -55,16 +55,16 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// </summary>
         /// <param name="expenseId">The expense identifier.</param>
         /// <returns></returns>
-        [HttpGet("{expenseId}", Name = "GetExpense")]
-        [Authorize("GetExpense")]
+        [HttpGet("{incomeId}", Name = "GetIncome")]
+        [Authorize("GetIncome")]
         [Produces(Constants.ApplicationJson)]
-        public async Task<IActionResult> GetExpense([FromRoute] string expenseId)
+        public async Task<IActionResult> GetIncome([FromRoute] string incomeId)
         {
             try
             {
-                var expense = await _expenseService.GetExpenseAsync(expenseId,
+                var income = await _incomeService.GetIncomeAsync(incomeId,
                     (await _userManager.FindByIdAsync(User.Identity.Name)).Id);
-                return Ok(expense);
+                return Ok(income);
             }
             catch (Exception) //TODO Custom exceptions
             {
@@ -73,45 +73,29 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize("GetExpenses")]
+        [Authorize("GetIncomes")]
         [Produces(Constants.ApplicationJson)]
-        public async Task<IActionResult> GetExpenses()
+        public async Task<IActionResult> GetIncomes()
         {
-            var expenses = await _expenseService.GetExpensesAsync(User.Identity.Name);
+            var incomes = await _incomeService.GetIncomesAsync(User.Identity.Name);
 
-            return Ok(expenses);
+            return Ok(incomes);
         }
 
         [HttpPost("edit")]
-        [Authorize("EditExpense")]
+        [Authorize("EditIncome")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
-        public async Task<IActionResult> EditExpense([FromBody] ExpenseDto expenseDto)
+        public async Task<IActionResult> EditIncome([FromBody] IncomeDto incomeDto)
         {
             try
             {
-                var result = await _expenseService.EditExpenseAsync(expenseDto, User.Identity.Name);
+                var result = await _incomeService.EditIncomeAsync(incomeDto, User.Identity.Name);
                 return Ok(result);
             }
             catch (Exception e) //TODO Custom exceptions
             {
                 return StatusCode(400, e.Message);
-            }
-        }
-
-        [HttpGet("linked/{expenseId}")]
-        [Authorize("GetExpenses")]
-        [Produces(Constants.ApplicationJson)]
-        public async Task<IActionResult> GetLinkedExpenses([FromRoute] string expenseId)
-        {
-            try
-            {
-                var expenses = await _expenseService.GetLinkedExpensesAsync(expenseId, User.Identity.Name);
-                return Ok(expenses);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(400, e.Message); //TODO custom exceptions
             }
         }
     }

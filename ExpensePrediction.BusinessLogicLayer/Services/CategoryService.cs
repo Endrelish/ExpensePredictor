@@ -20,7 +20,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<CategoryDto> AddCategory(CategoryDto categoryDto)
+        public async Task<CategoryDto> AddCategoryAsync(CategoryDto categoryDto)
         {
             categoryDto.Id = null;
             var category = _mapper.Map<TCategory>(categoryDto);
@@ -34,7 +34,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             throw new Exception("nie da sie"); //TODO custom exceptions
         }
 
-        public async Task<CategoryDto> EditCategory(CategoryDto categoryDto)
+        public async Task<CategoryDto> EditCategoryAsync(CategoryDto categoryDto)
         {
             var category = _mapper.Map<TCategory>(categoryDto);
             _categoryRepository.Update(category);
@@ -47,12 +47,12 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             throw new Exception(); //TODO custom exceptions
         }
 
-        public async Task<IEnumerable<CategoryDto>> GetCategories()
+        public async Task<IEnumerable<CategoryDto>> GetCategoriesAsync()
         {
             return _mapper.Map<IEnumerable<CategoryDto>>(await _categoryRepository.FindAllAsync());
         }
 
-        public async Task<CategoryDto> GetCategory(string categoryId)
+        public async Task<CategoryDto> GetCategoryAsync(string categoryId)
         {
             return _mapper.Map<CategoryDto>(await _categoryRepository.FindByIdAsync(categoryId));
         }

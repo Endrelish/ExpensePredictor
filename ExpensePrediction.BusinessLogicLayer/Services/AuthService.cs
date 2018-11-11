@@ -34,7 +34,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             _hasher = hasher;
         }
 
-        public async Task<string> GetToken(LoginDto loginData)
+        public async Task<string> GetTokenAsync(LoginDto loginData)
         {
             var user = await _userManager.FindByNameAsync(loginData.Username);
             var result = _hasher.VerifyHashedPassword(user, user.PasswordHash, loginData.Password);
@@ -47,7 +47,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             throw new Exception(); //TODO custom exceptions
         }
 
-        public async Task<string> Register(RegisterDto registerData)
+        public async Task<string> RegisterAsync(RegisterDto registerData)
         {
             var user = _mapper.Map<User>(registerData);
 

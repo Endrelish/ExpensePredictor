@@ -4,6 +4,7 @@
     <AssemblyName>ExpensePrediction.WebAPI</AssemblyName>
     <RootNamespace>ExpensePrediction.WebAPI</RootNamespace>
     <StartupObject></StartupObject>
+    <UserSecretsId>6bbb3924-8ac9-4aee-ae7a-05f3abb1e156</UserSecretsId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\SwaggerApiDescription.xml</DocumentationFile>
