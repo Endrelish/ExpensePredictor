@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
@@ -76,9 +77,13 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             throw new Exception(); //TODO custom exceptions
         }
 
-        public async Task<IEnumerable<IncomeDto>> GetIncomesAsync(string userId)
+        public async Task<IEnumerable<IncomeDto>> GetIncomesAsync(string userId, DateTime from, DateTime to)
         {
-            var incomes = await _incomeRepository.FindByConditionAync(i => i.User.Id == userId);
+            Expression<Func<Income, bool>> condition = i => i.UserId == userId &&
+                                                             i.Date >= from &&
+                                                             i.Date <= to;
+
+            var incomes = await _incomeRepository.FindByConditionAync(condition);
             return _mapper.Map<IEnumerable<IncomeDto>>(incomes);
         }
     }

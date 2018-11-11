@@ -51,7 +51,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        ///     Gets the expense data.
+        /// Gets data of an expense specified by its id.
         /// </summary>
         /// <param name="expenseId">The expense identifier.</param>
         /// <returns></returns>
@@ -72,12 +72,16 @@ namespace ExpensePrediction.WebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets user expenses.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize("GetExpenses")]
         [Produces(Constants.ApplicationJson)]
-        public async Task<IActionResult> GetExpenses()
+        public async Task<IActionResult> GetExpenses([FromQuery] DateTime from, [FromQuery] DateTime to)
         {
-            var expenses = await _expenseService.GetExpensesAsync(User.Identity.Name);
+            var expenses = await _expenseService.GetExpensesAsync(User.Identity.Name, from, to);
 
             return Ok(expenses);
         }

@@ -26,13 +26,7 @@ namespace ExpensePrediction.WebAPI.Controllers
             _mapper = mapper;
             _incomeService = incomeService;
         }
-
-        /// <summary>
-        ///     Adds an expense.
-        /// </summary>
-        /// <consumes>application/json</consumes>
-        /// <param name="incomeDto">The expense data.</param>
-        /// <returns>Link to the created expense</returns>
+        
         [HttpPost("add")]
         [Authorize("AddIncome")]
         [Consumes(Constants.ApplicationJson)]
@@ -49,12 +43,7 @@ namespace ExpensePrediction.WebAPI.Controllers
                 return StatusCode(400, e.Message); //TODO custom error codes and exceptions
             }
         }
-
-        /// <summary>
-        ///     Gets the expense data.
-        /// </summary>
-        /// <param name="expenseId">The expense identifier.</param>
-        /// <returns></returns>
+        
         [HttpGet("{incomeId}", Name = "GetIncome")]
         [Authorize("GetIncome")]
         [Produces(Constants.ApplicationJson)]
@@ -75,9 +64,9 @@ namespace ExpensePrediction.WebAPI.Controllers
         [HttpGet]
         [Authorize("GetIncomes")]
         [Produces(Constants.ApplicationJson)]
-        public async Task<IActionResult> GetIncomes()
+        public async Task<IActionResult> GetIncomes([FromQuery] DateTime from, [FromQuery] DateTime to)
         {
-            var incomes = await _incomeService.GetIncomesAsync(User.Identity.Name);
+            var incomes = await _incomeService.GetIncomesAsync(User.Identity.Name, from, to);
 
             return Ok(incomes);
         }
