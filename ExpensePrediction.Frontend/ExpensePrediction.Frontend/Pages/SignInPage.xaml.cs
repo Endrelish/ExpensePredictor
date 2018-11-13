@@ -1,7 +1,7 @@
 ﻿using AuthWebApi.Dto;
 using ExpensePrediction.Frontend.Service;
 using System;
-
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -29,10 +29,12 @@ namespace ExpensePrediction.Frontend.Pages
 
             try
             {
-                await _authService.Login(loginDto);
-
-                Navigation.InsertPageBefore(new StartPage(), this);
-                await Navigation.PopAsync();
+                Func<Task> navigateAsync = async () =>
+                {
+                    Navigation.InsertPageBefore(new StartPage(), this);
+                    await Navigation.PopAsync();
+                };
+                await _authService.LoginAsync(loginDto, navigateAsync);
             }
             catch (Exception)
             {

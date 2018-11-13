@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExpensePrediction.Frontend.Service;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -23,6 +24,18 @@ namespace ExpensePrediction.Frontend.Pages
 
             BindingContext = new StartPageMasterViewModel();
             ListView = MenuItemsListView;
+        }
+
+        public async void LogOut(object sender, ClickedEventArgs args)
+        {
+            var authService = new AuthService();
+            Func<Task> navigate = async () =>
+            {
+                Navigation.InsertPageBefore(new SignInPage(), (Page)Parent);
+                await Navigation.PopAsync();
+            };
+
+            await authService.LogoutAsync(navigate);
         }
 
         class StartPageMasterViewModel : INotifyPropertyChanged
