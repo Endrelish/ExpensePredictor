@@ -31,8 +31,10 @@ namespace ExpensePrediction.Frontend.Pages
             var authService = new AuthService();
             Func<Task> navigate = async () =>
             {
-                Navigation.InsertPageBefore(new SignInPage(), (Page)Parent);
-                await Navigation.PopAsync();
+                App.Current.MainPage = new NavigationPage(new MainPage());
+                //await App.Current.MainPage.Navigation.PopAsync();
+                //Navigation.InsertPageBefore(new MainPage(), (Page)Parent);
+                //await Navigation.PopAsync();
             };
 
             await authService.LogoutAsync(navigate);

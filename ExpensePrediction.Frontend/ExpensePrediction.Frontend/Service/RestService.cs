@@ -20,7 +20,6 @@ namespace ExpensePrediction.Frontend.Service
         private async Task<HttpContent> CreateContent(object dto, bool authorize)
         {
             var content = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, ApplicationJsonContentType);
-            content.Headers.Add("Origin", "http://google.com");
 
             var headers = content.Headers;
             if (authorize)
