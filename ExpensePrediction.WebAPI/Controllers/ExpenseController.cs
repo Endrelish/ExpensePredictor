@@ -41,8 +41,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         {
             try
             {
-                var expense = await _expenseService.AddExpense(expenseDto, User.Identity.Name);
-                return CreatedAtRoute("GetExpense", new {expenseId = expense.Id}, _mapper.Map<ExpenseDto>(expense));
+                var expense = await _expenseService.AddExpenseAsync(expenseDto, User.Identity.Name);
+                return CreatedAtRoute("GetExpense", new {expenseId = expense.Id}, expense);
             }
             catch (Exception e)
             {
@@ -51,7 +51,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        ///     Gets the expense data.
+        /// Gets data of an expense specified by its id.
         /// </summary>
         /// <param name="expenseId">The expense identifier.</param>
         /// <returns></returns>
@@ -62,7 +62,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         {
             try
             {
-                var expense = await _expenseService.GetExpense(expenseId,
+                var expense = await _expenseService.GetExpenseAsync(expenseId,
                     (await _userManager.FindByIdAsync(User.Identity.Name)).Id);
                 return Ok(expense);
             }
@@ -72,14 +72,18 @@ namespace ExpensePrediction.WebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets user expenses.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize("GetExpenses")]
         [Produces(Constants.ApplicationJson)]
-        public async Task<IActionResult> GetExpenses()
+        public async Task<IActionResult> GetExpenses([FromQuery] DateTime from, [FromQuery] DateTime to)
         {
-            var expenses = await _expenseService.GetExpenses(User.Identity.Name);
+            var expenses = await _expenseService.GetExpensesAsync(User.Identity.Name, from, to);
 
-            return Ok(_mapper.Map<IEnumerable<ExpenseDto>>(expenses));
+            return Ok(expenses);
         }
 
         [HttpPost("edit")]
@@ -90,7 +94,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         {
             try
             {
-                var result = await _expenseService.EditExpense(expenseDto, User.Identity.Name);
+                var result = await _expenseService.EditExpenseAsync(expenseDto, User.Identity.Name);
                 return Ok(result);
             }
             catch (Exception e) //TODO Custom exceptions
@@ -106,7 +110,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         {
             try
             {
-                var expenses = await _expenseService.GetLinkedExpenses(expenseId, User.Identity.Name);
+                var expenses = await _expenseService.GetLinkedExpensesAsync(expenseId, User.Identity.Name);
                 return Ok(expenses);
             }
             catch (Exception e)

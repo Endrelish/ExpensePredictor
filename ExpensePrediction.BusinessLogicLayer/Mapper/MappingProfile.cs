@@ -17,6 +17,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Mapper
             CreateMap<UserDataDto, User>();
 
             CreateMap<ExpenseDto, Expense>();
+            CreateMap<IncomeDto, Income>();
 
             CreateMap<CategoryDto, ExpenseCategory>();
             CreateMap<CategoryDto, IncomeCategory>();

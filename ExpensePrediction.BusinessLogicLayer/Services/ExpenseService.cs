@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
@@ -26,7 +27,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<ExpenseDto> AddExpense(ExpenseDto expenseDto, string userId)
+        public async Task<ExpenseDto> AddExpenseAsync(ExpenseDto expenseDto, string userId)
         {
             var expense = _mapper.Map<Expense>(expenseDto);
             expense.Id = null;
@@ -38,7 +39,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             return _mapper.Map<ExpenseDto>(expense);
         }
 
-        public async Task<ExpenseDto> EditExpense(ExpenseDto expenseDto, string userId)
+        public async Task<ExpenseDto> EditExpenseAsync(ExpenseDto expenseDto, string userId)
         {
             var expense = await _expenseRepository.FindByIdAsync(expenseDto.Id);
             if (!expense.UserId.Equals(userId, StringComparison.OrdinalIgnoreCase))
@@ -61,7 +62,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             return _mapper.Map<ExpenseDto>(expense);
         }
 
-        public async Task<ExpenseDto> GetExpense(string expenseId, string userId)
+        public async Task<ExpenseDto> GetExpenseAsync(string expenseId, string userId)
         {
             var expense = await _expenseRepository.FindByIdAsync(expenseId);
             if (expense == null)
@@ -77,13 +78,17 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             throw new Exception(); //TODO custom exceptions
         }
 
-        public async Task<IEnumerable<ExpenseDto>> GetExpenses(string userId)
+        public async Task<IEnumerable<ExpenseDto>> GetExpensesAsync(string userId, DateTime from, DateTime to)
         {
-            var expenses = await _expenseRepository.FindByConditionAync(e => e.User.Id == userId);
+            Expression<Func<Expense, bool>> condition = e => e.UserId == userId &&
+                                                 e.Date >= from &&
+                                                 e.Date <= to;
+
+            var expenses = await _expenseRepository.FindByConditionAync(condition);
             return _mapper.Map<IEnumerable<ExpenseDto>>(expenses);
         }
 
-        public async Task<IEnumerable<ExpenseDto>> GetLinkedExpenses(string expenseId, string userId)
+        public async Task<IEnumerable<ExpenseDto>> GetLinkedExpensesAsync(string expenseId, string userId)
         {
             var expense = await _expenseRepository.FindByIdAsync(expenseId);
             if (!string.Equals(expense.UserId, userId))
