@@ -1,24 +1,43 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace ExpensePrediction.Frontend.Service
 {
     public class RestService
     {
         private const string ApplicationJsonContentType = "application/json";
-        private readonly HttpClient client;
-        public RestService()
+        private static readonly HttpClient _client;
+
+        static RestService()
         {
-            client = new HttpClient();
+            _client = new HttpClient();
         }
 
-        private HttpContent CreateContent(object dto)
+        private async Task<HttpContent> CreateContent(object dto, bool authorize)
         {
-            return new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, ApplicationJsonContentType);
+            var content = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, ApplicationJsonContentType);
+            content.Headers.Add("Origin", "http://google.com");
+
+            var headers = content.Headers;
+            if (authorize)
+            {
+                try
+                {
+                    var token = await SecureStorage.GetAsync(Constants.Token);
+                    token = "Bearer " + token;
+                    content.Headers.Add("Authorization", token);
+                }
+                catch (Exception ex)
+                {
+                    //TODO don't know what
+                }
+            }
+
+            return content;
         }
 
         private async Task<T> GetContent<T>(HttpResponseMessage response)
@@ -26,12 +45,16 @@ namespace ExpensePrediction.Frontend.Service
             return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<T> PostAsync<T>(string uri, object content)
+        public async Task<T> PostAsync<T>(string uri, object content, bool authorize = true)
         {
-            var response = await client.PostAsync(uri, CreateContent(content));
+            var response = await _client.PostAsync(uri, await CreateContent(content, authorize));
+
+            if(!response.IsSuccessStatusCode) 
+            {
+                //NOOOOOOOOOOOOOOOOOOOOOOOOOO
+            }
 
             return await GetContent<T>(response);
         }
-
     }
 }
