@@ -4,7 +4,8 @@ namespace ExpensePrediction.Frontend
 {
     public static class Constants
     {
-        private static readonly string BaseUri = "http://10.0.2.2:50458/api/";
+        //private static readonly string BaseUri = "http://10.0.2.2:50458/api/";
+        private static readonly string BaseUri = "https://expensepredictionwebapi.azurewebsites.net/api/";
 
         #region auth
         private static readonly string AuthControllerUri = BaseUri + "auth/";
@@ -33,7 +34,7 @@ namespace ExpensePrediction.Frontend
         public static readonly string GetExpensesUri = ExpenseControllerUri;
         public static readonly string AddExpenseUri = ExpenseControllerUri + "add";
         public static readonly string EditExpenseUri = ExpenseControllerUri + "edit";
-        public static string GetExpense(string id) => ExpenseControllerUri + id;
+        public static string GetExpenseUri(string id) => ExpenseControllerUri + id;
         public static string GetLinkedExpensesUri(string id) => ExpenseControllerUri + "linked/" + id;
         #endregion
 

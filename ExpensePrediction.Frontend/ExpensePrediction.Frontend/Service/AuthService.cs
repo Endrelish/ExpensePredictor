@@ -17,7 +17,7 @@ namespace ExpensePrediction.Frontend.Service
             _restService = new RestService();
         }
 
-        public async Task LoginAsync(LoginDto loginDto, Func<Task> navigateAsync)
+        public async Task LoginAsync(LoginDto loginDto, Action navigateAsync)
         {
             var token = await _restService.PostAsync<TokenDto>(Constants.GetTokenUri, loginDto, false);
             try
@@ -32,14 +32,14 @@ namespace ExpensePrediction.Frontend.Service
             }
 
             App.IsUserLoggedIn = true;
-            await navigateAsync();
+            navigateAsync();
         }
 
-        public async Task LogoutAsync(Func<Task> navigateAsync)
+        public void Logout(Action navigateAsync)
         {
             SecureStorage.Remove(Constants.Token);
             App.IsUserLoggedIn = false;
-            await navigateAsync();
+            navigateAsync();
         }
     }
 }

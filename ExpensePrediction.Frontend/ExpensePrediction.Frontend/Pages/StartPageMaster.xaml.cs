@@ -26,18 +26,12 @@ namespace ExpensePrediction.Frontend.Pages
             ListView = MenuItemsListView;
         }
 
-        public async void LogOut(object sender, ClickedEventArgs args)
+        public void LogOut(object sender, ClickedEventArgs args)
         {
             var authService = new AuthService();
-            Func<Task> navigate = async () =>
-            {
-                App.Current.MainPage = new NavigationPage(new MainPage());
-                //await App.Current.MainPage.Navigation.PopAsync();
-                //Navigation.InsertPageBefore(new MainPage(), (Page)Parent);
-                //await Navigation.PopAsync();
-            };
+            Action navigate = () => Application.Current.MainPage = new NavigationPage(new MainPage());
 
-            await authService.LogoutAsync(navigate);
+            authService.Logout(navigate);
         }
 
         class StartPageMasterViewModel : INotifyPropertyChanged

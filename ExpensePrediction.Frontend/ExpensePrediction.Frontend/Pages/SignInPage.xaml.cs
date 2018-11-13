@@ -29,13 +29,7 @@ namespace ExpensePrediction.Frontend.Pages
 
             try
             {
-                Func<Task> navigateAsync = async () =>
-                {
-                    App.Current.MainPage = new StartPage();
-                    //await App.Current.MainPage.Navigation.PopAsync();
-                    //Navigation.InsertPageBefore(new StartPage(), this);
-                    //await Navigation.PopAsync();
-                };
+                Action navigateAsync = () => Application.Current.MainPage = new StartPage();
                 await _authService.LoginAsync(loginDto, navigateAsync);
             }
             catch (Exception)
