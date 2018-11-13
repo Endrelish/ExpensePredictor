@@ -42,11 +42,11 @@ namespace ExpensePrediction.WebAPI.Controllers
                 switch (categoryType)
                 {
                     case CategoryType.ExpenseCategory:
-                        category = await _expenseCategoryService.AddCategory(categoryDto);
+                        category = await _expenseCategoryService.AddCategoryAsync(categoryDto);
                         break;
 
                     case CategoryType.IncomeCategory:
-                        category = await _incomeCategoryService.AddCategory(categoryDto);
+                        category = await _incomeCategoryService.AddCategoryAsync(categoryDto);
                         break;
 
                     default:
@@ -76,11 +76,11 @@ namespace ExpensePrediction.WebAPI.Controllers
                 switch (categoryType)
                 {
                     case CategoryType.ExpenseCategory:
-                        category = await _expenseCategoryService.GetCategory(categoryId);
+                        category = await _expenseCategoryService.GetCategoryAsync(categoryId);
                         break;
 
                     case CategoryType.IncomeCategory:
-                        category = await _incomeCategoryService.GetCategory(categoryId);
+                        category = await _incomeCategoryService.GetCategoryAsync(categoryId);
                         break;
                 }
 
@@ -110,11 +110,11 @@ namespace ExpensePrediction.WebAPI.Controllers
                 switch (categoryType)
                 {
                     case CategoryType.ExpenseCategory:
-                        category = await _expenseCategoryService.EditCategory(categoryDto);
+                        category = await _expenseCategoryService.EditCategoryAsync(categoryDto);
                         break;
 
                     case CategoryType.IncomeCategory:
-                        category = await _incomeCategoryService.EditCategory(categoryDto);
+                        category = await _incomeCategoryService.EditCategoryAsync(categoryDto);
                         break;
                 }
 
@@ -138,11 +138,11 @@ namespace ExpensePrediction.WebAPI.Controllers
                 switch (categoryType)
                 {
                     case CategoryType.ExpenseCategory:
-                        categories = await _expenseCategoryService.GetCategories();
+                        categories = await _expenseCategoryService.GetCategoriesAsync();
                         break;
 
                     case CategoryType.IncomeCategory:
-                        categories = await _incomeCategoryService.GetCategories();
+                        categories = await _incomeCategoryService.GetCategoriesAsync();
                         break;
                     case CategoryType.Undefined:
                         return StatusCode(400, "UNDEFINED_CATEGORY"); //TODO dto with error code and description

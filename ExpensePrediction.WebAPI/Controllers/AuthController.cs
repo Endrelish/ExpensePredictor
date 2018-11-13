@@ -32,7 +32,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         {
             try
             {
-                var token = await _authService.Register(registerDto);
+                var token = await _authService.RegisterAsync(registerDto);
                 return Ok(new {Token = token});
             }
             catch (Exception)
@@ -53,13 +53,19 @@ namespace ExpensePrediction.WebAPI.Controllers
         {
             try
             {
-                var token = await _authService.GetToken(loginDto);
+                var token = await _authService.GetTokenAsync(loginDto);
                 return Ok(new {Token = token});
             }
             catch (Exception) //TODO custom exception
             {
                 return Unauthorized();
             }
+        }
+
+        [HttpGet("haha")]
+        public IActionResult Haha()
+        {
+            return Ok(new {Haha = "hehe"});
         }
     }
 }

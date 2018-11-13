@@ -19,7 +19,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             _mapper = mapper;
         }
 
-        public async Task ChangePassword(PasswordChangeDto passwordChangeDto, string userId)
+        public async Task ChangePasswordAsync(PasswordChangeDto passwordChangeDto, string userId)
         {
             if (passwordChangeDto.NewPassword != passwordChangeDto.NewPasswordRepeated)
             {
@@ -36,7 +36,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             }
         }
 
-        public async Task<UserDataDto> EditUserData(UserEditDto userEditDto, string userId)
+        public async Task<UserDataDto> EditUserDataAsync(UserEditDto userEditDto, string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
@@ -49,7 +49,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             return _mapper.Map<UserDataDto>(user);
         }
 
-        public async Task<UserDataDto> GetUserData(string userId)
+        public async Task<UserDataDto> GetUserDataAsync(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
             return _mapper.Map<UserDataDto>(user);
