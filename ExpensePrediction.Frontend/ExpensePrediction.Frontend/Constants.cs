@@ -36,5 +36,9 @@ namespace ExpensePrediction.Frontend
         public static string GetExpense(string id) => ExpenseControllerUri + id;
         public static string GetLinkedExpensesUri(string id) => ExpenseControllerUri + "linked/" + id;
         #endregion
+
+        #region storageKeys
+        public static readonly string Token = "token";
+        #endregion
     }
 }

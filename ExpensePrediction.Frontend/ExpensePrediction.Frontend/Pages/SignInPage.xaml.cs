@@ -1,4 +1,5 @@
 ﻿using AuthWebApi.Dto;
+using ExpensePrediction.Frontend.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,18 +14,23 @@ namespace ExpensePrediction.Frontend.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class SignInPage : ContentPage
 	{
+        private readonly AuthService _authService;
 		public SignInPage ()
 		{
 			InitializeComponent ();
+
+            _authService = new AuthService();
 		}
 
-        private void SignInClicked(object sender, EventArgs e)
+        private async Task SignInClicked(object sender, EventArgs e)
         {
             var loginDto = new LoginDto
             {
                 Username = Username.Text,
                 Password = Password.Text
             };
+
+            await _authService.Login(loginDto);
         }
     }
 }
