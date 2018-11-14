@@ -23,10 +23,12 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// <param name="userEditDto">The user data.</param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize]
+        [Authorize("EditUser")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
-        public async Task<IActionResult> Edit([FromBody] UserEditDto userEditDto)
+        [ProducesResponseType(typeof(UserEditDto), 200)]
+        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
+        public async Task<IActionResult> EditUser([FromBody] UserEditDto userEditDto)
         {
             try
             {
@@ -44,8 +46,10 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// </summary>
         /// <returns>Current user data.</returns>
         [HttpGet]
-        [Authorize]
+        [Authorize("GetUser")]
         [Produces(Constants.ApplicationJson)]
+        [ProducesResponseType(typeof(UserDataDto), 200)]
+        [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
         public async Task<IActionResult> GetUser()
         {
             try
@@ -65,9 +69,12 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// <param name="passwordChangeDto">The data for password change.</param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize("ChangePassword")]
         [Route("change-password")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
         public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeDto passwordChangeDto)
         {
             try

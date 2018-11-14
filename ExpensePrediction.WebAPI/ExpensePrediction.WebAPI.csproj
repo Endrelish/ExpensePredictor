@@ -28,6 +28,5 @@
     <ProjectReference Include="..\ExpensePrediction.DataAccessLayer.Interfaces\ExpensePrediction.DataAccessLayer.Interfaces.csproj" />
     <ProjectReference Include="..\ExpensePrediction.DataAccessLayer\ExpensePrediction.DataAccessLayer.csproj" />
     <ProjectReference Include="..\ExpensePrediction.DataTransferObjects\ExpensePrediction.DataTransferObjects.csproj" />
-    <ProjectReference Include="..\ExpensePrediction.Shared\ExpensePrediction.Shared.csproj" />
   </ItemGroup>
 </Project>

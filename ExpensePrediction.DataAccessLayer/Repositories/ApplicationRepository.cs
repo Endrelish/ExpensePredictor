@@ -35,7 +35,15 @@ namespace ExpensePrediction.DataAccessLayer.Repositories
 
         public virtual async Task<IEnumerable<TEntity>> FindByConditionAync(Expression<Func<TEntity, bool>> expression)
         {
-            return await _dbContext.Set<TEntity>().Where(expression).ToListAsync();
+            try
+            {
+                return await _dbContext.Set<TEntity>().Where(expression).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         public virtual async Task<TEntity> FindByIdAsync(string id)

@@ -28,15 +28,19 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        ///     Adds an expense.
+        /// Adds an expense.
         /// </summary>
-        /// <consumes>application/json</consumes>
         /// <param name="expenseDto">The expense data.</param>
-        /// <returns>Link to the created expense</returns>
+        /// <returns>
+        /// Link to the created expense.
+        /// </returns>
+        /// <consumes>application/json</consumes>
         [HttpPost("add")]
         [Authorize("AddExpense")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
+        [ProducesResponseType(typeof(ExpenseDto), 201)]
+        [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
         public async Task<IActionResult> AddExpense([FromBody] ExpenseDto expenseDto)
         {
             try
@@ -54,10 +58,12 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// Gets data of an expense specified by its id.
         /// </summary>
         /// <param name="expenseId">The expense identifier.</param>
-        /// <returns></returns>
+        /// <returns>The expense.</returns>
         [HttpGet("{expenseId}", Name = "GetExpense")]
         [Authorize("GetExpense")]
         [Produces(Constants.ApplicationJson)]
+        [ProducesResponseType(typeof(ExpenseDto), 200)]
+        [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
         public async Task<IActionResult> GetExpense([FromRoute] string expenseId)
         {
             try
@@ -73,23 +79,40 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Gets user expenses.
+        /// Gets user expenses from given period of time.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="from">From date.</param>
+        /// <param name="to">To date.</param>
+        /// <returns>Expenses.</returns>
         [HttpGet]
         [Authorize("GetExpenses")]
         [Produces(Constants.ApplicationJson)]
+        [ProducesResponseType(typeof(IEnumerable<ExpenseDto>), 200)]
+        [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
         public async Task<IActionResult> GetExpenses([FromQuery] DateTime from, [FromQuery] DateTime to)
         {
-            var expenses = await _expenseService.GetExpensesAsync(User.Identity.Name, from, to);
-
-            return Ok(expenses);
+            try
+            {
+                var expenses = await _expenseService.GetExpensesAsync(User.Identity.Name, from, to);
+                return Ok(expenses);
+            }
+            catch (Exception)
+            {
+                return StatusCode(400, "ERROR"); //TODO custom exceptions
+            }
         }
 
+        /// <summary>
+        /// Edits the expense.
+        /// </summary>
+        /// <param name="expenseDto">The expense dto.</param>
+        /// <returns>Edited expense.</returns>
         [HttpPost("edit")]
         [Authorize("EditExpense")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
+        [ProducesResponseType(typeof(ExpenseDto), 200)]
+        [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
         public async Task<IActionResult> EditExpense([FromBody] ExpenseDto expenseDto)
         {
             try
@@ -103,9 +126,16 @@ namespace ExpensePrediction.WebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Gets the linked expenses.
+        /// </summary>
+        /// <param name="expenseId">The expense identifier.</param>
+        /// <returns>Linked expenses.</returns>
         [HttpGet("linked/{expenseId}")]
         [Authorize("GetExpenses")]
         [Produces(Constants.ApplicationJson)]
+        [ProducesResponseType(typeof(IEnumerable<ExpenseDto>), 200)]
+        [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
         public async Task<IActionResult> GetLinkedExpenses([FromRoute] string expenseId)
         {
             try

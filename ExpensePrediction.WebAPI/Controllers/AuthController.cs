@@ -21,13 +21,17 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        ///     Registers a new user with specified data.
+        /// Registers a new user with specified data.
         /// </summary>
         /// <param name="registerDto">The registration data.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// Access token
+        /// </returns>
         [HttpPost("register")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
+        [ProducesResponseType(typeof(string), 200)] //TODO Change to TokenDto
+        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
             try
@@ -37,18 +41,22 @@ namespace ExpensePrediction.WebAPI.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(400, "ERROR"); //TODO custom error codes
+                return StatusCode(400, "ERROR"); //TODO Custom exceptions
             }
         }
 
         /// <summary>
-        ///     Gets the token for specified user.
+        /// Gets the token for specified user.
         /// </summary>
         /// <param name="loginDto">The login data.</param>
-        /// <returns>The token.</returns>
+        /// <returns>
+        /// The token.
+        /// </returns>
         [HttpPost("get-token")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
+        [ProducesResponseType(typeof(string), 200)] //TODO use TokenDto
+        [ProducesResponseType(401)]
         public async Task<IActionResult> GetToken([FromBody] LoginDto loginDto)
         {
             try
@@ -62,6 +70,10 @@ namespace ExpensePrediction.WebAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Hahas this instance.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("haha")]
         public IActionResult Haha()
         {

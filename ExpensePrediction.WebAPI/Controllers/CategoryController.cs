@@ -24,15 +24,19 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        ///     Adds the category.
+        /// Adds a new category.
         /// </summary>
         /// <param name="categoryType">Type of the category.</param>
         /// <param name="categoryDto">The category data.</param>
-        /// <returns>Newly created category.</returns>
+        /// <returns>
+        /// Newly created category.
+        /// </returns>
         [HttpPost("add/{categoryType}")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [Authorize("AddCategory")]
+        [ProducesResponseType(typeof(CategoryDto), 201)]
+        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
         public async Task<IActionResult> AddCategory([FromRoute] CategoryType categoryType,
             [FromBody] CategoryDto categoryDto)
         {
@@ -59,14 +63,23 @@ namespace ExpensePrediction.WebAPI.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(400, "ERROR");
+                return StatusCode(400, "ERROR"); //TODO Custom exceptions
             }
         }
 
+        /// <summary>
+        /// Gets the category.
+        /// </summary>
+        /// <param name="categoryId">The category identifier.</param>
+        /// <param name="categoryType">Type of the category.</param>
+        /// <returns>The category.</returns>
         [HttpGet("{categoryType}/{categoryId}", Name = "GetCategory")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [Authorize("GetCategory")]
+        [ProducesResponseType(typeof(CategoryDto), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
         public async Task<IActionResult> GetCategory([FromRoute] string categoryId,
             [FromRoute] CategoryType categoryType)
         {
@@ -93,14 +106,22 @@ namespace ExpensePrediction.WebAPI.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(400, "ERROR");
+                return StatusCode(400, "ERROR"); //TODO Custom exceptions
             }
         }
 
+        /// <summary>
+        /// Edits the category.
+        /// </summary>
+        /// <param name="categoryType">Type of the category.</param>
+        /// <param name="categoryDto">The category data.</param>
+        /// <returns>The edited category.</returns>
         [HttpPost("edit/{categoryType}")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [Authorize("EditCategory")]
+        [ProducesResponseType(typeof(CategoryDto), 200)]
+        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
         public async Task<IActionResult> EditCategory([FromRoute] CategoryType categoryType,
             [FromBody] CategoryDto categoryDto)
         {
@@ -122,14 +143,21 @@ namespace ExpensePrediction.WebAPI.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(400, "ERROR");
+                return StatusCode(400, "ERROR"); //TODO Custom exceptions
             }
         }
 
+        /// <summary>
+        /// Gets all categories of given type.
+        /// </summary>
+        /// <param name="categoryType">Type of the category.</param>
+        /// <returns>All categories.</returns>
         [HttpGet("{categoryType}")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [Authorize("GetCategories")]
+        [ProducesResponseType(typeof(IEnumerable<CategoryDto>), 200)]
+        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
         public async Task<IActionResult> GetCategories([FromRoute] CategoryType categoryType)
         {
             try
@@ -152,7 +180,7 @@ namespace ExpensePrediction.WebAPI.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(400, "ERROR");
+                return StatusCode(400, "ERROR"); //TODO Custom exceptions
             }
         }
     }
