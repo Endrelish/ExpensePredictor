@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExpensePrediction.Frontend.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,9 +15,9 @@ namespace ExpensePrediction.Frontend
             InitializeComponent();
         }
 
-        private void SignIn(object sender, EventArgs e)
+        private async void SignIn(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new SignInPage());
         }
 
         private void SignUp(object sender, EventArgs e)
