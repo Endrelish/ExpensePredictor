@@ -1,4 +1,4 @@
-﻿namespace ExpensePrediction.DataTransferObjects
+﻿namespace ExpensePrediction.DataTransferObjects.Category
 {
     public enum CategoryType
     {

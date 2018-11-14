@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
+using ExpensePrediction.DataAccessLayer.Interfaces;
 using ExpensePrediction.DataTransferObjects.User;
 using Microsoft.AspNetCore.Identity;
 
@@ -13,10 +15,16 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
 
-        public AccountService(UserManager<User> userManager, IMapper mapper)
+        //TODO Delet dis
+        private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly IApplicationRepository<User> repo;
+
+        public AccountService(UserManager<User> userManager, IMapper mapper, IPasswordHasher<User> passwordHasher, IApplicationRepository<User> repo)
         {
             _userManager = userManager;
             _mapper = mapper;
+            _passwordHasher = passwordHasher;
+            this.repo = repo;
         }
 
         public async Task ChangePasswordAsync(PasswordChangeDto passwordChangeDto, string userId)
@@ -53,6 +61,15 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         {
             var user = await _userManager.FindByIdAsync(userId);
             return _mapper.Map<UserDataDto>(user);
+        }
+        
+        //TODO Delet dis
+        public async Task ResetPassAsync(string userId)
+        {
+            var user = (await repo.FindByConditionAync(u => u.UserName == userId)).FirstOrDefault();
+            if (user == null) return;
+            user.PasswordHash = _passwordHasher.HashPassword(user, user.UserName + "pass");
+            await repo.SaveAsync();
         }
     }
 }

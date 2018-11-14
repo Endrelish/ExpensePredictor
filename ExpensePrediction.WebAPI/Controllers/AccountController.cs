@@ -87,5 +87,18 @@ namespace ExpensePrediction.WebAPI.Controllers
                 return StatusCode(400, e.Message); //TODO custom exceptions
             }
         }
+
+        //TODO Delet dis
+        /// <summary>
+        /// Resets the password.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <returns></returns>
+        [HttpGet("reset-pass/{userName}")]
+        public async Task<IActionResult> ResetPassword([FromRoute]string userName)
+        {
+            await _accountService.ResetPassAsync(userName);
+            return Ok();
+        }
     }
 }

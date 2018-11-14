@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using ExpensePrediction.BusinessLogicLayer.Mapper;
 
-namespace ExpensePrediction.BusinessLogicLayer.Services
+namespace ExpensePrediction.BusinessLogicLayer.Mapper
 {
     public static class MapperService
     {

@@ -1,4 +1,4 @@
-namespace AuthWebApi.Dto
+namespace ExpensePrediction.DataTransferObjects.User
 {
     public class LoginDto
     {

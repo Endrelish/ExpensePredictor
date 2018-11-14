@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using AuthWebApi.Dto;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataTransferObjects.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -69,6 +69,8 @@ namespace ExpensePrediction.WebAPI.Controllers
                 return Unauthorized();
             }
         }
+
+        //----------ENDPOINTS BELOW JUST FOR TESTING----------//
 
         /// <summary>
         /// Hahas this instance.

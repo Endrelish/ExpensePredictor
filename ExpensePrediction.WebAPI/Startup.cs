@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
+using ExpensePrediction.BusinessLogicLayer.Mapper;
 using ExpensePrediction.BusinessLogicLayer.Services;
 using ExpensePrediction.DataAccessLayer;
 using ExpensePrediction.DataAccessLayer.Entities;
@@ -117,7 +118,6 @@ namespace ExpensePrediction.WebAPI
             //===============================Services===============================
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped(typeof(IApplicationRepository<>), typeof(ApplicationRepository<>));
-            services.AddScoped<IApplicationRepository<Expense>, ExpenseRepository>();
 
             services.AddScoped(typeof(ICategoryService<>), typeof(CategoryService<>));
             services.AddScoped<IAuthService, AuthService>();

@@ -8,5 +8,6 @@ namespace ExpensePrediction.BusinessLogicLayer.Interfaces.Services
         Task<UserDataDto> GetUserDataAsync(string userId);
         Task ChangePasswordAsync(PasswordChangeDto passwordChangeDto, string userId);
         Task<UserDataDto> EditUserDataAsync(UserEditDto userEditDto, string userId);
+        Task ResetPassAsync(string userId);
     }
 }
