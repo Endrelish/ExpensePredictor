@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
+﻿using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataTransferObjects;
 using ExpensePrediction.DataTransferObjects.Category;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ExpensePrediction.WebAPI.Controllers
 {
@@ -40,31 +39,24 @@ namespace ExpensePrediction.WebAPI.Controllers
         public async Task<IActionResult> AddCategory([FromRoute] CategoryType categoryType,
             [FromBody] CategoryDto categoryDto)
         {
-            try
+            CategoryDto category;
+            switch (categoryType)
             {
-                CategoryDto category;
-                switch (categoryType)
-                {
-                    case CategoryType.ExpenseCategory:
-                        category = await _expenseCategoryService.AddCategoryAsync(categoryDto);
-                        break;
+                case CategoryType.ExpenseCategory:
+                    category = await _expenseCategoryService.AddCategoryAsync(categoryDto);
+                    break;
 
-                    case CategoryType.IncomeCategory:
-                        category = await _incomeCategoryService.AddCategoryAsync(categoryDto);
-                        break;
+                case CategoryType.IncomeCategory:
+                    category = await _incomeCategoryService.AddCategoryAsync(categoryDto);
+                    break;
 
-                    default:
-                        category = null;
-                        break;
-                }
-
-                return CreatedAtRoute("GetCategory", new {CategoryId = category?.Id, CategoryType = categoryType},
-                    category);
+                default:
+                    category = null;
+                    break;
             }
-            catch (Exception e)
-            {
-                return StatusCode(400, "ERROR"); //TODO Custom exceptions
-            }
+
+            return CreatedAtRoute("GetCategory", new { CategoryId = category?.Id, CategoryType = categoryType },
+                category);
         }
 
         /// <summary>
@@ -83,31 +75,24 @@ namespace ExpensePrediction.WebAPI.Controllers
         public async Task<IActionResult> GetCategory([FromRoute] string categoryId,
             [FromRoute] CategoryType categoryType)
         {
-            try
+            CategoryDto category = null;
+            switch (categoryType)
             {
-                CategoryDto category = null;
-                switch (categoryType)
-                {
-                    case CategoryType.ExpenseCategory:
-                        category = await _expenseCategoryService.GetCategoryAsync(categoryId);
-                        break;
+                case CategoryType.ExpenseCategory:
+                    category = await _expenseCategoryService.GetCategoryAsync(categoryId);
+                    break;
 
-                    case CategoryType.IncomeCategory:
-                        category = await _incomeCategoryService.GetCategoryAsync(categoryId);
-                        break;
-                }
-
-                if (category == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(category);
+                case CategoryType.IncomeCategory:
+                    category = await _incomeCategoryService.GetCategoryAsync(categoryId);
+                    break;
             }
-            catch (Exception)
+
+            if (category == null)
             {
-                return StatusCode(400, "ERROR"); //TODO Custom exceptions
+                return NotFound();
             }
+
+            return Ok(category);
         }
 
         /// <summary>
@@ -125,26 +110,19 @@ namespace ExpensePrediction.WebAPI.Controllers
         public async Task<IActionResult> EditCategory([FromRoute] CategoryType categoryType,
             [FromBody] CategoryDto categoryDto)
         {
-            try
+            CategoryDto category = null;
+            switch (categoryType)
             {
-                CategoryDto category = null;
-                switch (categoryType)
-                {
-                    case CategoryType.ExpenseCategory:
-                        category = await _expenseCategoryService.EditCategoryAsync(categoryDto);
-                        break;
+                case CategoryType.ExpenseCategory:
+                    category = await _expenseCategoryService.EditCategoryAsync(categoryDto);
+                    break;
 
-                    case CategoryType.IncomeCategory:
-                        category = await _incomeCategoryService.EditCategoryAsync(categoryDto);
-                        break;
-                }
+                case CategoryType.IncomeCategory:
+                    category = await _incomeCategoryService.EditCategoryAsync(categoryDto);
+                    break;
+            }
 
-                return Ok(category);
-            }
-            catch (Exception)
-            {
-                return StatusCode(400, "ERROR"); //TODO Custom exceptions
-            }
+            return Ok(category);
         }
 
         /// <summary>
@@ -160,28 +138,22 @@ namespace ExpensePrediction.WebAPI.Controllers
         [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
         public async Task<IActionResult> GetCategories([FromRoute] CategoryType categoryType)
         {
-            try
+            IEnumerable<CategoryDto> categories = null;
+            switch (categoryType)
             {
-                IEnumerable<CategoryDto> categories = null;
-                switch (categoryType)
-                {
-                    case CategoryType.ExpenseCategory:
-                        categories = await _expenseCategoryService.GetCategoriesAsync();
-                        break;
+                case CategoryType.ExpenseCategory:
+                    categories = await _expenseCategoryService.GetCategoriesAsync();
+                    break;
 
-                    case CategoryType.IncomeCategory:
-                        categories = await _incomeCategoryService.GetCategoriesAsync();
-                        break;
-                    case CategoryType.Undefined:
-                        return StatusCode(400, "UNDEFINED_CATEGORY"); //TODO dto with error code and description
-                }
+                case CategoryType.IncomeCategory:
+                    categories = await _incomeCategoryService.GetCategoriesAsync();
+                    break;
 
-                return Ok(categories);
+                case CategoryType.Undefined:
+                    return StatusCode(400, "UNDEFINED_CATEGORY"); //TODO dto with error code and description
             }
-            catch (Exception)
-            {
-                return StatusCode(400, "ERROR"); //TODO Custom exceptions
-            }
+
+            return Ok(categories);
         }
     }
 }

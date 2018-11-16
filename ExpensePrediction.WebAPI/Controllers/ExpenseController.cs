@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
@@ -8,6 +5,9 @@ using ExpensePrediction.DataTransferObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ExpensePrediction.WebAPI.Controllers
 {
@@ -43,15 +43,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
         public async Task<IActionResult> AddExpense([FromBody] ExpenseDto expenseDto)
         {
-            try
-            {
-                var expense = await _expenseService.AddExpenseAsync(expenseDto, User.Identity.Name);
-                return CreatedAtRoute("GetExpense", new {expenseId = expense.Id}, expense);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(400, e.Message); //TODO custom error codes and exceptions
-            }
+            var expense = await _expenseService.AddExpenseAsync(expenseDto, User.Identity.Name);
+            return CreatedAtRoute("GetExpense", new { expenseId = expense.Id }, expense);
         }
 
         /// <summary>
@@ -66,16 +59,9 @@ namespace ExpensePrediction.WebAPI.Controllers
         [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
         public async Task<IActionResult> GetExpense([FromRoute] string expenseId)
         {
-            try
-            {
-                var expense = await _expenseService.GetExpenseAsync(expenseId,
-                    (await _userManager.FindByIdAsync(User.Identity.Name)).Id);
-                return Ok(expense);
-            }
-            catch (Exception) //TODO Custom exceptions
-            {
-                return StatusCode(400, "ERROR"); //TODO Custom error codes
-            }
+            var expense = await _expenseService.GetExpenseAsync(expenseId,
+                (await _userManager.FindByIdAsync(User.Identity.Name)).Id);
+            return Ok(expense);
         }
 
         /// <summary>
@@ -91,15 +77,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
         public async Task<IActionResult> GetExpenses([FromQuery] DateTime from, [FromQuery] DateTime to)
         {
-            try
-            {
-                var expenses = await _expenseService.GetExpensesAsync(User.Identity.Name, from, to);
-                return Ok(expenses);
-            }
-            catch (Exception)
-            {
-                return StatusCode(400, "ERROR"); //TODO custom exceptions
-            }
+            var expenses = await _expenseService.GetExpensesAsync(User.Identity.Name, from, to);
+            return Ok(expenses);
         }
 
         /// <summary>
@@ -115,15 +94,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
         public async Task<IActionResult> EditExpense([FromBody] ExpenseDto expenseDto)
         {
-            try
-            {
-                var result = await _expenseService.EditExpenseAsync(expenseDto, User.Identity.Name);
-                return Ok(result);
-            }
-            catch (Exception e) //TODO Custom exceptions
-            {
-                return StatusCode(400, e.Message);
-            }
+            var result = await _expenseService.EditExpenseAsync(expenseDto, User.Identity.Name);
+            return Ok(result);
         }
 
         /// <summary>
@@ -138,15 +110,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
         public async Task<IActionResult> GetLinkedExpenses([FromRoute] string expenseId)
         {
-            try
-            {
-                var expenses = await _expenseService.GetLinkedExpensesAsync(expenseId, User.Identity.Name);
-                return Ok(expenses);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(400, e.Message); //TODO custom exceptions
-            }
+            var expenses = await _expenseService.GetLinkedExpensesAsync(expenseId, User.Identity.Name);
+            return Ok(expenses);
         }
     }
 }

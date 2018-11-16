@@ -1,9 +1,8 @@
-using System;
-using System.Threading.Tasks;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataTransferObjects.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace ExpensePrediction.WebAPI.Controllers
 {
@@ -30,15 +29,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
         public async Task<IActionResult> EditUser([FromBody] UserEditDto userEditDto)
         {
-            try
-            {
-                var user = await _accountService.EditUserDataAsync(userEditDto, User.Identity.Name);
-                return Ok(user);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(400, e.Message);
-            }
+            var user = await _accountService.EditUserDataAsync(userEditDto, User.Identity.Name);
+            return Ok(user);
         }
 
         /// <summary>
@@ -52,15 +44,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
         public async Task<IActionResult> GetUser()
         {
-            try
-            {
-                var user = await _accountService.GetUserDataAsync(User.Identity.Name);
-                return Ok(user);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(400, e.Message); //TODO custom exceptions
-            }
+            var user = await _accountService.GetUserDataAsync(User.Identity.Name);
+            return Ok(user);
         }
 
         /// <summary>
@@ -77,15 +62,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
         public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeDto passwordChangeDto)
         {
-            try
-            {
-                await _accountService.ChangePasswordAsync(passwordChangeDto, User.Identity.Name);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return StatusCode(400, e.Message); //TODO custom exceptions
-            }
+            await _accountService.ChangePasswordAsync(passwordChangeDto, User.Identity.Name);
+            return Ok();
         }
     }
 }

@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
@@ -8,6 +5,9 @@ using ExpensePrediction.DataTransferObjects;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ExpensePrediction.WebAPI.Controllers
 {
@@ -40,15 +40,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
         public async Task<IActionResult> AddIncome([FromBody] IncomeDto incomeDto)
         {
-            try
-            {
-                var income = await _incomeService.AddIncomeAsync(incomeDto, User.Identity.Name);
-                return CreatedAtRoute("GetIncome", new {incomeId = income.Id}, income);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(400, e.Message); //TODO custom error codes and exceptions
-            }
+            var income = await _incomeService.AddIncomeAsync(incomeDto, User.Identity.Name);
+            return CreatedAtRoute("GetIncome", new { incomeId = income.Id }, income);
         }
 
         /// <summary>
@@ -63,16 +56,9 @@ namespace ExpensePrediction.WebAPI.Controllers
         [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
         public async Task<IActionResult> GetIncome([FromRoute] string incomeId)
         {
-            try
-            {
-                var income = await _incomeService.GetIncomeAsync(incomeId,
-                    (await _userManager.FindByIdAsync(User.Identity.Name)).Id);
-                return Ok(income);
-            }
-            catch (Exception) //TODO Custom exceptions
-            {
-                return StatusCode(400, "ERROR"); //TODO Custom error codes
-            }
+            var income = await _incomeService.GetIncomeAsync(incomeId,
+                (await _userManager.FindByIdAsync(User.Identity.Name)).Id);
+            return Ok(income);
         }
 
         /// <summary>
@@ -88,15 +74,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
         public async Task<IActionResult> GetIncomes([FromQuery] DateTime from, [FromQuery] DateTime to)
         {
-            try
-            {
-                var incomes = await _incomeService.GetIncomesAsync(User.Identity.Name, from, to);
-                return Ok(incomes);
-            }
-            catch (Exception)
-            {
-                return StatusCode(400, "ERROR"); //TODO Custom exceptions
-            }
+            var incomes = await _incomeService.GetIncomesAsync(User.Identity.Name, from, to);
+            return Ok(incomes);
         }
 
         /// <summary>
@@ -112,15 +91,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
         public async Task<IActionResult> EditIncome([FromBody] IncomeDto incomeDto)
         {
-            try
-            {
-                var result = await _incomeService.EditIncomeAsync(incomeDto, User.Identity.Name);
-                return Ok(result);
-            }
-            catch (Exception e) //TODO Custom exceptions
-            {
-                return StatusCode(400, e.Message);
-            }
+            var result = await _incomeService.EditIncomeAsync(incomeDto, User.Identity.Name);
+            return Ok(result);
         }
     }
 }
