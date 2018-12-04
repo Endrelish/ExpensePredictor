@@ -1,5 +1,5 @@
-﻿using ExpensePrediction.Frontend.Pages;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using ExpensePrediction.Frontend.Pages;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,8 +10,6 @@ namespace ExpensePrediction.Frontend
 {
     public partial class App : Application
     {
-        public static bool IsUserLoggedIn { get; set; }
-
         public App()
         {
             var token = Task.Run(async () => await SecureStorage.GetAsync(Constants.Token));
@@ -27,6 +25,8 @@ namespace ExpensePrediction.Frontend
                 MainPage = new NavigationPage(new MainPage());
             }
         }
+
+        public static bool IsUserLoggedIn { get; set; }
 
         protected override void OnStart()
         {

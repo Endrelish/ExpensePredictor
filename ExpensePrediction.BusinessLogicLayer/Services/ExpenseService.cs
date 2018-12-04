@@ -81,8 +81,8 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         public async Task<IEnumerable<ExpenseDto>> GetExpensesAsync(string userId, DateTime from, DateTime to)
         {
             Expression<Func<Expense, bool>> condition = e => e.UserId == userId &&
-                                                 e.Date >= from &&
-                                                 e.Date <= to;
+                                                             e.Date >= from &&
+                                                             e.Date <= to;
 
             var expenses = await _expenseRepository.FindByConditionAync(condition);
             return _mapper.Map<IEnumerable<ExpenseDto>>(expenses);

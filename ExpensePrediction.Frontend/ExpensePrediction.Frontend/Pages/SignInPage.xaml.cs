@@ -1,7 +1,6 @@
-﻿using AuthWebApi.Dto;
+﻿using System;
+using ExpensePrediction.DataTransferObjects.User;
 using ExpensePrediction.Frontend.Service;
-using System;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -29,8 +28,12 @@ namespace ExpensePrediction.Frontend.Pages
 
             try
             {
-                Action navigateAsync = () => Application.Current.MainPage = new StartPage();
-                await _authService.LoginAsync(loginDto, navigateAsync);
+                void Navigate()
+                {
+                    Application.Current.MainPage = new StartPage();
+                }
+
+                await _authService.LoginAsync(loginDto, Navigate);
             }
             catch (Exception)
             {

@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataTransferObjects.User;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -21,17 +20,18 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Registers a new user with specified data.
+        ///     Registers a new user with specified data.
         /// </summary>
         /// <param name="registerDto">The registration data.</param>
         /// <returns>
-        /// Access token
+        ///     Access token
         /// </returns>
         [HttpPost("register")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(string), 200)] //TODO Change to TokenDto
-        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO Custom exceptions
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
             try
@@ -46,11 +46,11 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Gets the token for specified user.
+        ///     Gets the token for specified user.
         /// </summary>
         /// <param name="loginDto">The login data.</param>
         /// <returns>
-        /// The token.
+        ///     The token.
         /// </returns>
         [HttpPost("get-token")]
         [Consumes(Constants.ApplicationJson)]
@@ -73,7 +73,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         //----------ENDPOINTS BELOW JUST FOR TESTING----------//
 
         /// <summary>
-        /// Hahas this instance.
+        ///     Hahas this instance.
         /// </summary>
         /// <returns></returns>
         [HttpGet("haha")]

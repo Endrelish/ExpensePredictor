@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
-using ExpensePrediction.DataTransferObjects;
 using ExpensePrediction.DataTransferObjects.Category;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,19 +23,20 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Adds a new category.
+        ///     Adds a new category.
         /// </summary>
         /// <param name="categoryType">Type of the category.</param>
         /// <param name="categoryDto">The category data.</param>
         /// <returns>
-        /// Newly created category.
+        ///     Newly created category.
         /// </returns>
         [HttpPost("add/{categoryType}")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [Authorize("AddCategory")]
         [ProducesResponseType(typeof(CategoryDto), 201)]
-        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO Custom exceptions
         public async Task<IActionResult> AddCategory([FromRoute] CategoryType categoryType,
             [FromBody] CategoryDto categoryDto)
         {
@@ -68,7 +68,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Gets the category.
+        ///     Gets the category.
         /// </summary>
         /// <param name="categoryId">The category identifier.</param>
         /// <param name="categoryType">Type of the category.</param>
@@ -79,7 +79,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Authorize("GetCategory")]
         [ProducesResponseType(typeof(CategoryDto), 200)]
         [ProducesResponseType(404)]
-        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO Custom exceptions
         public async Task<IActionResult> GetCategory([FromRoute] string categoryId,
             [FromRoute] CategoryType categoryType)
         {
@@ -111,7 +112,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Edits the category.
+        ///     Edits the category.
         /// </summary>
         /// <param name="categoryType">Type of the category.</param>
         /// <param name="categoryDto">The category data.</param>
@@ -121,7 +122,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         [Authorize("EditCategory")]
         [ProducesResponseType(typeof(CategoryDto), 200)]
-        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO Custom exceptions
         public async Task<IActionResult> EditCategory([FromRoute] CategoryType categoryType,
             [FromBody] CategoryDto categoryDto)
         {
@@ -148,7 +150,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Gets all categories of given type.
+        ///     Gets all categories of given type.
         /// </summary>
         /// <param name="categoryType">Type of the category.</param>
         /// <returns>All categories.</returns>
@@ -157,7 +159,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         [Authorize("GetCategories")]
         [ProducesResponseType(typeof(IEnumerable<CategoryDto>), 200)]
-        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO Custom exceptions
         public async Task<IActionResult> GetCategories([FromRoute] CategoryType categoryType)
         {
             try

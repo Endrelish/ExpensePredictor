@@ -13,10 +13,10 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
 {
     public class IncomeService : IIncomeService
     {
+        private readonly IApplicationRepository<IncomeCategory> _categoryRepository;
         private readonly IApplicationRepository<Income> _incomeRepository;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
-        private readonly IApplicationRepository<IncomeCategory> _categoryRepository;
 
         public IncomeService(IApplicationRepository<Income> incomeRepository, IMapper mapper,
             UserManager<User> userManager, IApplicationRepository<IncomeCategory> categoryRepository)
@@ -80,8 +80,8 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         public async Task<IEnumerable<IncomeDto>> GetIncomesAsync(string userId, DateTime from, DateTime to)
         {
             Expression<Func<Income, bool>> condition = i => i.UserId == userId &&
-                                                             i.Date >= from &&
-                                                             i.Date <= to;
+                                                            i.Date >= from &&
+                                                            i.Date <= to;
 
             var incomes = await _incomeRepository.FindByConditionAync(condition);
             return _mapper.Map<IEnumerable<IncomeDto>>(incomes);

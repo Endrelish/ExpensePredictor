@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Xamarin.Essentials;
 
 namespace ExpensePrediction.Frontend.Service
@@ -19,7 +19,8 @@ namespace ExpensePrediction.Frontend.Service
 
         private async Task<HttpContent> CreateContent(object dto, bool authorize)
         {
-            var content = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, ApplicationJsonContentType);
+            var content = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8,
+                ApplicationJsonContentType);
 
             var headers = content.Headers;
             if (authorize)
@@ -48,7 +49,7 @@ namespace ExpensePrediction.Frontend.Service
         {
             var response = await _client.PostAsync(uri, await CreateContent(content, authorize));
 
-            if(!response.IsSuccessStatusCode) 
+            if (!response.IsSuccessStatusCode)
             {
                 //NOOOOOOOOOOOOOOOOOOOOOOOOOO
             }

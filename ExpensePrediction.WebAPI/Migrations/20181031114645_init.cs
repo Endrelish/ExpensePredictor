@@ -8,22 +8,19 @@ namespace ExpensePrediction.WebAPI.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AspNetRoles",
-                columns: table => new
+                "AspNetRoles",
+                table => new
                 {
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AspNetRoles", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
+                "AspNetUsers",
+                table => new
                 {
                     Id = table.Column<string>(nullable: false),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
@@ -43,38 +40,29 @@ namespace ExpensePrediction.WebAPI.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_AspNetUsers", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "ExpenseCategories",
-                columns: table => new
+                "ExpenseCategories",
+                table => new
                 {
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExpenseCategories", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_ExpenseCategories", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "IncomeCategories",
-                columns: table => new
+                "IncomeCategories",
+                table => new
                 {
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_IncomeCategories", x => x.Id);
-                });
+                constraints: table => { table.PrimaryKey("PK_IncomeCategories", x => x.Id); });
 
             migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
+                "AspNetRoleClaims",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
@@ -86,16 +74,16 @@ namespace ExpensePrediction.WebAPI.Migrations
                 {
                     table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
+                        "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        x => x.RoleId,
+                        "AspNetRoles",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ActivationTokens",
-                columns: table => new
+                "ActivationTokens",
+                table => new
                 {
                     Id = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
@@ -106,16 +94,16 @@ namespace ExpensePrediction.WebAPI.Migrations
                 {
                     table.PrimaryKey("PK_ActivationTokens", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ActivationTokens_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_ActivationTokens_AspNetUsers_UserId",
+                        x => x.UserId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserClaims",
-                columns: table => new
+                "AspNetUserClaims",
+                table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
@@ -127,16 +115,16 @@ namespace ExpensePrediction.WebAPI.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        x => x.UserId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserLogins",
-                columns: table => new
+                "AspNetUserLogins",
+                table => new
                 {
                     LoginProvider = table.Column<string>(nullable: false),
                     ProviderKey = table.Column<string>(nullable: false),
@@ -145,42 +133,42 @@ namespace ExpensePrediction.WebAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new {x.LoginProvider, x.ProviderKey});
                     table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        x => x.UserId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserRoles",
-                columns: table => new
+                "AspNetUserRoles",
+                table => new
                 {
                     UserId = table.Column<string>(nullable: false),
                     RoleId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new {x.UserId, x.RoleId});
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
+                        "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        x => x.RoleId,
+                        "AspNetRoles",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        x => x.UserId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUserTokens",
-                columns: table => new
+                "AspNetUserTokens",
+                table => new
                 {
                     UserId = table.Column<string>(nullable: false),
                     LoginProvider = table.Column<string>(nullable: false),
@@ -189,18 +177,18 @@ namespace ExpensePrediction.WebAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new {x.UserId, x.LoginProvider, x.Name});
                     table.ForeignKey(
-                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        x => x.UserId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Expenses",
-                columns: table => new
+                "Expenses",
+                table => new
                 {
                     Id = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
@@ -213,28 +201,28 @@ namespace ExpensePrediction.WebAPI.Migrations
                 {
                     table.PrimaryKey("PK_Expenses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Expenses_ExpenseCategories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "ExpenseCategories",
-                        principalColumn: "Id",
+                        "FK_Expenses_ExpenseCategories_CategoryId",
+                        x => x.CategoryId,
+                        "ExpenseCategories",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Expenses_Expenses_LinkedExpenseId",
-                        column: x => x.LinkedExpenseId,
-                        principalTable: "Expenses",
-                        principalColumn: "Id",
+                        "FK_Expenses_Expenses_LinkedExpenseId",
+                        x => x.LinkedExpenseId,
+                        "Expenses",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Expenses_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_Expenses_AspNetUsers_UserId",
+                        x => x.UserId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Incomes",
-                columns: table => new
+                "Incomes",
+                table => new
                 {
                     Id = table.Column<string>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
@@ -246,159 +234,172 @@ namespace ExpensePrediction.WebAPI.Migrations
                 {
                     table.PrimaryKey("PK_Incomes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Incomes_IncomeCategories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "IncomeCategories",
-                        principalColumn: "Id",
+                        "FK_Incomes_IncomeCategories_CategoryId",
+                        x => x.CategoryId,
+                        "IncomeCategories",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Incomes_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        "FK_Incomes_AspNetUsers_UserId",
+                        x => x.UserId,
+                        "AspNetUsers",
+                        "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "2fdbec88-4aa9-430c-8359-8b27756cf1ca", "daab4dbb-85e9-4e5d-8709-12b23689abba", "admin", "ADMIN" });
+                "AspNetRoles",
+                new[] {"Id", "ConcurrencyStamp", "Name", "NormalizedName"},
+                new object[]
+                    {"2fdbec88-4aa9-430c-8359-8b27756cf1ca", "daab4dbb-85e9-4e5d-8709-12b23689abba", "admin", "ADMIN"});
 
             migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "307d5d07-87cf-49a0-9cd4-b925b5380963", "b9599d8c-5441-48d3-a59e-66a5125e5ce1", "user", "USER" });
+                "AspNetRoles",
+                new[] {"Id", "ConcurrencyStamp", "Name", "NormalizedName"},
+                new object[]
+                    {"307d5d07-87cf-49a0-9cd4-b925b5380963", "b9599d8c-5441-48d3-a59e-66a5125e5ce1", "user", "USER"});
 
             migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "830f0d08-6a56-4a57-83c9-329c094f184b", 0, "8bc49ec0-656f-4618-907a-a45e8cee2eaa", "user@user.com", false, "User", "User", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", "123456780", false, null, false, "user" });
+                "AspNetUsers",
+                new[]
+                {
+                    "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName",
+                    "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash",
+                    "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName"
+                },
+                new object[]
+                {
+                    "830f0d08-6a56-4a57-83c9-329c094f184b", 0, "8bc49ec0-656f-4618-907a-a45e8cee2eaa", "user@user.com",
+                    false, "User", "User", false, null, "USER@USER.COM", "USER",
+                    "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", "123456780",
+                    false, null, false, "user"
+                });
 
             migrationBuilder.InsertData(
-                table: "ExpenseCategories",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { "27a62b11-7765-473d-a1b6-7ecda9915dd5", "Żarcie" });
+                "ExpenseCategories",
+                new[] {"Id", "Name"},
+                new object[] {"27a62b11-7765-473d-a1b6-7ecda9915dd5", "Żarcie"});
 
             migrationBuilder.InsertData(
-                table: "ExpenseCategories",
-                columns: new[] { "Id", "Name" },
-                values: new object[] { "7edeb282-6172-49b1-9a8f-5c3b25b7d0b8", "Alkohol" });
+                "ExpenseCategories",
+                new[] {"Id", "Name"},
+                new object[] {"7edeb282-6172-49b1-9a8f-5c3b25b7d0b8", "Alkohol"});
 
             migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "UserId", "RoleId" },
-                values: new object[] { "830f0d08-6a56-4a57-83c9-329c094f184b", "2fdbec88-4aa9-430c-8359-8b27756cf1ca" });
+                "AspNetUserRoles",
+                new[] {"UserId", "RoleId"},
+                new object[] {"830f0d08-6a56-4a57-83c9-329c094f184b", "2fdbec88-4aa9-430c-8359-8b27756cf1ca"});
 
             migrationBuilder.InsertData(
-                table: "AspNetUserRoles",
-                columns: new[] { "UserId", "RoleId" },
-                values: new object[] { "830f0d08-6a56-4a57-83c9-329c094f184b", "307d5d07-87cf-49a0-9cd4-b925b5380963" });
+                "AspNetUserRoles",
+                new[] {"UserId", "RoleId"},
+                new object[] {"830f0d08-6a56-4a57-83c9-329c094f184b", "307d5d07-87cf-49a0-9cd4-b925b5380963"});
 
             migrationBuilder.CreateIndex(
-                name: "IX_ActivationTokens_UserId",
-                table: "ActivationTokens",
-                column: "UserId");
+                "IX_ActivationTokens_UserId",
+                "ActivationTokens",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoleClaims_RoleId",
-                table: "AspNetRoleClaims",
-                column: "RoleId");
+                "IX_AspNetRoleClaims_RoleId",
+                "AspNetRoleClaims",
+                "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                table: "AspNetRoles",
-                column: "NormalizedName",
+                "RoleNameIndex",
+                "AspNetRoles",
+                "NormalizedName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserClaims_UserId",
-                table: "AspNetUserClaims",
-                column: "UserId");
+                "IX_AspNetUserClaims_UserId",
+                "AspNetUserClaims",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserLogins_UserId",
-                table: "AspNetUserLogins",
-                column: "UserId");
+                "IX_AspNetUserLogins_UserId",
+                "AspNetUserLogins",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUserRoles_RoleId",
-                table: "AspNetUserRoles",
-                column: "RoleId");
+                "IX_AspNetUserRoles_RoleId",
+                "AspNetUserRoles",
+                "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "EmailIndex",
-                table: "AspNetUsers",
-                column: "NormalizedEmail");
+                "EmailIndex",
+                "AspNetUsers",
+                "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "UserNameIndex",
-                table: "AspNetUsers",
-                column: "NormalizedUserName",
+                "UserNameIndex",
+                "AspNetUsers",
+                "NormalizedUserName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Expenses_CategoryId",
-                table: "Expenses",
-                column: "CategoryId");
+                "IX_Expenses_CategoryId",
+                "Expenses",
+                "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Expenses_LinkedExpenseId",
-                table: "Expenses",
-                column: "LinkedExpenseId");
+                "IX_Expenses_LinkedExpenseId",
+                "Expenses",
+                "LinkedExpenseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Expenses_UserId",
-                table: "Expenses",
-                column: "UserId");
+                "IX_Expenses_UserId",
+                "Expenses",
+                "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Incomes_CategoryId",
-                table: "Incomes",
-                column: "CategoryId");
+                "IX_Incomes_CategoryId",
+                "Incomes",
+                "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Incomes_UserId",
-                table: "Incomes",
-                column: "UserId");
+                "IX_Incomes_UserId",
+                "Incomes",
+                "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ActivationTokens");
+                "ActivationTokens");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoleClaims");
+                "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserClaims");
+                "AspNetUserClaims");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserLogins");
+                "AspNetUserLogins");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserRoles");
+                "AspNetUserRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserTokens");
+                "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Expenses");
+                "Expenses");
 
             migrationBuilder.DropTable(
-                name: "Incomes");
+                "Incomes");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "ExpenseCategories");
+                "ExpenseCategories");
 
             migrationBuilder.DropTable(
-                name: "IncomeCategories");
+                "IncomeCategories");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                "AspNetUsers");
         }
     }
 }

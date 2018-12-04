@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ExpensePrediction.DataTransferObjects.User
+﻿namespace ExpensePrediction.DataTransferObjects.User
 {
     public class TokenDto
     {

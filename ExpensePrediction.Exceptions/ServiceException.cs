@@ -1,7 +1,7 @@
-﻿namespace ExpensePrediction.Exceptions
-{
-    using System;
+﻿using System;
 
+namespace ExpensePrediction.Exceptions
+{
     public class ServiceException : Exception
     {
         public ServiceException()

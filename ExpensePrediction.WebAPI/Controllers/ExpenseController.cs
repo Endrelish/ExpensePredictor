@@ -28,11 +28,11 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Adds an expense.
+        ///     Adds an expense.
         /// </summary>
         /// <param name="expenseDto">The expense data.</param>
         /// <returns>
-        /// Link to the created expense.
+        ///     Link to the created expense.
         /// </returns>
         /// <consumes>application/json</consumes>
         [HttpPost("add")]
@@ -40,7 +40,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(ExpenseDto), 201)]
-        [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO custom exceptions
         public async Task<IActionResult> AddExpense([FromBody] ExpenseDto expenseDto)
         {
             try
@@ -55,7 +56,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Gets data of an expense specified by its id.
+        ///     Gets data of an expense specified by its id.
         /// </summary>
         /// <param name="expenseId">The expense identifier.</param>
         /// <returns>The expense.</returns>
@@ -63,7 +64,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Authorize("GetExpense")]
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(ExpenseDto), 200)]
-        [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO custom exceptions
         public async Task<IActionResult> GetExpense([FromRoute] string expenseId)
         {
             try
@@ -79,7 +81,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Gets user expenses from given period of time.
+        ///     Gets user expenses from given period of time.
         /// </summary>
         /// <param name="from">From date.</param>
         /// <param name="to">To date.</param>
@@ -88,7 +90,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Authorize("GetExpenses")]
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(IEnumerable<ExpenseDto>), 200)]
-        [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO custom exceptions
         public async Task<IActionResult> GetExpenses([FromQuery] DateTime from, [FromQuery] DateTime to)
         {
             try
@@ -103,7 +106,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Edits the expense.
+        ///     Edits the expense.
         /// </summary>
         /// <param name="expenseDto">The expense dto.</param>
         /// <returns>Edited expense.</returns>
@@ -112,7 +115,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(ExpenseDto), 200)]
-        [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO custom exceptions
         public async Task<IActionResult> EditExpense([FromBody] ExpenseDto expenseDto)
         {
             try
@@ -127,7 +131,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Gets the linked expenses.
+        ///     Gets the linked expenses.
         /// </summary>
         /// <param name="expenseId">The expense identifier.</param>
         /// <returns>Linked expenses.</returns>
@@ -135,7 +139,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Authorize("GetExpenses")]
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(IEnumerable<ExpenseDto>), 200)]
-        [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO custom exceptions
         public async Task<IActionResult> GetLinkedExpenses([FromRoute] string expenseId)
         {
             try

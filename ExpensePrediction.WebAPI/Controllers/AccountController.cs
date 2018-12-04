@@ -27,7 +27,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(UserEditDto), 200)]
-        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO Custom exceptions
         public async Task<IActionResult> EditUser([FromBody] UserEditDto userEditDto)
         {
             try
@@ -49,7 +50,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Authorize("GetUser")]
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(UserDataDto), 200)]
-        [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO custom exceptions
         public async Task<IActionResult> GetUser()
         {
             try
@@ -74,7 +76,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(string), 400)] //TODO custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO custom exceptions
         public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeDto passwordChangeDto)
         {
             try
@@ -90,12 +93,12 @@ namespace ExpensePrediction.WebAPI.Controllers
 
         //TODO Delet dis
         /// <summary>
-        /// Resets the password.
+        ///     Resets the password.
         /// </summary>
         /// <param name="userName">Name of the user.</param>
         /// <returns></returns>
         [HttpGet("reset-pass/{userName}")]
-        public async Task<IActionResult> ResetPassword([FromRoute]string userName)
+        public async Task<IActionResult> ResetPassword([FromRoute] string userName)
         {
             await _accountService.ResetPassAsync(userName);
             return Ok();

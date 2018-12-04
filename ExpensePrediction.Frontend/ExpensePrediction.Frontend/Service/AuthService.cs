@@ -1,17 +1,14 @@
-﻿using AuthWebApi.Dto;
-using ExpensePrediction.DataTransferObjects.User;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
+using ExpensePrediction.DataTransferObjects.User;
 using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace ExpensePrediction.Frontend.Service
 {
     public class AuthService
     {
         private readonly RestService _restService;
+
         public AuthService()
         {
             _restService = new RestService();
@@ -20,19 +17,23 @@ namespace ExpensePrediction.Frontend.Service
         public async Task LoginAsync(LoginDto loginDto, Action navigateAsync)
         {
             var token = await _restService.PostAsync<TokenDto>(Constants.GetTokenUri, loginDto, false);
-            try
-            {
-                await SecureStorage.SetAsync(Constants.Token, token.Token);
-                //TODO set some task to obtain a new token when this one expires
-            }
-            catch (Exception e)
-            {
-                //TODO don't know what
-                throw;
-            }
+            await SetTokenAsync(token);
+            navigateAsync();
+        }
+
+        public async Task RegisterAsync(RegisterDto registerDto, Action navigateAsync)
+        {
+            var token = await _restService.PostAsync<TokenDto>(Constants.RegisterUri, registerDto, false);
+            await SetTokenAsync(token);
+            navigateAsync();
+        }
+
+        private async Task SetTokenAsync(TokenDto token)
+        {
+            await SecureStorage.SetAsync(Constants.Token, token.Token);
+            //TODO set some task to obtain a new token when this one expires if credentials are remembered
 
             App.IsUserLoggedIn = true;
-            navigateAsync();
         }
 
         public void Logout(Action navigateAsync)

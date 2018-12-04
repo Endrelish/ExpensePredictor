@@ -1,9 +1,5 @@
-﻿using ExpensePrediction.Frontend.Pages;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using ExpensePrediction.Frontend.Pages;
 using Xamarin.Forms;
 
 namespace ExpensePrediction.Frontend
@@ -20,9 +16,9 @@ namespace ExpensePrediction.Frontend
             await Navigation.PushAsync(new SignInPage());
         }
 
-        private void SignUp(object sender, EventArgs e)
+        private async void SignUp(object sender, EventArgs e)
         {
-
+            await Navigation.PushAsync(new SignUpPage());
         }
     }
 }

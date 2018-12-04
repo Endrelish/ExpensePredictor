@@ -28,7 +28,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Adds the income.
+        ///     Adds the income.
         /// </summary>
         /// <param name="incomeDto">The income dto.</param>
         /// <returns>Link to the created income.</returns>
@@ -37,7 +37,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(IncomeDto), 200)]
-        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO Custom exceptions
         public async Task<IActionResult> AddIncome([FromBody] IncomeDto incomeDto)
         {
             try
@@ -52,7 +53,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Gets the income.
+        ///     Gets the income.
         /// </summary>
         /// <param name="incomeId">The income identifier.</param>
         /// <returns>The income.</returns>
@@ -60,7 +61,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Authorize("GetIncome")]
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(IncomeDto), 200)]
-        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO Custom exceptions
         public async Task<IActionResult> GetIncome([FromRoute] string incomeId)
         {
             try
@@ -76,7 +78,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Gets the incomes.
+        ///     Gets the incomes.
         /// </summary>
         /// <param name="from">From date.</param>
         /// <param name="to">To date.</param>
@@ -85,7 +87,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Authorize("GetIncomes")]
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(IEnumerable<IncomeDto>), 200)]
-        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO Custom exceptions
         public async Task<IActionResult> GetIncomes([FromQuery] DateTime from, [FromQuery] DateTime to)
         {
             try
@@ -100,7 +103,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Edits the income.
+        ///     Edits the income.
         /// </summary>
         /// <param name="incomeDto">The income dto.</param>
         /// <returns>The edited income</returns>
@@ -109,7 +112,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(IEnumerable<IncomeDto>), 200)]
-        [ProducesResponseType(typeof(string), 400)] //TODO Custom exceptions
+        [ProducesResponseType(typeof(string), 400)]
+        //TODO Custom exceptions
         public async Task<IActionResult> EditIncome([FromBody] IncomeDto incomeDto)
         {
             try

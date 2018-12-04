@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExpensePrediction.Frontend.Pages.SignUpPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Label Text="Sign Up"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand" />
+                <Entry x:Name="Username"
+                       Placeholder="Username"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand" />
+                <Entry x:Name="Email"
+                       Placeholder="Email"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand" />
+                <Entry x:Name="Password"
+                       Placeholder="Password"
+                       IsPassword="True"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand" />
+                <Entry x:Name="PasswordConfirm"
+                       Placeholder="Confirm password"
+                       IsPassword="True"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand" />
+                <Entry x:Name="FirstName"
+                       Placeholder="First name"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand" />
+                <Entry x:Name="LastName"
+                       Placeholder="Last name"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand" />
+                <Entry x:Name="Phone"
+                       Placeholder="Phone number"
+                       Keyboard="Numeric"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand" />
+                <Button Text="Sign up"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        Clicked="SignUpClicked" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

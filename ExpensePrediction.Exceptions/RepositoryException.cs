@@ -1,7 +1,7 @@
-﻿namespace ExpensePrediction.Exceptions
-{
-    using System;
+﻿using System;
 
+namespace ExpensePrediction.Exceptions
+{
     public class RepositoryException : Exception
     {
         public RepositoryException(string errorCode)
