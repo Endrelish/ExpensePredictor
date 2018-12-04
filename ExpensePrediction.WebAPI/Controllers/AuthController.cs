@@ -1,9 +1,9 @@
-using System;
-using System.Threading.Tasks;
+using AuthWebApi.Dto;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataTransferObjects.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 
 namespace ExpensePrediction.WebAPI.Controllers
 {
@@ -34,15 +34,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         //TODO Custom exceptions
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
-            try
-            {
-                var token = await _authService.RegisterAsync(registerDto);
-                return Ok(new {Token = token});
-            }
-            catch (Exception)
-            {
-                return StatusCode(400, "ERROR"); //TODO Custom exceptions
-            }
+            var token = await _authService.RegisterAsync(registerDto);
+            return Ok(new { Token = token });
         }
 
         /// <summary>
@@ -59,15 +52,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [ProducesResponseType(401)]
         public async Task<IActionResult> GetToken([FromBody] LoginDto loginDto)
         {
-            try
-            {
-                var token = await _authService.GetTokenAsync(loginDto);
-                return Ok(new {Token = token});
-            }
-            catch (Exception) //TODO custom exception
-            {
-                return Unauthorized();
-            }
+            var token = await _authService.GetTokenAsync(loginDto);
+            return Ok(new { Token = token });
         }
 
         //----------ENDPOINTS BELOW JUST FOR TESTING----------//
@@ -79,7 +65,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         [HttpGet("haha")]
         public IActionResult Haha()
         {
-            return Ok(new {Haha = "hehe"});
+            return Ok(new { Haha = "hehe" });
         }
     }
 }

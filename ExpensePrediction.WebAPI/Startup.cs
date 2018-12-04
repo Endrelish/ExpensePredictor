@@ -150,6 +150,11 @@ namespace ExpensePrediction.WebAPI
             });
         }
 
+        public void UseGlobalExceptionHandler(IApplicationBuilder app)
+        {
+            app.UseMiddleware<ExceptionMiddleware>();
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -168,6 +173,7 @@ namespace ExpensePrediction.WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            UseGlobalExceptionHandler(app);
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
