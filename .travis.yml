@@ -9,4 +9,4 @@ install:
 - echo "deb http://cz.archive.ubuntu.com/ubuntu xenial-updates main" >> /etc/apt/sources.list
 - sudo apt-get update
 - sudo apt-get install -y dotnet-sdk-2.1
-- nuget restore AuthWebApi.sln
+- nuget restore ExpensePrediction.sln
