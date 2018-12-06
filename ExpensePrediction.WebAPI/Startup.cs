@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Reflection;
-using System.Security.Claims;
-using System.Text;
-using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
+﻿using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.BusinessLogicLayer.Mapper;
 using ExpensePrediction.BusinessLogicLayer.Services;
 using ExpensePrediction.DataAccessLayer;
@@ -21,25 +14,23 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Reflection;
+using System.Security.Claims;
+using System.Text;
 
 namespace ExpensePrediction.WebAPI
 {
     public class Startup
     {
-        public readonly LoggerFactory LoggerFactory;
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            LoggerFactory = new LoggerFactory(new[]
-            {
-                new ConsoleLoggerProvider((category, level)
-                    => category == DbLoggerCategory.Database.Command.Name
-                       && level == LogLevel.Information, true)
-            });
         }
 
         public IConfiguration Configuration { get; }
@@ -61,7 +52,6 @@ namespace ExpensePrediction.WebAPI
 
                 optionsBuilder
                     .UseLazyLoadingProxies()
-                    .UseLoggerFactory(LoggerFactory)
                     .EnableSensitiveDataLogging();
             });
         }
@@ -113,6 +103,14 @@ namespace ExpensePrediction.WebAPI
             });
         }
 
+        public void SetUpLogging(IServiceCollection services)
+        {
+            services.AddLogging(builder =>
+               builder.AddConsole()
+               .AddFilter((category, level) => category == DbLoggerCategory.Database.Command.Name && level == LogLevel.Information)
+            );
+        }
+
         private void AddServices(IServiceCollection services)
         {
             //===============================Services===============================
@@ -132,7 +130,7 @@ namespace ExpensePrediction.WebAPI
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info {Title = "Inzynierka API", Version = "v1"});
+                c.SwaggerDoc("v1", new Info { Title = "Inzynierka API", Version = "v1" });
                 c.IncludeXmlComments(string.Format(@"{0}\SwaggerApiDescription.xml",
                     AppDomain.CurrentDomain.BaseDirectory));
                 c.AddSecurityDefinition("Bearer",
@@ -159,9 +157,10 @@ namespace ExpensePrediction.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            
             SetUpDbContext(services);
             SetUpSecurity(services);
+            SetUpLogging(services);
             AddServices(services);
             AddSwagger(services);
         }

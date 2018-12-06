@@ -64,7 +64,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         [HttpGet("haha")]
         public IActionResult Haha()
         {
-            return Ok(new { Haha = "hehe", Hehe = "haha" });
+            return Ok(new { Haha = "hehe", Hehe = "haha", Hoho = "huhu", Huhu = "hoho" });
         }
     }
 }
