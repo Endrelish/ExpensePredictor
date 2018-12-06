@@ -1,5 +1,5 @@
 language: csharp
-solution: AuthWebApi.sln
+solution: ExpensePrediction.sln
 install:
 - sudo apt-get install apt-transport-https
 - sudo apt-get update
