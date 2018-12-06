@@ -1,4 +1,3 @@
-using AuthWebApi.Dto;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataTransferObjects.User;
 using Microsoft.AspNetCore.Mvc;
@@ -65,7 +64,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         [HttpGet("haha")]
         public IActionResult Haha()
         {
-            return Ok(new { Haha = "hehe" });
+            return Ok(new { Haha = "hehe", Hehe = "haha" });
         }
     }
 }
