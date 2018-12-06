@@ -4,11 +4,15 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
 pool:
-  vmImage: 'Ubuntu 16.04'
+  vmImage: "Ubuntu 16.04"
 
 variables:
-  buildConfiguration: 'BackendRelease'
+  buildConfiguration: "BackendRelease"
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
+  - task: DotNetCoreInstaller@0
+    inputs:
+      packageType: "sdk"
+      version: "2.2.100"
+  - script: dotnet build --configuration $(buildConfiguration)
+    displayName: "dotnet build $(buildConfiguration)"
