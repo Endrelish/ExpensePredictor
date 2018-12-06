@@ -5,12 +5,16 @@
     <RootNamespace>ExpensePrediction.WebAPI</RootNamespace>
     <StartupObject></StartupObject>
     <UserSecretsId>6bbb3924-8ac9-4aee-ae7a-05f3abb1e156</UserSecretsId>
+    <Configurations>Debug;Release;BackendRelease</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\SwaggerApiDescription.xml</DocumentationFile>
     <NoWarn>1701;1702;1597;1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\SwaggerApiDescription.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='BackendRelease|AnyCPU'">
     <DocumentationFile>bin\SwaggerApiDescription.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
