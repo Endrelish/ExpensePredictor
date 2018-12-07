@@ -4,12 +4,13 @@ namespace ExpensePrediction.Frontend
 {
     public static class Constants
     {
-        private static readonly string BaseUri = "http://10.0.2.2:56856/api/";
+        private static readonly string BaseUri = "http://10.0.2.2:50458/api/";
         //private static readonly string BaseUri = "https://expensepredictionwebapi.azurewebsites.net/api/";
 
         #region storageKeys
 
         public static readonly string Token = "token";
+        public static readonly string UserId = "userId";
 
         #endregion
 
