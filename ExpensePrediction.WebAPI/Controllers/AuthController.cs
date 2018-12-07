@@ -34,7 +34,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
             var token = await _authService.RegisterAsync(registerDto);
-            return Ok(new { Token = token });
+            return Ok(token);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         public async Task<IActionResult> GetToken([FromBody] LoginDto loginDto)
         {
             var token = await _authService.GetTokenAsync(loginDto);
-            return Ok(new { Token = token });
+            return Ok(token);
         }
 
         //----------ENDPOINTS BELOW JUST FOR TESTING----------//
