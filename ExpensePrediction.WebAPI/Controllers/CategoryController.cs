@@ -133,7 +133,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         /// <param name="categoryType">Type of the category.</param>
         /// <returns>All categories.</returns>
         [HttpGet("{categoryType}")]
-        [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
         [Authorize("GetCategories")]
         [ProducesResponseType(typeof(IEnumerable<CategoryDto>), 200)]

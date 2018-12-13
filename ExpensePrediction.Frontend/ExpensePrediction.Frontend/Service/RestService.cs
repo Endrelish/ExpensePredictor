@@ -17,7 +17,7 @@ namespace ExpensePrediction.Frontend.Service
             _client = new HttpClient();
         }
 
-        private static async Task<HttpContent> CreateContent(object dto, bool authorize)
+        private static async Task<HttpContent> CreateContentAsync(object dto, bool authorize)
         {
             var content = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8,
                 ApplicationJsonContentType);
@@ -40,12 +40,13 @@ namespace ExpensePrediction.Frontend.Service
             return content;
         }
 
-        private static async Task<T> GetContent<T>(HttpResponseMessage response)
+        private static async Task<T> GetContentAsync<T>(HttpResponseMessage response)
         {
-            return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(content);
         }
 
-        private static async Task<HttpRequestMessage> GetGetRequest(string uri, bool authorize)
+        private static async Task<HttpRequestMessage> GetGetRequestAsync(string uri, bool authorize)
         {
             try
             {
@@ -68,7 +69,7 @@ namespace ExpensePrediction.Frontend.Service
 
         public static async Task<T> PostAsync<T>(string uri, object content, bool authorize = true)
         {
-            var response = await _client.PostAsync(uri, await CreateContent(content, authorize));
+            var response = await _client.PostAsync(uri, await CreateContentAsync(content, authorize));
 
             if (!response.IsSuccessStatusCode)
             {
@@ -76,12 +77,12 @@ namespace ExpensePrediction.Frontend.Service
                 //TODO sth
             }
 
-            return await GetContent<T>(response);
+            return await GetContentAsync<T>(response);
         }
 
         public static async Task<T> GetAsync<T>(string uri, bool authorize = true)
         {
-            var response = await _client.SendAsync(await GetGetRequest(uri, authorize));
+            var response = await _client.SendAsync(await GetGetRequestAsync(uri, authorize));
 
             if (!response.IsSuccessStatusCode)
             {
@@ -89,7 +90,8 @@ namespace ExpensePrediction.Frontend.Service
                 //TODO sth
             }
 
-            return await GetContent<T>(response);
+            var content = await GetContentAsync<T>(response);
+            return content;
         }
     }
 }

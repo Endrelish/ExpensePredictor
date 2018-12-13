@@ -40,8 +40,8 @@ namespace ExpensePrediction.Frontend.Pages
                 MenuItems = new ObservableCollection<StartPageMenuItem>(new[]
                 {
                     new StartPageMenuItem (0, "User details", typeof(UserDetailPage)),
-                    new StartPageMenuItem (0, "Page 2", typeof(StartPageDetail)),
-                    new StartPageMenuItem (0, "Page 3", typeof(StartPageDetail)),
+                    new StartPageMenuItem (1, "Expenses", typeof(ExpensesPage)),
+                    new StartPageMenuItem (2, "Incomes", typeof(IncomesPage)),
                 });
             }
 
