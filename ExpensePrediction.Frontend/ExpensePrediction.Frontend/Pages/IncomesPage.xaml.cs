@@ -29,5 +29,11 @@ namespace ExpensePrediction.Frontend.Pages
             IncomesList.ItemsSource = incomes.OrderByDescending(i => i.Date);
             await ActivityIndicatorPage.ToggleIndicator(false);
         }
+        private async void AddIncomeClicked(object sender, EventArgs e)
+        {
+            await ActivityIndicatorPage.ToggleIndicator(true);
+
+            await ActivityIndicatorPage.ToggleIndicator(false);
+        }
     }
 }
