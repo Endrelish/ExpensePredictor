@@ -1,6 +1,7 @@
 ﻿using System;
 using ExpensePrediction.DataTransferObjects.User;
 using ExpensePrediction.Frontend.Service;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,6 +21,7 @@ namespace ExpensePrediction.Frontend.Pages
 
         private async void SignInClicked(object sender, EventArgs e)
         {
+            await ActivityIndicatorPage.ToggleIndicator(true);
             var loginDto = new LoginDto
             {
                 Username = Username.Text,
@@ -38,6 +40,10 @@ namespace ExpensePrediction.Frontend.Pages
             catch (Exception)
             {
                 //TODO display a message i guess
+            }
+            finally
+            {
+                await ActivityIndicatorPage.ToggleIndicator(true);
             }
         }
     }

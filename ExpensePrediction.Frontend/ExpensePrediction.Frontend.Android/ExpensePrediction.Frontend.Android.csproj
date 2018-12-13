@@ -59,6 +59,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Rg.Plugins.Popup">
+      <Version>1.1.5.180</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Essentials">
       <Version>0.11.0-preview</Version>
     </PackageReference>

@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ExpensePrediction.Frontend.Pages.UserDetailPage">
     <ContentPage.Content>
-        <RelativeLayout>
-            <StackLayout VerticalOptions="CenterAndExpand"
+        <StackLayout VerticalOptions="CenterAndExpand"
                          HorizontalOptions="CenterAndExpand"
                          RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.33}"
                          RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.33}">
@@ -21,17 +20,5 @@
                 VerticalOptions="CenterAndExpand"
                 HorizontalOptions="CenterAndExpand" />
             </StackLayout>
-            <ActivityIndicator IsVisible="True"
-                               IsRunning="True"
-                               Color="Black"
-                               VerticalOptions="CenterAndExpand"
-                               HorizontalOptions="CenterAndExpand"
-                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent,
-                                        Property=Height,
-                                        Factor=0.33}"
-                               RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
-                                        Property=Height,
-                                        Factor=0.33}" />
-        </RelativeLayout>
     </ContentPage.Content>
 </ContentPage>

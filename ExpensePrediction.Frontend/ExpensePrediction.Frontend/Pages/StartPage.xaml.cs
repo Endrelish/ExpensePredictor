@@ -11,6 +11,7 @@ namespace ExpensePrediction.Frontend.Pages
         {
             InitializeComponent();
             MasterPage.ListView.ItemSelected += ListView_ItemSelected;
+            NavigationPage.SetHasNavigationBar(this, false);
         }
 
         private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -24,9 +25,9 @@ namespace ExpensePrediction.Frontend.Pages
             page.Title = item.Title;
             Detail = new NavigationPage(page);
             IsPresented = false;
-            if (page is IInitializedPage p) await p.Initialize();
-
             MasterPage.ListView.SelectedItem = null;
+
+            if (page is IInitializedPage p) await p.Initialize();
         }
     }
 }
