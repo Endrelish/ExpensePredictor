@@ -3,22 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ExpensePrediction.Frontend.Pages.UserDetailPage">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="CenterAndExpand"
-                         HorizontalOptions="CenterAndExpand"
-                         RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.33}"
-                         RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.33}">
-                <Label x:Name="Username"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand" />
-                <Label x:Name="FirstName"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand" />
-                <Label x:Name="LastName"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand" />
-                <Label x:Name="PhoneNumber"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand" />
-            </StackLayout>
+        <StackLayout>
+            <Label x:Name="Username"
+                VerticalOptions="Start"
+                HorizontalOptions="Fill" />
+            <Label x:Name="FirstName"
+                VerticalOptions="Start"
+                HorizontalOptions="Fill" />
+            <Label x:Name="LastName"
+                VerticalOptions="Start"
+                HorizontalOptions="Fill" />
+            <Label x:Name="PhoneNumber"
+                VerticalOptions="Start"
+                HorizontalOptions="Fill" />
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

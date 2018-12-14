@@ -3,34 +3,34 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="ExpensePrediction.Frontend.Pages.AddTransactionPage">
     <ScrollView>
-        <StackLayout>
-            <!--<Label x:Name="Title"
-                       VerticalOptions="CenterAndExpand"
-                       HorizontalOptions="CenterAndExpand" />-->
-            <Entry x:Name="Description"
-                       Placeholder="Description"
-                       VerticalOptions="CenterAndExpand"
-                       HorizontalOptions="CenterAndExpand" />
+        <StackLayout Padding="20">
+            <Entry      x:Name="Description"
+                        Placeholder="Description"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Fill" />
             <DatePicker x:Name="Date"
-                       VerticalOptions="CenterAndExpand"
-                       HorizontalOptions="CenterAndExpand" />
-            <Entry x:Name="Value"
-                       Placeholder="Value"
-                       Keyboard="Numeric"
-                       VerticalOptions="CenterAndExpand"
-                       HorizontalOptions="CenterAndExpand" />
-            <Picker x:Name="Category"
-                    Title="Category" />
-            <Grid>
+                        VerticalOptions="Start"
+                        HorizontalOptions="Fill" />
+            <Entry      x:Name="Value"
+                        Placeholder="Value"
+                        Keyboard="Numeric"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Fill" />
+            <Picker     x:Name="Category"
+                        Title="Category"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Fill"/>
+            <Grid       VerticalOptions="Start"
+                        HorizontalOptions="Fill" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Text="Add"
+                <Button Grid.Column="0" Text="Add"
                         VerticalOptions="Center"
                         HorizontalOptions="Center"
                         Clicked="AddTransactionClicked" />
-            <Button Grid.Column="1" Text="Cancel"
+                <Button Grid.Column="1" Text="Cancel"
                         VerticalOptions="Center"
                         HorizontalOptions="Center"
                         Clicked="CancelClicked" />
