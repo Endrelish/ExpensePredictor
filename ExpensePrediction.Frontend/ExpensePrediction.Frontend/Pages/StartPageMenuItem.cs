@@ -1,14 +1,16 @@
 ﻿using System;
+using Xamarin.Forms;
 
 namespace ExpensePrediction.Frontend.Pages
 {
     public class StartPageMenuItem
     {
-        public StartPageMenuItem()
+        public StartPageMenuItem(int id, string title, Type targetType)
         {
-            TargetType = typeof(StartPageDetail);
+            Id = id;
+            Title = title;
+            TargetType = targetType;
         }
-
         public int Id { get; set; }
         public string Title { get; set; }
 

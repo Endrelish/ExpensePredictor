@@ -31,6 +31,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         {
             var expense = _mapper.Map<Expense>(expenseDto);
             expense.Id = null;
+            expense.Date = expense.Date.Date;
             //TODO check if specified keys exist in the db
             expense.UserId = userId;
             await _expenseRepository.CreateAsync(expense);

@@ -11,23 +11,23 @@ namespace ExpensePrediction.Frontend.Pages
         {
             InitializeComponent();
             MasterPage.ListView.ItemSelected += ListView_ItemSelected;
+            NavigationPage.SetHasNavigationBar(this, false);
         }
 
-        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var item = e.SelectedItem as StartPageMenuItem;
             if (item == null)
             {
                 return;
             }
-
-            var page = (Page) Activator.CreateInstance(item.TargetType);
+            var page = (Page)Activator.CreateInstance(item.TargetType);
             page.Title = item.Title;
-
             Detail = new NavigationPage(page);
             IsPresented = false;
-
             MasterPage.ListView.SelectedItem = null;
+
+            if (page is IInitializedPage p) await p.Initialize();
         }
     }
 }

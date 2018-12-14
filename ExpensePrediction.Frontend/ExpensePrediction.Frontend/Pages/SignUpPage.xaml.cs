@@ -22,6 +22,7 @@ namespace ExpensePrediction.Frontend.Pages
 
         private async void SignUpClicked(object sender, EventArgs e)
         {
+            await ActivityIndicatorPage.ToggleIndicator(true);
             if (Password != PasswordConfirm)
             {
                 //TODO throw sth
@@ -49,6 +50,10 @@ namespace ExpensePrediction.Frontend.Pages
             catch (Exception)
             {
                 //TODO catch sth
+            }
+            finally
+            {
+                await ActivityIndicatorPage.ToggleIndicator(false);
             }
         }
     }

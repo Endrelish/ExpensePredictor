@@ -100,7 +100,8 @@ namespace ExpensePrediction.DataAccessLayer
                     CategoryId = "fb9d333d-5e85-484b-bb35-ef307fd06379",
                     Date = DateTime.Now.AddDays(-5).AddMonths(-i),
                     UserId = "830f0d08-6a56-4a57-83c9-329c094f184b",
-                    Value = 2345.67
+                    Value = 2345.67,
+                    Description = "Spadek po cioci"
                 };
             }
             modelBuilder.Entity<Income>().HasData(incomes);

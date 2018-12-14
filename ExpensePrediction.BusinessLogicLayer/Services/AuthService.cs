@@ -33,29 +33,29 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             _hasher = hasher;
         }
 
-        public async Task<string> GetTokenAsync(LoginDto loginData)
+        public async Task<TokenDto> GetTokenAsync(LoginDto loginData)
         {
             var user = await _userManager.FindByNameAsync(loginData.Username);
             var result = _hasher.VerifyHashedPassword(user, user.PasswordHash, loginData.Password);
 
             if (result == PasswordVerificationResult.Success)
             {
-                return await GenerateJwtToken(user);
+                return await GenerateJwtTokenAsync(user);
             }
 
             throw new Exception(); //TODO custom exceptions
         }
 
-        public async Task<string> RegisterAsync(RegisterDto registerData)
+        public async Task<TokenDto> RegisterAsync(RegisterDto registerData)
         {
             var user = _mapper.Map<User>(registerData);
 
             var userCreateResult = await _userManager.CreateAsync(user, registerData.Password);
-            var userRolesResult = await SetDefaultRoles(user);
+            var userRolesResult = await SetDefaultRolesAsync(user);
 
             if (userCreateResult.Succeeded && userRolesResult)
             {
-                var token = await GenerateJwtToken(user);
+                var token = await GenerateJwtTokenAsync(user);
                 return token;
             }
 
@@ -64,7 +64,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             throw new Exception(); //TODO custom exceptions
         }
 
-        private async Task<string> GenerateJwtToken(User user)
+        private async Task<TokenDto> GenerateJwtTokenAsync(User user)
         {
             var roles = await _userManager.GetRolesAsync(user);
             var rolesClaims = roles.Select(r => new Claim("identityRoles", r));
@@ -87,11 +87,16 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
                 expires: expires,
                 signingCredentials: creds
             );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            return new TokenDto
+            {
+                UserId = user.Id,
+                ExpireDate = expires,
+                Token = tokenString
+            };
         }
 
-        private async Task<bool> SetDefaultRoles(User user)
+        private async Task<bool> SetDefaultRolesAsync(User user)
         {
             var roleNames = _configuration.GetSection("DefaultRoles").Get<List<string>>();
 

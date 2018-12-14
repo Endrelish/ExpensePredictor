@@ -11,5 +11,6 @@ namespace ExpensePrediction.DataAccessLayer.Entities
         public virtual T Category { get; set; }
         public DateTime Date { get; set; }
         public string Id { get; set; }
+        public string Description { get; set; }
     }
 }
