@@ -19,6 +19,7 @@ namespace ExpensePrediction.Frontend.Droid
 
             base.OnCreate(savedInstanceState);
             Platform.Init(this, savedInstanceState);
+            Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
         }

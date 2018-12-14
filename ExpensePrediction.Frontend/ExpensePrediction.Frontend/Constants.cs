@@ -1,4 +1,5 @@
 ﻿using ExpensePrediction.DataTransferObjects.Category;
+using System;
 
 namespace ExpensePrediction.Frontend
 {
@@ -56,7 +57,10 @@ namespace ExpensePrediction.Frontend
 
         public static readonly string ExpenseControllerUri = BaseUri + "expense/";
 
-        public static readonly string GetExpensesUri = ExpenseControllerUri;
+        public static string GetExpensesUri(DateTime from, DateTime to)
+        {
+            return ExpenseControllerUri + "?from=" + from.ToShortDateString() + "&to=" + to.ToShortDateString();
+        }
         public static readonly string AddExpenseUri = ExpenseControllerUri + "add";
         public static readonly string EditExpenseUri = ExpenseControllerUri + "edit";
 
@@ -70,6 +74,23 @@ namespace ExpensePrediction.Frontend
             return ExpenseControllerUri + "linked/" + id;
         }
 
+        #endregion
+
+        #region income
+
+        public static readonly string IncomeControllerUri = BaseUri + "income/";
+
+        public static string GetIncomesUri(DateTime from, DateTime to)
+        {
+            return IncomeControllerUri + "?from=" + from.ToShortDateString() + "&to=" + to.ToShortDateString();
+        }
+        public static readonly string AddIncomeUri = IncomeControllerUri + "add";
+        public static readonly string EditIncomeUri = IncomeControllerUri + "edit";
+
+        public static string GetIncomeUri(string id)
+        {
+            return IncomeControllerUri + id;
+        }
         #endregion
     }
 }
