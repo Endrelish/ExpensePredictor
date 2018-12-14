@@ -5,15 +5,19 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <DatePicker x:Name="DateFrom" Format="yyyy-MM-dd" />
-                <DatePicker x:Name="DateTo" Format="yyyy-MM-dd" />
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Text="Get incomes" Clicked="GetIncomesClicked" />
-                    <Button Grid.Column="1" Text="Add" Clicked="AddIncomeClicked" />
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <DatePicker Grid.Row="0" Grid.Column="0" x:Name="DateFrom" Format="yyyy-MM-dd" />
+                    <DatePicker Grid.Row="0" Grid.Column="1" x:Name="DateTo" Format="yyyy-MM-dd" />
+                    <Button Grid.Row="1" Grid.Column="0" Text="Get incomes" Clicked="GetIncomesClicked" />
+                    <Button Grid.Row="1" Grid.Column="1" Text="Add" Clicked="AddIncomeClicked" />
                 </Grid>
                 <ListView x:Name="IncomesList" Margin="10">
                     <ListView.ItemTemplate>

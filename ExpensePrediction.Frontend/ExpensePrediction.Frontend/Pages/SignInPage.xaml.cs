@@ -43,7 +43,7 @@ namespace ExpensePrediction.Frontend.Pages
             }
             finally
             {
-                await ActivityIndicatorPage.ToggleIndicator(true);
+                await ActivityIndicatorPage.ToggleIndicator(false);
             }
         }
     }

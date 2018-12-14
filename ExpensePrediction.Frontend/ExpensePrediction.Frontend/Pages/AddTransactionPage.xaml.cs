@@ -1,92 +1,80 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using ExpensePrediction.DataTransferObjects;
+using ExpensePrediction.DataTransferObjects.Category;
+using ExpensePrediction.Frontend.Service;
+using Rg.Plugins.Popup.Services;
+using System;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace ExpensePrediction.Frontend.Pages
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class AddTransactionPage : Rg.Plugins.Popup.Pages.PopupPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+	public partial class AddTransactionPage : ContentPage, IInitializedPage
     {
-		public AddTransactionPage ()
+        private readonly CategoryType _type;
+        private readonly CategoryService _categoryService;
+        private readonly ExpenseService _expenseService;
+        private readonly IncomeService _incomeService;
+        private readonly Action<TransactionDto> _addTransaction;
+        public AddTransactionPage (CategoryType type, Action<TransactionDto> addTransaction)
 		{
-			InitializeComponent ();
+			InitializeComponent();
+            _type = type;
+            _expenseService = new ExpenseService();
+            _incomeService = new IncomeService();
+            _categoryService = new CategoryService();
+            _addTransaction = addTransaction;
+
+            switch(type)
+            {
+                case CategoryType.ExpenseCategory:
+                    Title = "Add expense";
+                    break;
+                case CategoryType.IncomeCategory:
+                    Title = "Add income";
+                    break;
+            }
 		}
 
-        protected override void OnAppearing()
+        public async Task Initialize()
         {
-            base.OnAppearing();
+            Category.ItemsSource = await _categoryService.GetCategories(_type);
+            Category.SelectedItem = Category.ItemsSource[0];
         }
 
-        protected override void OnDisappearing()
+        private async void AddTransactionClicked(object sender, EventArgs e)
         {
-            base.OnDisappearing();
+            await ActivityIndicatorPage.ToggleIndicator(true);
+            var dto = new TransactionDto
+            {
+                Description = Description.Text,
+                Value = double.Parse(Value.Text),
+                Date = Date.Date,
+                CategoryId = ((CategoryDto)Category.SelectedItem).Id
+            };
+
+            switch(_type)
+            {
+                case CategoryType.IncomeCategory:
+                    await _incomeService.AddIncomeAsync(dto);
+                    break;
+                case CategoryType.ExpenseCategory:
+                    await _expenseService.AddExpenseAsync(dto);
+                    break;
+            }
+            await ActivityIndicatorPage.ToggleIndicator(false);
+            await Close();
         }
 
-        // ### Methods for supporting animations in your popup page ###
-
-        // Invoked before an animation appearing
-        protected override void OnAppearingAnimationBegin()
+        private async void CancelClicked(object sender, EventArgs e)
         {
-            base.OnAppearingAnimationBegin();
+            await Close();
         }
 
-        // Invoked after an animation appearing
-        protected override void OnAppearingAnimationEnd()
+        private async Task Close()
         {
-            base.OnAppearingAnimationEnd();
-        }
-
-        // Invoked before an animation disappearing
-        protected override void OnDisappearingAnimationBegin()
-        {
-            base.OnDisappearingAnimationBegin();
-        }
-
-        // Invoked after an animation disappearing
-        protected override void OnDisappearingAnimationEnd()
-        {
-            base.OnDisappearingAnimationEnd();
-        }
-
-        protected override Task OnAppearingAnimationBeginAsync()
-        {
-            return base.OnAppearingAnimationBeginAsync();
-        }
-
-        protected override Task OnAppearingAnimationEndAsync()
-        {
-            return base.OnAppearingAnimationEndAsync();
-        }
-
-        protected override Task OnDisappearingAnimationBeginAsync()
-        {
-            return base.OnDisappearingAnimationBeginAsync();
-        }
-
-        protected override Task OnDisappearingAnimationEndAsync()
-        {
-            return base.OnDisappearingAnimationEndAsync();
-        }
-
-        // ### Overrided methods which can prevent closing a popup page ###
-
-        // Invoked when a hardware back button is pressed
-        protected override bool OnBackButtonPressed()
-        {
-            // Return true if you don't want to close this popup page when a back button is pressed
-            return base.OnBackButtonPressed();
-        }
-
-        // Invoked when background is clicked
-        protected override bool OnBackgroundClicked()
-        {
-            // Return false if you don't want to close this popup page when a background of the popup page is clicked
-            return base.OnBackgroundClicked();
+            await Navigation.PopAsync();
         }
     }
 }

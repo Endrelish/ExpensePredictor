@@ -1,4 +1,5 @@
-﻿using ExpensePrediction.Frontend.Service;
+﻿using ExpensePrediction.DataTransferObjects;
+using ExpensePrediction.Frontend.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,25 @@ namespace ExpensePrediction.Frontend.Pages
             var expenses = await _expenseService.GetExpenses(DateFrom.Date, DateTo.Date);
             ExpensesList.ItemsSource = expenses.OrderByDescending(ex => ex.Date);
             await ActivityIndicatorPage.ToggleIndicator(false);
+        }
+
+        private void AddExpense(TransactionDto transaction)
+        {
+            if (transaction is ExpenseDto expense)
+            {
+                var incomes = ExpensesList.ItemsSource.Cast<ExpenseDto>().ToList();
+                incomes.Add(expense);
+                ExpensesList.ItemsSource = incomes;
+            }
+        }
+
+        private async void AddExpenseClicked(object sender, EventArgs e)
+        {
+            await ActivityIndicatorPage.ToggleIndicator(true);
+            var page = new AddTransactionPage(DataTransferObjects.Category.CategoryType.ExpenseCategory, AddExpense);
+            await page.Initialize();
+            await ActivityIndicatorPage.ToggleIndicator(false);
+            await Navigation.PushAsync(page);
         }
     }
 }

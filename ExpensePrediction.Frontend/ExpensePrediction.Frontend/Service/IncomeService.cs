@@ -12,5 +12,10 @@ namespace ExpensePrediction.Frontend.Service
         {
             return await RestService.GetAsync<List<IncomeDto>>(Constants.GetIncomesUri(from, to));
         }
+
+        public async Task<IncomeDto> AddIncomeAsync(TransactionDto dto)
+        {
+            return await RestService.PostAsync<IncomeDto>(Constants.AddIncomeUri, dto);
+        }
     }
 }

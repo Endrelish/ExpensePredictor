@@ -9,11 +9,7 @@ namespace ExpensePrediction.Frontend.Service
     {
         public async Task LoginAsync(LoginDto loginDto, Action navigateAsync)
         {
-            var token = await RestService.PostAsync<TokenDto>(Constants.GetTokenUri, loginDto, false);
-            var a = token.UserId;
-            var b = token.ExpireDate;
-            var c = token.Token;
-            await SetTokenAsync(token);
+            await SetTokenAsync(await RestService.PostAsync<TokenDto>(Constants.GetTokenUri, loginDto, false));
             navigateAsync();
         }
 
