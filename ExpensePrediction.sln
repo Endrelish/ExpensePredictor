@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpensePrediction.Frontend"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpensePrediction.Exceptions", "ExpensePrediction.Exceptions\ExpensePrediction.Exceptions.csproj", "{43A47BFF-5289-49F6-85A3-7022699F6296}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFront", "TestFront\TestFront.csproj", "{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BackendRelease|Any CPU = BackendRelease|Any CPU
@@ -222,6 +224,24 @@ Global
 		{43A47BFF-5289-49F6-85A3-7022699F6296}.Release|x64.Build.0 = Release|Any CPU
 		{43A47BFF-5289-49F6-85A3-7022699F6296}.Release|x86.ActiveCfg = Release|Any CPU
 		{43A47BFF-5289-49F6-85A3-7022699F6296}.Release|x86.Build.0 = Release|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.BackendRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.BackendRelease|Any CPU.Build.0 = Release|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.BackendRelease|x64.ActiveCfg = Release|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.BackendRelease|x64.Build.0 = Release|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.BackendRelease|x86.ActiveCfg = Release|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.BackendRelease|x86.Build.0 = Release|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.Debug|x64.Build.0 = Debug|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.Debug|x86.Build.0 = Debug|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.Release|x64.ActiveCfg = Release|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.Release|x64.Build.0 = Release|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.Release|x86.ActiveCfg = Release|Any CPU
+		{C0AEEA9A-DF1A-4E08-BD72-BFF90E53052E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
