@@ -18,10 +18,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Regression
             var targets = ExtractTargetsMatrix(dataSet);
             var predictorsTransposed = predictors.Transpose();
 
-            var coefficients = predictorsTransposed.Multiply(predictors);
-            coefficients = coefficients.Inverse();
-            coefficients = coefficients.Multiply(predictorsTransposed);
-            coefficients = coefficients.Multiply(targets);
+            var coefficients = predictorsTransposed.Multiply(predictors).Inverse().Multiply(predictorsTransposed).Multiply(targets);
 
             int i = 0;
             foreach(var coefficient in coefficients.Enumerate())
