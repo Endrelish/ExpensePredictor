@@ -5,7 +5,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Interfaces.Services
 {
     public interface IAuthService
     {
-        Task<string> RegisterAsync(RegisterDto registerData);
-        Task<string> GetTokenAsync(LoginDto loginData);
+        Task<TokenDto> RegisterAsync(RegisterDto registerData);
+        Task<TokenDto> GetTokenAsync(LoginDto loginData);
     }
 }

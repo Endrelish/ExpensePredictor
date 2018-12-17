@@ -7,30 +7,24 @@ namespace ExpensePrediction.Frontend.Service
 {
     public class AuthService
     {
-        private readonly RestService _restService;
-
-        public AuthService()
-        {
-            _restService = new RestService();
-        }
-
         public async Task LoginAsync(LoginDto loginDto, Action navigateAsync)
         {
-            var token = await _restService.PostAsync<TokenDto>(Constants.GetTokenUri, loginDto, false);
-            await SetTokenAsync(token);
+            await SetTokenAsync(await RestService.PostAsync<TokenDto>(Constants.GetTokenUri, loginDto, false));
             navigateAsync();
         }
 
         public async Task RegisterAsync(RegisterDto registerDto, Action navigateAsync)
         {
-            var token = await _restService.PostAsync<TokenDto>(Constants.RegisterUri, registerDto, false);
+            var token = await RestService.PostAsync<TokenDto>(Constants.RegisterUri, registerDto, false);
             await SetTokenAsync(token);
             navigateAsync();
         }
 
         private async Task SetTokenAsync(TokenDto token)
         {
+
             await SecureStorage.SetAsync(Constants.Token, token.Token);
+            await SecureStorage.SetAsync(Constants.UserId, token.UserId);
             //TODO set some task to obtain a new token when this one expires if credentials are remembered
 
             App.IsUserLoggedIn = true;
@@ -39,6 +33,7 @@ namespace ExpensePrediction.Frontend.Service
         public void Logout(Action navigateAsync)
         {
             SecureStorage.Remove(Constants.Token);
+            SecureStorage.Remove(Constants.UserId);
             App.IsUserLoggedIn = false;
             navigateAsync();
         }

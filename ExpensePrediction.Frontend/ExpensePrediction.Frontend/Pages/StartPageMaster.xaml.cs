@@ -20,7 +20,7 @@ namespace ExpensePrediction.Frontend.Pages
             BindingContext = new StartPageMasterViewModel();
             ListView = MenuItemsListView;
         }
-
+        
         public void LogOut(object sender, EventArgs eventArgs)
         {
             var authService = new AuthService();
@@ -39,11 +39,9 @@ namespace ExpensePrediction.Frontend.Pages
             {
                 MenuItems = new ObservableCollection<StartPageMenuItem>(new[]
                 {
-                    new StartPageMenuItem {Id = 0, Title = "Page 1"},
-                    new StartPageMenuItem {Id = 1, Title = "Page 2"},
-                    new StartPageMenuItem {Id = 2, Title = "Page 3"},
-                    new StartPageMenuItem {Id = 3, Title = "Page 4"},
-                    new StartPageMenuItem {Id = 4, Title = "Page 5"}
+                    new StartPageMenuItem (0, "User details", typeof(UserDetailPage)),
+                    new StartPageMenuItem (1, "Expenses", typeof(ExpensesPage)),
+                    new StartPageMenuItem (2, "Incomes", typeof(IncomesPage)),
                 });
             }
 

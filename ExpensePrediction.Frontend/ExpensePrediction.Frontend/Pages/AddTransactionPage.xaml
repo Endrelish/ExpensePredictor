@@ -1,0 +1,40 @@
+﻿<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="ExpensePrediction.Frontend.Pages.AddTransactionPage">
+    <ScrollView>
+        <StackLayout>
+            <!--<Label x:Name="Title"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand" />-->
+            <Entry x:Name="Description"
+                       Placeholder="Description"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand" />
+            <DatePicker x:Name="Date"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand" />
+            <Entry x:Name="Value"
+                       Placeholder="Value"
+                       Keyboard="Numeric"
+                       VerticalOptions="CenterAndExpand"
+                       HorizontalOptions="CenterAndExpand" />
+            <Picker x:Name="Category"
+                    Title="Category" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Text="Add"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        Clicked="AddTransactionClicked" />
+            <Button Grid.Column="1" Text="Cancel"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        Clicked="CancelClicked" />
+            </Grid>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
