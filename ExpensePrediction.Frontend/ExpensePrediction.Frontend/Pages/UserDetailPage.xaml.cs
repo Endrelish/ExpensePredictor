@@ -1,5 +1,6 @@
 ﻿using ExpensePrediction.DataTransferObjects.User;
 using ExpensePrediction.Frontend.Service;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,8 +34,10 @@ namespace ExpensePrediction.Frontend.Pages
         
         public async Task Initialize()
         {
+            await ActivityIndicatorPage.ToggleIndicator(true);
             var data = await _userService.GetUserDetailsAsync();
             SetUserData(data);
+            await ActivityIndicatorPage.ToggleIndicator(false);
         }
     }
 }

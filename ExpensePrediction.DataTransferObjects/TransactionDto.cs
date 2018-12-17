@@ -8,5 +8,6 @@ namespace ExpensePrediction.DataTransferObjects
         public double Value { get; set; }
         public DateTime Date { get; set; }
         public string CategoryId { get; set; }
+        public string Description { get; set; }
     }
 }
