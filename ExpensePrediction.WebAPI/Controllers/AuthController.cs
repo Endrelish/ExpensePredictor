@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace ExpensePrediction.WebAPI.Controllers
 {
     [Route("api/auth")]
+    [ApiController]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;

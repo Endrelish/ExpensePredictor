@@ -52,7 +52,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             expense.Value = expenseDto.Value;
             expense.Date = expenseDto.Date;
             expense.CategoryId = expenseDto.CategoryId;
-            expense.LinkedExpenseId = expenseDto.LinkedExpenseId;
+            //expense.LinkedExpenseId = expenseDto.LinkedExpenseId;
 
             var result = await _expenseRepository.SaveAsync();
             if (result < 1)

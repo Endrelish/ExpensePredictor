@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace ExpensePrediction.WebAPI.Controllers
 {
     [Route("api/account")]
+    [ApiController]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;

@@ -122,6 +122,7 @@ namespace ExpensePrediction.WebAPI
             services.AddScoped<IExpenseService, ExpenseService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IIncomeService, IncomeService>();
+            services.AddScoped<IPredictionService, PredictionService>();
 
             services.AddSingleton(MapperService.Mapper);
         }

@@ -12,6 +12,19 @@ namespace ExpensePrediction.BusinessLogicLayer.Regression
             Coefficients = new double[predictors];
         }
 
+        public double PredictTarget(double[] predictors)
+        {
+            if (predictors.Length != Coefficients.Length) throw new System.Exception("nope"); //TODO custom exception
+
+            var prediction = 0.0d;
+            for(int i = 0; i < predictors.Length; i++)
+            {
+                prediction += predictors[i] * Coefficients[i];
+            }
+
+            return prediction;
+        }
+
         public void CalculateCoefficients(DataSet dataSet)
         {
             var predictors = ExtractPredictorsMatrix(dataSet);
