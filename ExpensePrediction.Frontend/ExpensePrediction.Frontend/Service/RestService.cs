@@ -1,9 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using ExpensePrediction.DataTransferObjects;
+using ExpensePrediction.Exceptions;
 using Xamarin.Essentials;
+using Xamarin.Forms;
 
 namespace ExpensePrediction.Frontend.Service
 {
@@ -25,8 +29,6 @@ namespace ExpensePrediction.Frontend.Service
 
         private static async Task<HttpRequestMessage> GetRequestAsync(string uri, bool authorize, HttpMethod method, object dto = null)
         {
-            try
-            {
                 var request = new HttpRequestMessage(method, uri);
                 if (authorize)
                 {
@@ -40,12 +42,6 @@ namespace ExpensePrediction.Frontend.Service
                 }
 
                 return request;
-            }
-            catch (Exception)
-            {
-                //TODO sth
-                throw;
-            }
         }
 
         public static async Task<T> PostAsync<T>(string uri, object content, bool authorize = true)
@@ -54,8 +50,17 @@ namespace ExpensePrediction.Frontend.Service
 
             if (!response.IsSuccessStatusCode)
             {
-                //NOOOOOOOOOOOOOOOOOOOOOOOOOO
-                //TODO sth
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    void Navigate()
+                    {
+                        Application.Current.MainPage = new NavigationPage(new MainPage());
+                    }
+                    AuthService.Logout(Navigate);
+                    await Application.Current.MainPage.DisplayAlert("Logout", "You session expired", "");
+                }
+                var error = await GetContentAsync<ErrorDto>(response);
+                throw new RestException(error.Message, error.ErrorCode);
             }
 
             return await GetContentAsync<T>(response);
@@ -67,8 +72,8 @@ namespace ExpensePrediction.Frontend.Service
 
             if (!response.IsSuccessStatusCode)
             {
-                //NOOOOOOOOOOOOOOOOOOOOOOOOOO
-                //TODO sth
+                var error = await GetContentAsync<ErrorDto>(response);
+                throw new RestException(error.Message, error.ErrorCode);
             }
 
             var content = await GetContentAsync<T>(response);

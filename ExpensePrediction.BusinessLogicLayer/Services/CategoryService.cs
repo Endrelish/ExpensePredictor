@@ -6,6 +6,8 @@ using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataAccessLayer.Interfaces;
 using ExpensePrediction.DataTransferObjects.Category;
+using ExpensePrediction.Exceptions;
+using ApplicationException = ExpensePrediction.Exceptions.ApplicationException;
 
 namespace ExpensePrediction.BusinessLogicLayer.Services
 {
@@ -26,12 +28,18 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             var category = _mapper.Map<TCategory>(categoryDto);
             await _categoryRepository.CreateAsync(category);
 
-            if (await _categoryRepository.SaveAsync() > 0)
+            try
             {
-                return _mapper.Map<CategoryDto>(category);
+                if (await _categoryRepository.SaveAsync() > 0)
+                {
+                    return _mapper.Map<CategoryDto>(category);
+                }
+                throw new CategoryException("Cannot add category", 500);
             }
-
-            throw new Exception("nie da sie"); //TODO custom exceptions
+            catch (RepositoryException e)
+            {
+                throw new CategoryException("Cannot add category", e, 500);
+            }
         }
 
         public async Task<CategoryDto> EditCategoryAsync(CategoryDto categoryDto)
@@ -39,12 +47,18 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             var category = _mapper.Map<TCategory>(categoryDto);
             _categoryRepository.Update(category);
 
-            if (await _categoryRepository.SaveAsync() > 0)
+            try
             {
-                return _mapper.Map<CategoryDto>(category);
+                if (await _categoryRepository.SaveAsync() > 0)
+                {
+                    return _mapper.Map<CategoryDto>(category);
+                }
+                throw new CategoryException("Cannot add category", 500);
             }
-
-            throw new Exception(); //TODO custom exceptions
+            catch (RepositoryException e)
+            {
+                throw new CategoryException("Cannot add category", e, 500);
+            }
         }
 
         public async Task<IEnumerable<CategoryDto>> GetCategoriesAsync()

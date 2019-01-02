@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExpensePrediction.DataTransferObjects.User;
+using ExpensePrediction.Exceptions;
 using ExpensePrediction.Frontend.Service;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -25,7 +26,7 @@ namespace ExpensePrediction.Frontend.Pages
             await ActivityIndicatorPage.ToggleIndicator(true);
             if (Password != PasswordConfirm)
             {
-                //TODO throw sth
+                await DisplayAlert("", "Passwords don't match", "");
             }
 
             var registerDto = new RegisterDto
@@ -47,9 +48,9 @@ namespace ExpensePrediction.Frontend.Pages
 
                 await _authService.RegisterAsync(registerDto, Navigate);
             }
-            catch (Exception)
+            catch (RestException re)
             {
-                //TODO catch sth
+                await DisplayAlert("", re.Message, "");
             }
             finally
             {

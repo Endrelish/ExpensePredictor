@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace ExpensePrediction.WebAPI.Controllers
 {
     [Route("api/account")]
+    [ApiController]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
@@ -27,7 +28,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(UserEditDto), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO Custom exceptions
         public async Task<IActionResult> EditUser([FromBody] UserEditDto userEditDto)
         {
             var user = await _accountService.EditUserDataAsync(userEditDto, User.Identity.Name);
@@ -43,7 +43,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(UserDataDto), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO custom exceptions
         public async Task<IActionResult> GetUser()
         {
             var user = await _accountService.GetUserDataAsync(User.Identity.Name);
@@ -62,7 +61,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO custom exceptions
         public async Task<IActionResult> ChangePassword([FromBody] PasswordChangeDto passwordChangeDto)
         {
             await _accountService.ChangePasswordAsync(passwordChangeDto, User.Identity.Name);

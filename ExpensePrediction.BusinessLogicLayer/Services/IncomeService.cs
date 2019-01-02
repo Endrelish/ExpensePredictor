@@ -7,6 +7,7 @@ using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataAccessLayer.Interfaces;
 using ExpensePrediction.DataTransferObjects;
+using ExpensePrediction.Exceptions;
 using Microsoft.AspNetCore.Identity;
 
 namespace ExpensePrediction.BusinessLogicLayer.Services
@@ -31,10 +32,9 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         {
             var income = _mapper.Map<Income>(incomeDto);
             income.Id = null;
-            //TODO check if specified keys exist in the db
             income.UserId = userId;
             await _incomeRepository.CreateAsync(income);
-            var result = await _incomeRepository.SaveAsync(); //TODO Check if saved
+            var result = await _incomeRepository.SaveAsync();
             //if(result == 0) throw sth;
             return _mapper.Map<IncomeDto>(income);
         }
@@ -44,10 +44,9 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             var income = await _incomeRepository.FindByIdAsync(incomeDto.Id);
             if (!income.UserId.Equals(userId, StringComparison.OrdinalIgnoreCase))
             {
-                throw new Exception("NOT_YOUR_EXPENSE_YOU_DAMN_HACKER"); //TODO throw custom exceptions
+                throw new IncomeException("Cannot find income", 400);
             }
-
-            //TODO check if specified keys exist
+            
             income.Value = incomeDto.Value;
             income.Date = incomeDto.Date;
             income.CategoryId = incomeDto.CategoryId;
@@ -55,7 +54,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             var result = await _incomeRepository.SaveAsync();
             if (result < 1)
             {
-                throw new Exception("SOMETHING_WENT_WRONG"); //TODO throw custom exceptions
+                throw new IncomeException("Cannot edit income", 500);
             }
 
             return _mapper.Map<IncomeDto>(income);
@@ -64,17 +63,13 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         public async Task<IncomeDto> GetIncomeAsync(string incomeId, string userId)
         {
             var income = await _incomeRepository.FindByIdAsync(incomeId);
-            if (income == null)
-            {
-                throw new Exception(); //TODO throw not found sth
-            }
 
-            if (income.UserId == userId)
+            if (income != null && income.UserId == userId)
             {
                 return _mapper.Map<IncomeDto>(income);
             }
 
-            throw new Exception(); //TODO custom exceptions
+            throw new IncomeException("Income not found", 400);
         }
 
         public async Task<IEnumerable<IncomeDto>> GetIncomesAsync(string userId, DateTime from, DateTime to)

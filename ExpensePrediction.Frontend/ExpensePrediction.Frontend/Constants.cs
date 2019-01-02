@@ -5,8 +5,8 @@ namespace ExpensePrediction.Frontend
 {
     public static class Constants
     {
-        private static readonly string BaseUri = "http://10.0.2.2:50458/api/";
-        //private static readonly string BaseUri = "https://expensepredictionwebapi.azurewebsites.net/api/";
+        //private static readonly string BaseUri = "http://10.0.2.2:50458/api/";
+        private static readonly string BaseUri = "https://expensepredictionwebapi.azurewebsites.net/api/";
 
         #region storageKeys
 

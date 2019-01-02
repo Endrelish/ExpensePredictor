@@ -9,6 +9,7 @@ using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataTransferObjects.User;
+using ExpensePrediction.Exceptions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -36,6 +37,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         public async Task<TokenDto> GetTokenAsync(LoginDto loginData)
         {
             var user = await _userManager.FindByNameAsync(loginData.Username);
+            if (user == null) throw new AuthException("Username or password incorrect", 400);
             var result = _hasher.VerifyHashedPassword(user, user.PasswordHash, loginData.Password);
 
             if (result == PasswordVerificationResult.Success)
@@ -43,7 +45,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
                 return await GenerateJwtTokenAsync(user);
             }
 
-            throw new Exception(); //TODO custom exceptions
+            throw new AuthException("Username or password incorrect", 400);
         }
 
         public async Task<TokenDto> RegisterAsync(RegisterDto registerData)
@@ -59,9 +61,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
                 return token;
             }
 
-            //else userCreateResult.Errors => exceptions
-
-            throw new Exception(); //TODO custom exceptions
+            throw new AuthException("Registration not successful", 400);
         }
 
         private async Task<TokenDto> GenerateJwtTokenAsync(User user)

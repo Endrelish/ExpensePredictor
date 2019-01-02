@@ -38,7 +38,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(IncomeDto), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO Custom exceptions
         public async Task<IActionResult> AddIncome([FromBody] IncomeDto incomeDto)
         {
             var income = await _incomeService.AddIncomeAsync(incomeDto, User.Identity.Name);
@@ -55,7 +54,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(IncomeDto), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO Custom exceptions
         public async Task<IActionResult> GetIncome([FromRoute] string incomeId)
         {
             var income = await _incomeService.GetIncomeAsync(incomeId,
@@ -74,7 +72,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(IEnumerable<IncomeDto>), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO Custom exceptions
         public async Task<IActionResult> GetIncomes([FromQuery] DateTime from, [FromQuery] DateTime to)
         {
             var incomes = await _incomeService.GetIncomesAsync(User.Identity.Name, from, to);
@@ -92,7 +89,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(IEnumerable<IncomeDto>), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO Custom exceptions
         public async Task<IActionResult> EditIncome([FromBody] IncomeDto incomeDto)
         {
             var result = await _incomeService.EditIncomeAsync(incomeDto, User.Identity.Name);

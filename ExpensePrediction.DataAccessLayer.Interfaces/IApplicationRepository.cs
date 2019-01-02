@@ -9,6 +9,7 @@ namespace ExpensePrediction.DataAccessLayer.Interfaces
     {
         Task<IEnumerable<TEntity>> FindAllAsync();
         Task<IEnumerable<TEntity>> FindByConditionAync(Expression<Func<TEntity, bool>> expression);
+        Task<IEnumerable<TEntity>> FindTopByConditionAsync(Expression<Func<TEntity, bool>> expression, int top);
         Task<TEntity> FindByIdAsync(string id);
         Task CreateAsync(TEntity entity);
         void Update(TEntity entity);

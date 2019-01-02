@@ -1,20 +1,22 @@
-﻿using System;
+﻿
+using System;
 
 namespace ExpensePrediction.Exceptions
 {
-    public class ServiceException : Exception
+    public abstract class ServiceException : ExpensePrediction.Exceptions.ApplicationException
     {
-        public ServiceException()
+        protected ServiceException(string code)
+            : base(code)
         {
         }
 
-        public ServiceException(string message)
-            : base(message)
+        protected ServiceException(string code, string message)
+            : base(code, message)
         {
         }
 
-        public ServiceException(string message, Exception inner)
-            : base(message, inner)
+        protected ServiceException(string code, string message, Exception inner)
+            : base(code, message, inner)
         {
         }
     }

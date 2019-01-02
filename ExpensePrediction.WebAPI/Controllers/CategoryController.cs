@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ExpensePrediction.Exceptions;
 
 namespace ExpensePrediction.WebAPI.Controllers
 {
     [Route("api/category")]
+    [ApiController]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService<ExpenseCategory> _expenseCategoryService;
@@ -35,7 +37,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Authorize("AddCategory")]
         [ProducesResponseType(typeof(CategoryDto), 201)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO Custom exceptions
         public async Task<IActionResult> AddCategory([FromRoute] CategoryType categoryType,
             [FromBody] CategoryDto categoryDto)
         {
@@ -72,7 +73,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [ProducesResponseType(typeof(CategoryDto), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO Custom exceptions
         public async Task<IActionResult> GetCategory([FromRoute] string categoryId,
             [FromRoute] CategoryType categoryType)
         {
@@ -108,7 +108,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Authorize("EditCategory")]
         [ProducesResponseType(typeof(CategoryDto), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO Custom exceptions
         public async Task<IActionResult> EditCategory([FromRoute] CategoryType categoryType,
             [FromBody] CategoryDto categoryDto)
         {
@@ -137,7 +136,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Authorize("GetCategories")]
         [ProducesResponseType(typeof(IEnumerable<CategoryDto>), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO Custom exceptions
         public async Task<IActionResult> GetCategories([FromRoute] CategoryType categoryType)
         {
             IEnumerable<CategoryDto> categories = null;
@@ -152,7 +150,7 @@ namespace ExpensePrediction.WebAPI.Controllers
                     break;
 
                 case CategoryType.Undefined:
-                    return StatusCode(400, "UNDEFINED_CATEGORY"); //TODO dto with error code and description
+                    throw new CategoryException("Category not found", 400);
             }
 
             return Ok(categories);

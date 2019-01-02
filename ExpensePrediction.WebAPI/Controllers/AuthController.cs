@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace ExpensePrediction.WebAPI.Controllers
 {
     [Route("api/auth")]
+    [ApiController]
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -28,9 +29,8 @@ namespace ExpensePrediction.WebAPI.Controllers
         [HttpPost("register")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
-        [ProducesResponseType(typeof(string), 200)] //TODO Change to TokenDto
-        [ProducesResponseType(typeof(string), 400)]
-        //TODO Custom exceptions
+        [ProducesResponseType(typeof(TokenDto), 200)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
             var token = await _authService.RegisterAsync(registerDto);
@@ -47,7 +47,7 @@ namespace ExpensePrediction.WebAPI.Controllers
         [HttpPost("get-token")]
         [Consumes(Constants.ApplicationJson)]
         [Produces(Constants.ApplicationJson)]
-        [ProducesResponseType(typeof(string), 200)] //TODO use TokenDto
+        [ProducesResponseType(typeof(TokenDto), 200)]
         [ProducesResponseType(401)]
         public async Task<IActionResult> GetToken([FromBody] LoginDto loginDto)
         {
