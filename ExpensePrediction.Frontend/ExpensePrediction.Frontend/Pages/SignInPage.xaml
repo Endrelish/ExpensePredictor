@@ -2,24 +2,22 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ExpensePrediction.Frontend.Pages.SignInPage">
+             x:Class="ExpensePrediction.Frontend.Pages.SignInPage"
+             Title="Sign in">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Sign In"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
+        <StackLayout Margin="20">
             <Entry x:Name="Username"
                    Placeholder="Username"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
+                   VerticalOptions="Start"
+                   HorizontalOptions="Fill" />
             <Entry x:Name="Password"
                    Placeholder="Password"
                    IsPassword="True"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
+                   VerticalOptions="Start"
+                   HorizontalOptions="Fill" />
             <Button Text="Sign in"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Fill"
                     Clicked="SignInClicked" />
         </StackLayout>
     </ContentPage.Content>
