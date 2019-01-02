@@ -41,7 +41,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(ExpenseDto), 201)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO custom exceptions
         public async Task<IActionResult> AddExpense([FromBody] ExpenseDto expenseDto)
         {
             var expense = await _expenseService.AddExpenseAsync(expenseDto, User.Identity.Name);
@@ -58,7 +57,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(ExpenseDto), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO custom exceptions
         public async Task<IActionResult> GetExpense([FromRoute] string expenseId)
         {
             var expense = await _expenseService.GetExpenseAsync(expenseId,
@@ -77,7 +75,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(IEnumerable<ExpenseDto>), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO custom exceptions
         public async Task<IActionResult> GetExpenses([FromQuery] DateTime from, [FromQuery] DateTime to)
         {
             var expenses = await _expenseService.GetExpensesAsync(User.Identity.Name, from, to);
@@ -95,7 +92,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(ExpenseDto), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO custom exceptions
         public async Task<IActionResult> EditExpense([FromBody] ExpenseDto expenseDto)
         {
             var result = await _expenseService.EditExpenseAsync(expenseDto, User.Identity.Name);
@@ -112,7 +108,6 @@ namespace ExpensePrediction.WebAPI.Controllers
         [Produces(Constants.ApplicationJson)]
         [ProducesResponseType(typeof(IEnumerable<ExpenseDto>), 200)]
         [ProducesResponseType(typeof(string), 400)]
-        //TODO custom exceptions
         public async Task<IActionResult> GetLinkedExpenses([FromRoute] string expenseId)
         {
             var expenses = await _expenseService.GetLinkedExpensesAsync(expenseId, User.Identity.Name);

@@ -1,6 +1,7 @@
 ﻿using ExpensePrediction.BusinessLogicLayer.Regression.Model;
 using MathNet.Numerics.LinearAlgebra.Double;
 using System.Linq;
+using ExpensePrediction.Exceptions;
 
 namespace ExpensePrediction.BusinessLogicLayer.Regression
 {
@@ -14,7 +15,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Regression
 
         public double PredictTarget(double[] predictors)
         {
-            if (predictors.Length != Coefficients.Length) throw new System.Exception("nope"); //TODO custom exception
+            if (predictors.Length != Coefficients.Length) throw new RegressionException();
 
             var prediction = 0.0d;
             for(int i = 0; i < predictors.Length; i++)

@@ -23,14 +23,12 @@ namespace ExpensePrediction.Frontend.Pages
         
         public void LogOut(object sender, EventArgs eventArgs)
         {
-            var authService = new AuthService();
-
             void Navigate()
             {
                 Application.Current.MainPage = new NavigationPage(new MainPage());
             }
 
-            authService.Logout(Navigate);
+            AuthService.Logout(Navigate);
         }
 
         private class StartPageMasterViewModel : INotifyPropertyChanged

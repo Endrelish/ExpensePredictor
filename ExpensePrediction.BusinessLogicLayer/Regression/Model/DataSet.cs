@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ExpensePrediction.Exceptions;
 
 namespace ExpensePrediction.BusinessLogicLayer.Regression.Model
 {
@@ -14,14 +15,14 @@ namespace ExpensePrediction.BusinessLogicLayer.Regression.Model
         public DataSet(double?[] targets, double[][] predictorSets)
         {
             if (targets.Length != predictorSets.Length)
-                throw new Exception("Number of targets does not equal the number of predictor sets."); //TODO custom exceptions
+                throw new RegressionException("Number of targets does not equal the number of predictor sets.");
             var tuples = new List<DataTuple>();
 
             var predictors = predictorSets[0].Length;
             for(int i = 0; i < predictorSets.Length; i++)
             {
                 if (predictorSets[i].Length != predictors)
-                    throw new Exception("Number of predictors must be the same for all tuples."); //TODO custom exceptions
+                    throw new RegressionException("Number of predictors must be the same for all tuples.");
 
                 tuples.Add(new DataTuple(predictorSets[i], targets[i]));
             }

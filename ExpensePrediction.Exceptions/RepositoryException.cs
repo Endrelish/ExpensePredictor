@@ -2,15 +2,19 @@
 
 namespace ExpensePrediction.Exceptions
 {
-    public class RepositoryException : Exception
+    public abstract class RepositoryException : ExpensePrediction.Exceptions.ApplicationException
     {
-        public RepositoryException(string errorCode)
-            : base(errorCode)
+        protected RepositoryException(string code)
+            : base(code)
+        {
+        }
+        protected RepositoryException(string code, string message)
+            : base(code, message)
         {
         }
 
-        public RepositoryException(string errorCode, Exception inner)
-            : base(errorCode, inner)
+        protected RepositoryException(string code, string message, Exception inner)
+            : base(code, message, inner)
         {
         }
     }

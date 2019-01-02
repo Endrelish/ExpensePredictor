@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using System;
-using System.Net;
 using System.Threading.Tasks;
+using ExpensePrediction.DataTransferObjects;
+using ApplicationException = ExpensePrediction.Exceptions.ApplicationException;
 
 namespace ExpensePrediction.WebAPI
 {
@@ -21,20 +22,22 @@ namespace ExpensePrediction.WebAPI
             {
                 await _next(context);
             }
-            //TODO Catch Service and Repository exceptions
+            catch (ApplicationException e)
+            {
+                await HandleExceptionAsync(context, e, e.HttpCode, e.Code);
+            }
             catch (Exception e)
             {
-                //TODO consider logging
-                await HandleExceptionAsync(context, e, 500);
+                await HandleExceptionAsync(context, e, 500, "unknown_error");
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception, int code)
+        private static Task HandleExceptionAsync(HttpContext context, Exception exception, int code, string error)
         {
             context.Response.ContentType = Constants.ApplicationJson;
             context.Response.StatusCode = code;
 
-            var response = new { ErrorCode = code, Message = exception.Message };
+            var response = new ErrorDto { ErrorCode = error, Message = exception.Message };
 
             return context.Response.WriteAsync(JsonConvert.SerializeObject(response));
         }

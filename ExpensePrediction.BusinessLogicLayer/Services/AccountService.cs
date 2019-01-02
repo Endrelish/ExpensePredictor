@@ -6,6 +6,7 @@ using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataAccessLayer.Interfaces;
 using ExpensePrediction.DataTransferObjects.User;
+using ExpensePrediction.Exceptions;
 using Microsoft.AspNetCore.Identity;
 
 namespace ExpensePrediction.BusinessLogicLayer.Services
@@ -32,7 +33,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         {
             if (passwordChangeDto.NewPassword != passwordChangeDto.NewPasswordRepeated)
             {
-                throw new Exception("NO_MATCH"); //TODO custom exceptions
+                throw new AccountException("Passwords don't match", 400);
             }
 
             var user = await _userManager.FindByIdAsync(userId);
@@ -41,7 +42,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
 
             if (!result.Succeeded)
             {
-                throw new Exception("NO_CAN_DO"); //TODO custom exceptions
+                throw new AccountException("Unknown error", 500);
             }
         }
 
@@ -53,7 +54,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             user.LastName = userEditDto.LastName;
             user.PhoneNumber = userEditDto.PhoneNumber;
 
-            await _userManager.UpdateAsync(user); //TODO check if saved
+            await _userManager.UpdateAsync(user);
 
             return _mapper.Map<UserDataDto>(user);
         }

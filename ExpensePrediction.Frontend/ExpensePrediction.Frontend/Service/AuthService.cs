@@ -22,15 +22,13 @@ namespace ExpensePrediction.Frontend.Service
 
         private async Task SetTokenAsync(TokenDto token)
         {
-
             await SecureStorage.SetAsync(Constants.Token, token.Token);
             await SecureStorage.SetAsync(Constants.UserId, token.UserId);
-            //TODO set some task to obtain a new token when this one expires if credentials are remembered
 
             App.IsUserLoggedIn = true;
         }
 
-        public void Logout(Action navigateAsync)
+        public static void Logout(Action navigateAsync)
         {
             SecureStorage.Remove(Constants.Token);
             SecureStorage.Remove(Constants.UserId);

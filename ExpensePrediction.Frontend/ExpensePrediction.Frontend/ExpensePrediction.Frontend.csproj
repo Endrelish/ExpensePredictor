@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ExpensePrediction.DataTransferObjects\ExpensePrediction.DataTransferObjects.csproj" />
+    <ProjectReference Include="..\..\ExpensePrediction.Exceptions\ExpensePrediction.Exceptions.csproj" />
   </ItemGroup>
 
   <ItemGroup>

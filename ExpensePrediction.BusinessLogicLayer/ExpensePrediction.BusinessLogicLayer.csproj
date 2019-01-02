@@ -18,6 +18,7 @@
     <ProjectReference Include="..\ExpensePrediction.BusinessLogicLayer.Interfaces\ExpensePrediction.BusinessLogicLayer.Interfaces.csproj" />
     <ProjectReference Include="..\ExpensePrediction.DataAccessLayer.Entities\ExpensePrediction.DataAccessLayer.Entities.csproj" />
     <ProjectReference Include="..\ExpensePrediction.DataAccessLayer.Interfaces\ExpensePrediction.DataAccessLayer.Interfaces.csproj" />
+    <ProjectReference Include="..\ExpensePrediction.Exceptions\ExpensePrediction.Exceptions.csproj" />
   </ItemGroup>
 
 </Project>

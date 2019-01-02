@@ -1,5 +1,6 @@
 ﻿using System;
 using ExpensePrediction.DataTransferObjects.User;
+using ExpensePrediction.Exceptions;
 using ExpensePrediction.Frontend.Service;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
@@ -37,9 +38,9 @@ namespace ExpensePrediction.Frontend.Pages
 
                 await _authService.LoginAsync(loginDto, Navigate);
             }
-            catch (Exception)
+            catch (RestException re)
             {
-                //TODO display a message i guess
+                await DisplayAlert("Error", re.Message, "");
             }
             finally
             {
