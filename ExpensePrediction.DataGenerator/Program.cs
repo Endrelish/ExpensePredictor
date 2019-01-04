@@ -34,17 +34,18 @@ namespace ExpensePrediction.DataGenerator
         {
             foreach(var user in _context.Users)
             {
-                await InsertUserIncomes(user);
+                var months = 24;
+                double lowerLimit = 2000.0d, upperLimit = 100000.0d, tolerance = 0.1d;
+                var rnd = new Random();
+                var income = (double)rnd.Next((int)lowerLimit * 100, (int)upperLimit * 100);
+                income /= 100.0d;
+                await InsertUserIncomes(user, income, tolerance, months);
             }
         }
 
-        private async static Task InsertUserIncomes(User user)
+        private async static Task InsertUserIncomes(User user, double income, double tolerance, int months)
         {
-            var months = 24;
-            double lowerLimit = 2000.0d, upperLimit = 100000.0d, tolerance = 0.1d;
             var rnd = new Random();
-            var income = (double)rnd.Next((int)lowerLimit * 100, (int)upperLimit * 100);
-            income /= 100.0d;
             var category = await _context.IncomeCategories.Select(c => c.Id).FirstAsync();
             for(int i = 0; i < months; i++)
             {
@@ -59,7 +60,7 @@ namespace ExpensePrediction.DataGenerator
             }
         }
 
-        private async static Task InsertUserExpenseAsync(User user)
+        private async static Task InsertUserExpensesAsync(User user)
         {
 
         }
