@@ -14,11 +14,11 @@ namespace ExpensePrediction.Frontend.Service
     public static class RestService
     {
         private const string ApplicationJsonContentType = "application/json";
-        private static readonly HttpClient _client;
+        private static readonly HttpClient Client;
 
         static RestService()
         {
-            _client = new HttpClient();
+            Client = new HttpClient();
         }
         
         private static async Task<T> GetContentAsync<T>(HttpResponseMessage response)
@@ -46,7 +46,7 @@ namespace ExpensePrediction.Frontend.Service
 
         public static async Task<T> PostAsync<T>(string uri, object content, bool authorize = true)
         {
-            var response = await _client.SendAsync(await GetRequestAsync(uri, authorize, HttpMethod.Post, content));
+            var response = await Client.SendAsync(await GetRequestAsync(uri, authorize, HttpMethod.Post, content));
 
             if (!response.IsSuccessStatusCode)
             {
@@ -57,7 +57,7 @@ namespace ExpensePrediction.Frontend.Service
                         Application.Current.MainPage = new NavigationPage(new MainPage());
                     }
                     AuthService.Logout(Navigate);
-                    await Application.Current.MainPage.DisplayAlert("Logout", "You session expired", "");
+                    await Application.Current.MainPage.DisplayAlert("Logout", "You session expired", "OK");
                 }
                 var error = await GetContentAsync<ErrorDto>(response);
                 throw new RestException(error.Message, error.ErrorCode);
@@ -68,7 +68,7 @@ namespace ExpensePrediction.Frontend.Service
 
         public static async Task<T> GetAsync<T>(string uri, bool authorize = true)
         {
-            var response = await _client.SendAsync(await GetRequestAsync(uri, authorize, HttpMethod.Get));
+            var response = await Client.SendAsync(await GetRequestAsync(uri, authorize, HttpMethod.Get));
 
             if (!response.IsSuccessStatusCode)
             {
