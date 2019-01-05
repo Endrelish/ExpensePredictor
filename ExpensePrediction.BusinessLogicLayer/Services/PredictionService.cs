@@ -55,7 +55,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         private async Task CalculateModels(RegressionModel[] models, double value)
         {
             var expenses = (await _expenseRepository.FindByConditionAync(e => e.Value >= value && e.Date.AddMonths(4).CompareTo(DateTime.Now) <= 0)).ToList();
-            var coefficients = 3;
+            const int coefficients = 3;
             var predictors = new List<double[]>();
 
             foreach(var expense in expenses)
