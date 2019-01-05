@@ -40,6 +40,7 @@ namespace ExpensePrediction.Frontend.Pages
                     new StartPageMenuItem (0, "User details", typeof(UserDetailPage)),
                     new StartPageMenuItem (1, "Expenses", typeof(ExpensesPage)),
                     new StartPageMenuItem (2, "Incomes", typeof(IncomesPage)),
+                    new StartPageMenuItem (3, "Prediction", typeof(PredictionPage))
                 });
             }
 

@@ -6,14 +6,11 @@
              x:Class="ExpensePrediction.Frontend.MainPage">
 
     <StackLayout>
-        <Label Text="Welcome to Expense Prediction hehe!"
-               HorizontalOptions="Center"
-               VerticalOptions="CenterAndExpand" />
-        <Button Text="Sign up" HorizontalOptions="Center"
-                VerticalOptions="CenterAndExpand"
+        <Button Text="Sign up" HorizontalOptions="Fill"
+                VerticalOptions="Start"
                 Clicked="SignUp" />
-        <Button Text="Sign in" HorizontalOptions="Center"
-                VerticalOptions="CenterAndExpand"
+        <Button Text="Sign in" HorizontalOptions="Fill"
+                VerticalOptions="Start"
                 Clicked="SignIn" />
     </StackLayout>
 

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExpensePrediction.Frontend.Pages.PredictionPage">
+  <ContentPage.Content>
+    <StackLayout Padding="20">
+      <DatePicker x:Name="Date"
+                  VerticalOptions="Start"
+                  HorizontalOptions="Fill" />
+      <Entry      x:Name="Value"
+                  Placeholder="Expense value"
+                  Keyboard="Numeric"
+                  VerticalOptions="Start"
+                  HorizontalOptions="Fill" />
+      <Picker     x:Name="Category"
+                  Title="Category"
+                  VerticalOptions="Start"
+                  HorizontalOptions="Fill" />
+      <Button     Text="Prediction"
+                  VerticalOptions="Start"
+                  HorizontalOptions="Fill"
+                  Clicked="PredictionButton_Clicked" />
+
+      <Grid x:Name="PredictionGrid" IsVisible="False">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition />
+          <ColumnDefinition />
+          <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <Label x:Name="FirstMonthLabel"
+               Grid.Column="0"
+               Grid.Row="0" />
+        <Label x:Name="SecondMonthLabel"
+               Grid.Column="0"
+               Grid.Row="1" />
+        <Label x:Name="ThirdMonthLabel"
+               Grid.Column="0"
+               Grid.Row="2" />
+        <Label x:Name="FirstMonthValue"
+               Grid.Column="2"
+               Grid.Row="0" />
+        <Label x:Name="SecondMonthValue"
+               Grid.Column="2"
+               Grid.Row="1" />
+        <Label x:Name="ThirdMonthValue"
+               Grid.Column="2"
+               Grid.Row="2" />
+      </Grid>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>
