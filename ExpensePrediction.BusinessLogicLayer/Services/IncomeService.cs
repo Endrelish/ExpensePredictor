@@ -78,7 +78,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
                                                             i.Date >= from &&
                                                             i.Date <= to;
 
-            var incomes = await _incomeRepository.FindByConditionAync(condition);
+            var incomes = await _incomeRepository.FindByConditionAsync(condition);
             return _mapper.Map<IEnumerable<IncomeDto>>(incomes);
         }
     }

@@ -209,7 +209,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                     CategoryId = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    LinkedExpenseId = table.Column<string>(nullable: true)
+                    Main = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -218,12 +218,6 @@ namespace ExpensePrediction.WebAPI.Migrations
                         name: "FK_Expenses_ExpenseCategories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "ExpenseCategories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Expenses_Expenses_LinkedExpenseId",
-                        column: x => x.LinkedExpenseId,
-                        principalTable: "Expenses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -267,14 +261,14 @@ namespace ExpensePrediction.WebAPI.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "2fdbec88-4aa9-430c-8359-8b27756cf1ca", "b7fabdd2-5d83-4b6a-8ba2-848a5e0ad5a6", "admin", "ADMIN" },
-                    { "307d5d07-87cf-49a0-9cd4-b925b5380963", "72b27c14-1474-4155-bf1a-bb181fd1b662", "user", "USER" }
+                    { "2fdbec88-4aa9-430c-8359-8b27756cf1ca", "0c7939be-0205-4aee-9d94-2d0625ea49df", "admin", "ADMIN" },
+                    { "307d5d07-87cf-49a0-9cd4-b925b5380963", "6f2affcc-e521-48ed-a546-74a7fa49c8ad", "user", "USER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "830f0d08-6a56-4a57-83c9-329c094f184b", 0, "2d042db9-0a07-468f-86ed-1774dab5931a", "user@user.com", false, "User", "User", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", "123456780", false, null, false, "user" });
+                values: new object[] { "830f0d08-6a56-4a57-83c9-329c094f184b", 0, "7efd49b6-c3f9-45b2-843c-d9a172afec4e", "user@user.com", false, "User", "User", false, null, "USER@USER.COM", "USER", "AQAAAAEAACcQAAAAEODZFtx31yVlQlAo6GcTs2dIyi/Dcch0/uqv27PvT/xXzy5+JAZEMVS5SvM13yrMdQ==", "123456780", false, null, false, "user" });
 
             migrationBuilder.InsertData(
                 table: "ExpenseCategories",
@@ -283,7 +277,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                 {
                     { "27a62b11-7765-473d-a1b6-7ecda9915dd5", "Żarcie" },
                     { "7edeb282-6172-49b1-9a8f-5c3b25b7d0b8", "Alkohol" },
-                    { "9def9750-e74a-4115-bdb7-e81bdccef26b", "Samochód" }
+                    { "5e2e41b3-f5fb-4d10-8685-9e45f8d480d8", "Samochód" }
                 });
 
             migrationBuilder.InsertData(
@@ -309,12 +303,12 @@ namespace ExpensePrediction.WebAPI.Migrations
                 columns: new[] { "Id", "CategoryId", "Date", "Description", "UserId", "Value" },
                 values: new object[,]
                 {
-                    { "336fe191-4041-43c1-ad99-f23b50f90240", "fb9d333d-5e85-484b-bb35-ef307fd06379", new DateTime(2018, 12, 8, 12, 23, 27, 497, DateTimeKind.Local).AddTicks(3545), "Spadek po cioci", "830f0d08-6a56-4a57-83c9-329c094f184b", 2345.6700000000001 },
-                    { "a91a0e86-dbde-4d14-bfb2-420a2d832f67", "fb9d333d-5e85-484b-bb35-ef307fd06379", new DateTime(2018, 11, 8, 12, 23, 27, 504, DateTimeKind.Local).AddTicks(2297), "Spadek po cioci", "830f0d08-6a56-4a57-83c9-329c094f184b", 2345.6700000000001 },
-                    { "165f9d5b-f38c-4b7d-8017-d6b686064311", "fb9d333d-5e85-484b-bb35-ef307fd06379", new DateTime(2018, 10, 8, 12, 23, 27, 504, DateTimeKind.Local).AddTicks(2325), "Spadek po cioci", "830f0d08-6a56-4a57-83c9-329c094f184b", 2345.6700000000001 },
-                    { "aaad10d5-c189-4e4d-9f27-1947ff724404", "fb9d333d-5e85-484b-bb35-ef307fd06379", new DateTime(2018, 9, 8, 12, 23, 27, 504, DateTimeKind.Local).AddTicks(2330), "Spadek po cioci", "830f0d08-6a56-4a57-83c9-329c094f184b", 2345.6700000000001 },
-                    { "3aa151cd-0418-4624-8fc3-409fb5b45c3c", "fb9d333d-5e85-484b-bb35-ef307fd06379", new DateTime(2018, 8, 8, 12, 23, 27, 504, DateTimeKind.Local).AddTicks(2334), "Spadek po cioci", "830f0d08-6a56-4a57-83c9-329c094f184b", 2345.6700000000001 },
-                    { "affc972b-9cbe-448a-a499-e27f38b48ee8", "fb9d333d-5e85-484b-bb35-ef307fd06379", new DateTime(2018, 7, 8, 12, 23, 27, 504, DateTimeKind.Local).AddTicks(2339), "Spadek po cioci", "830f0d08-6a56-4a57-83c9-329c094f184b", 2345.6700000000001 }
+                    { "37cf4f76-587e-4544-8135-4503b4c73f97", "fb9d333d-5e85-484b-bb35-ef307fd06379", new DateTime(2019, 1, 2, 19, 58, 6, 918, DateTimeKind.Local).AddTicks(2205), "Spadek po cioci", "830f0d08-6a56-4a57-83c9-329c094f184b", 2345.6700000000001 },
+                    { "63970621-cfbc-4e7c-9db2-c8dc4ff75b05", "fb9d333d-5e85-484b-bb35-ef307fd06379", new DateTime(2018, 12, 2, 19, 58, 6, 920, DateTimeKind.Local).AddTicks(8900), "Spadek po cioci", "830f0d08-6a56-4a57-83c9-329c094f184b", 2345.6700000000001 },
+                    { "c1d647a4-ca6f-4786-80b0-e1ac786d32fd", "fb9d333d-5e85-484b-bb35-ef307fd06379", new DateTime(2018, 11, 2, 19, 58, 6, 920, DateTimeKind.Local).AddTicks(8932), "Spadek po cioci", "830f0d08-6a56-4a57-83c9-329c094f184b", 2345.6700000000001 },
+                    { "0bdb265d-95bd-4de9-bd17-fc2ec894c80f", "fb9d333d-5e85-484b-bb35-ef307fd06379", new DateTime(2018, 10, 2, 19, 58, 6, 920, DateTimeKind.Local).AddTicks(8942), "Spadek po cioci", "830f0d08-6a56-4a57-83c9-329c094f184b", 2345.6700000000001 },
+                    { "9af37949-de7d-4a3d-80f1-6f4eeee670c3", "fb9d333d-5e85-484b-bb35-ef307fd06379", new DateTime(2018, 9, 2, 19, 58, 6, 920, DateTimeKind.Local).AddTicks(8946), "Spadek po cioci", "830f0d08-6a56-4a57-83c9-329c094f184b", 2345.6700000000001 },
+                    { "e61e224f-1a7f-40e1-b1b9-4351ecf3f71f", "fb9d333d-5e85-484b-bb35-ef307fd06379", new DateTime(2018, 8, 2, 19, 58, 6, 920, DateTimeKind.Local).AddTicks(9030), "Spadek po cioci", "830f0d08-6a56-4a57-83c9-329c094f184b", 2345.6700000000001 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -365,11 +359,6 @@ namespace ExpensePrediction.WebAPI.Migrations
                 name: "IX_Expenses_CategoryId",
                 table: "Expenses",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Expenses_LinkedExpenseId",
-                table: "Expenses",
-                column: "LinkedExpenseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Expenses_UserId",

@@ -97,21 +97,5 @@ namespace ExpensePrediction.WebAPI.Controllers
             var result = await _expenseService.EditExpenseAsync(expenseDto, User.Identity.Name);
             return Ok(result);
         }
-
-        /// <summary>
-        ///     Gets the linked expenses.
-        /// </summary>
-        /// <param name="expenseId">The expense identifier.</param>
-        /// <returns>Linked expenses.</returns>
-        [HttpGet("linked/{expenseId}")]
-        [Authorize("GetExpenses")]
-        [Produces(Constants.ApplicationJson)]
-        [ProducesResponseType(typeof(IEnumerable<ExpenseDto>), 200)]
-        [ProducesResponseType(typeof(string), 400)]
-        public async Task<IActionResult> GetLinkedExpenses([FromRoute] string expenseId)
-        {
-            var expenses = await _expenseService.GetLinkedExpensesAsync(expenseId, User.Identity.Name);
-            return Ok(expenses);
-        }
     }
 }
