@@ -5,6 +5,10 @@ Martina Bremer.
 \newblock {\em Math 261A}.
 \newblock SAN JOSÉ STATE UNIVERSITY, 2012.
 
+\bibitem{britch_dunn_schwelnus_2018}
+David Britch, Craig Dunn, and Joshua Schwelnus.
+\newblock extensible application markup language (xaml) - xamarin, Jun 2018.
+
 \bibitem{wielowymiarowymodelregresjiliniowej2014}
 Ewelina Wolska Karolina~Zyskowska Małgorzata~Lebiedź, Agnieszka~Weinstok.
 \newblock {\em Wielowymiarowy Model Regresji Liniowej}.
@@ -14,5 +18,9 @@ Ewelina Wolska Karolina~Zyskowska Małgorzata~Lebiedź, Agnieszka~Weinstok.
 Beata Pułaska-Turyna.
 \newblock {\em Statystyka dla ekonomistów. Wydanie III zmienione.}
 \newblock Difin SA, 2011.
+
+\bibitem{wagner_wenzel_latham_onderka_2016}
+Bill Wagner, Maira Wenzel, Luke Latham, and Petr Onderka.
+\newblock A tour of c\# - c\# guide, Aug 2016.
 
 \end{thebibliography}

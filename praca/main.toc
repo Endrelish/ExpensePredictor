@@ -11,20 +11,21 @@
 \contentsline {subsection}{\numberline {2.4.2\relax .\leavevmode@ifvmode \kern .5em }Metoda najmniejszych kwadrat\IeC {\'o}w}{9}% 
 \contentsline {section}{\numberline {2.5\relax .\leavevmode@ifvmode \kern .5em }Wykorzystanie metod analizy danych do predykcji wydatk\IeC {\'o}w}{10}% 
 \contentsline {chapter}{\numberline {3\relax .\leavevmode@ifvmode \kern .5em }Technologie u\IeC {\.z}yte w projekcie}{11}% 
-\contentsline {section}{\numberline {3.1\relax .\leavevmode@ifvmode \kern .5em }J\IeC {\k e}zyk programowania}{11}% 
-\contentsline {section}{\numberline {3.2\relax .\leavevmode@ifvmode \kern .5em }Narz\IeC {\k e}dzia}{11}% 
-\contentsline {chapter}{\numberline {4\relax .\leavevmode@ifvmode \kern .5em }Dokumentacja techniczna aplikacji do zarz\IeC {\k a}dzania bud\IeC {\.z}etem i predykcji wydatk\IeC {\'o}w}{12}% 
-\contentsline {section}{\numberline {4.1\relax .\leavevmode@ifvmode \kern .5em }Opis za\IeC {\l }o\IeC {\.z}e\IeC {\'n} projektu aplikacji}{12}% 
-\contentsline {section}{\numberline {4.2\relax .\leavevmode@ifvmode \kern .5em }Warstwa modelu danych}{12}% 
-\contentsline {section}{\numberline {4.3\relax .\leavevmode@ifvmode \kern .5em }Warstwa logiki biznesowej}{12}% 
-\contentsline {section}{\numberline {4.4\relax .\leavevmode@ifvmode \kern .5em }Warstwa interfejsu u\IeC {\.z}ytkownika - aplikacja mobilna}{12}% 
-\contentsline {chapter}{\numberline {5\relax .\leavevmode@ifvmode \kern .5em }Dokumentacja u\IeC {\.z}ytkownika aplikacji do zarz\IeC {\k a}dzania bud\IeC {\.z}etem i predykcji wydatk\IeC {\'o}w}{13}% 
-\contentsline {section}{\numberline {5.1\relax .\leavevmode@ifvmode \kern .5em }Modu\IeC {\l } obs\IeC {\l }ugi kont u\IeC {\.z}ytkownik\IeC {\'o}w}{13}% 
-\contentsline {section}{\numberline {5.2\relax .\leavevmode@ifvmode \kern .5em }Modu\IeC {\l } rejestracji wydatk\IeC {\'o}w i przychod\IeC {\'o}w}{13}% 
-\contentsline {section}{\numberline {5.3\relax .\leavevmode@ifvmode \kern .5em }Modu\IeC {\l } predykcji wydatk\IeC {\'o}w}{13}% 
-\contentsline {chapter}{\numberline {6\relax .\leavevmode@ifvmode \kern .5em }Podsumowanie}{14}% 
-\contentsline {section}{\numberline {6.1\relax .\leavevmode@ifvmode \kern .5em }Wnioski}{14}% 
-\contentsline {section}{\numberline {6.2\relax .\leavevmode@ifvmode \kern .5em }Perspektywy rozwoju}{14}% 
-\contentsline {chapter}{Bibliografia}{15}% 
-\contentsline {chapter}{Spis rysunk\'ow}{16}% 
-\contentsline {chapter}{Spis tabel}{17}% 
+\contentsline {section}{\numberline {3.1\relax .\leavevmode@ifvmode \kern .5em }J\IeC {\k e}zyki C\# i XAML}{11}% 
+\contentsline {section}{\numberline {3.2\relax .\leavevmode@ifvmode \kern .5em }Platformy programistyczne (frameworki)}{12}% 
+\contentsline {section}{\numberline {3.3\relax .\leavevmode@ifvmode \kern .5em }Narz\IeC {\k e}dzia}{12}% 
+\contentsline {chapter}{\numberline {4\relax .\leavevmode@ifvmode \kern .5em }Dokumentacja techniczna aplikacji do zarz\IeC {\k a}dzania bud\IeC {\.z}etem i predykcji wydatk\IeC {\'o}w}{13}% 
+\contentsline {section}{\numberline {4.1\relax .\leavevmode@ifvmode \kern .5em }Opis za\IeC {\l }o\IeC {\.z}e\IeC {\'n} projektu aplikacji}{13}% 
+\contentsline {section}{\numberline {4.2\relax .\leavevmode@ifvmode \kern .5em }Warstwa modelu danych}{13}% 
+\contentsline {section}{\numberline {4.3\relax .\leavevmode@ifvmode \kern .5em }Warstwa logiki biznesowej}{13}% 
+\contentsline {section}{\numberline {4.4\relax .\leavevmode@ifvmode \kern .5em }Warstwa interfejsu u\IeC {\.z}ytkownika - aplikacja mobilna}{13}% 
+\contentsline {chapter}{\numberline {5\relax .\leavevmode@ifvmode \kern .5em }Dokumentacja u\IeC {\.z}ytkownika aplikacji do zarz\IeC {\k a}dzania bud\IeC {\.z}etem i predykcji wydatk\IeC {\'o}w}{14}% 
+\contentsline {section}{\numberline {5.1\relax .\leavevmode@ifvmode \kern .5em }Modu\IeC {\l } obs\IeC {\l }ugi kont u\IeC {\.z}ytkownik\IeC {\'o}w}{14}% 
+\contentsline {section}{\numberline {5.2\relax .\leavevmode@ifvmode \kern .5em }Modu\IeC {\l } rejestracji wydatk\IeC {\'o}w i przychod\IeC {\'o}w}{14}% 
+\contentsline {section}{\numberline {5.3\relax .\leavevmode@ifvmode \kern .5em }Modu\IeC {\l } predykcji wydatk\IeC {\'o}w}{14}% 
+\contentsline {chapter}{\numberline {6\relax .\leavevmode@ifvmode \kern .5em }Podsumowanie}{15}% 
+\contentsline {section}{\numberline {6.1\relax .\leavevmode@ifvmode \kern .5em }Wnioski}{15}% 
+\contentsline {section}{\numberline {6.2\relax .\leavevmode@ifvmode \kern .5em }Perspektywy rozwoju}{15}% 
+\contentsline {chapter}{Bibliografia}{16}% 
+\contentsline {chapter}{Spis rysunk\'ow}{17}% 
+\contentsline {chapter}{Spis tabel}{18}% 
