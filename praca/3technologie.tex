@@ -1,19 +1,23 @@
 \chapter{Technologie użyte w projekcie}
-System stworzony na potrzeby niniejszej pracy składa się z dwóch komponentów: warstwy logiki (ang. \textit{backend})  oraz warstwy interfejsu użytkownika (ang. \textit{frontend}).
-\section{Języki C\# i XAML}
-Dwoma najpopularniejszymi językami wykorzystywanymi do tworzenia warstwy logiki są C\# i Java. Oba te języki posiadają bogaty zasób narzędzi i bibliotek ułatwiających ten proces. C\# i Java znajdują również zastosowanie w dziedzinie aplikacji mobilnych, gdzie popularnie wykorzystywanymi językami są też Kotlin, Swift oraz JavaScript.
+System stworzony na potrzeby niniejszej pracy składa się z dwóch komponentów: warstwy logiki (ang. \textit{backend}) oraz warstwy interfejsu użytkownika (ang. \textit{frontend}).\\
+Obecnie istnieje na rynku wiele technologii umożliwiających realizację warstwy backendu, jak np. Spring (Java), ASP .NET (C\#), ASP .NET Core (C\#). Technologie te różnią się wymaganiami oraz dostępnymi narzędziami.\\
+Warstwa frontendu została zrealizowana w formie aplikacji mobilnej. Aplikacje te można podzielić na trzy kategorie:
+\begin{itemize}
+	\item Natywne - zbudowane dla konkretnej platformy i napisane w języku dla niej odpowiednim, np. Swift dla iOS lub Kotlin dla Androida. Tak wykonane aplikacje cechują się szybkością oraz dostępem do funkcji urządzenia, takich jak akcelerometr czy czytnik linii papilarnych. Aplikacja natywna jest powiązana z konkretnym systemem operacyjnym, przez co proces tworzenia takowej dla różnych platform wiąże się z pisaniem odrębnych aplikacji.
+	\item  Webowe - dostęp do nich odbywa się poprzez przeglądarkę internetową. Nie mają dostępu do urządzenia na takim poziomie, jak aplikacje natywne, są jednak niezależne od systemu operacyjnego, przez co mniej kosztowne w produkcji. Popularne technologie tworzenia aplikacji webowych to np. Ruby on Rails (Ruby), Angular (TypeScript).
+	\item Hybrydowe - połączenie aplikacji natywnej i webowej, posiadają zalety obu kategorii, nie są jednak tak szybkie, jak natywne. Ich interfejs stworzony jest w formie aplikacji webowej i jest interpretowany przez natywną aplikację dla konkretnego systemu. Pozwala to na tworzenie aplikacji, do których nie jest wymagana przeglądarka internetowa, posiadających dostęp do urządzenia na poziomie aplikacji natywnej. Aplikacje hybrydowe tworzone są przy pomocy takich technologii jak Xamarin Forms (C\#) i React Native (JavaScript).
+\end{itemize}
+\section{Języki programowania}
+%TODO: Hello World listing
+Język \textbf{Java} jest współbieżnym, opartym na klasach i zorientowanym obiektowo językiem ogólnego zastosowania. Jest zaprojektowany tak, aby być prostym i sprawdzonym językiem. Zapewnia automatyczne zarządzanie pamięcią przy użyciu odśmiecacza (ang. \textit{garbage collector}). Kod napisany w Javie jest kompilowany do tzw. kodu bajtowego Javy (ang. \textit{Java bytecode}), który jest interpretowany przez maszynę wirtualną Javy (ang. \textit{Java Virtual Machine, JVM}).\cite{jamesgoslingbilljoyguysteelegiladbrachaalexbuckley2015}
 
-\textbf{C\#} jest prostym, nowoczesnym i zorientowanym obiektowo językiem programowania, wywodzącym się z języka C. Posiada on szereg funkcjonalności usprawniających proces wytwarzania oprogramowania, takimi jak: odśmiecanie (ang. \textit{garbage collection}), bezpieczeństwo typologiczne (ang. \textit{type safety}) czy obsługa wyjątków (ang. \textit{exception handling}).\cite{wagner_wenzel_latham_onderka_2016}\\
-Język C\# został użyty do stworzenia warstwy logiki oraz części warstwy interfejsu użytkownika odpowiedzialnej za komunikację z warstwą logiki. Wybór ten uzasadniony jest dostępnymi dla tego języka narzędziami oraz bibliotekami.
+\textbf{C\#} jest prostym, nowoczesnym i zorientowanym obiektowo językiem programowania, wywodzącym się z języka C. Posiada on szereg funkcjonalności usprawniających proces wytwarzania oprogramowania, takimi jak: odśmiecanie (ang. \textit{garbage collection}), bezpieczeństwo typologiczne (ang. \textit{type safety}) czy obsługa wyjątków (ang. \textit{exception handling}).\cite{wagner_wenzel_latham_onderka_2016}
 
-\textbf{XAML (Extensible Application Markup Language)} jest deklaratywnym językiem stworzonym na bazie języka XML. Pozwala on na definiowanie interfejsu użytkownika przy użyciu znaczników, podczas gdy zachowanie poszczególnych komponentów interfejsu opisane jest za pomocą kodu w języku C\#.\cite{britch_dunn_schwelnus_2018} \\
-Język XAML świetnie sprawdza się w opisie interfejsu użytkownika aplikacji stworzonej przy użyciu C\#, dlatego został on użyty do stworzenia aplikacji mobilnej.
+\textbf{JavaScript} jest interpretowanym językiem programowania bez ścisłej kontroli typów posiadającego możliwości języka zorientowanego obiektowo. Syntaktycznie jest podobny do języków C lub C++.\cite{davidflanagan2006} Nadzbiorem języka JavaScript jest \textbf{TypeScript}, który pozwala na typowanie statyczne.
+
+\textbf{Ruby} jest językiem całkowicie zorientowanym obiektowo, co oznacza że każda wartość jest obiektem. Jest dynamicznym językiem z bogatym zasobem bibliotek. Podobny jest do takich języków jak List, Smalltalk czy Perl.\cite{davidflanaganyukihiromatsimoto2008}
 \section{Platformy programistyczne (frameworki)}
-Obecnie na rynku istnieje wiele technologii umożliwiających tworzenie aplikacji, np. \textit{Spring, ASP .NET, ASP .NET Core} do warstwy logiki oraz \textit{Xamarin Native, Xamarin Forms, React Native} do aplikacji mobilnych.\\
-Framework Spring jest dostępny dla języka Java i umożliwia proste budowanie aplikacji webowych. 
 
-
-Warstwa logiki powstała przy użyciu platformy \textbf{ASP .NET Core}. Jest to otwartoźródłowa platforma programistyczna ogólnego użytku, wyróżniająca się kompatybilnością z wieloma systemami operacyjnymi oraz architekturami. Z platformy tej można korzystać używając języków C\#, F\# oraz Visual Basic.
 
 \section{Narzędzia}
 

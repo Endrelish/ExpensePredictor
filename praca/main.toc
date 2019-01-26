@@ -11,7 +11,7 @@
 \contentsline {subsection}{\numberline {2.4.2\relax .\leavevmode@ifvmode \kern .5em }Metoda najmniejszych kwadrat\IeC {\'o}w}{9}% 
 \contentsline {section}{\numberline {2.5\relax .\leavevmode@ifvmode \kern .5em }Wykorzystanie metod analizy danych do predykcji wydatk\IeC {\'o}w}{10}% 
 \contentsline {chapter}{\numberline {3\relax .\leavevmode@ifvmode \kern .5em }Technologie u\IeC {\.z}yte w projekcie}{11}% 
-\contentsline {section}{\numberline {3.1\relax .\leavevmode@ifvmode \kern .5em }J\IeC {\k e}zyki C\# i XAML}{11}% 
+\contentsline {section}{\numberline {3.1\relax .\leavevmode@ifvmode \kern .5em }J\IeC {\k e}zyki programowania}{11}% 
 \contentsline {section}{\numberline {3.2\relax .\leavevmode@ifvmode \kern .5em }Platformy programistyczne (frameworki)}{12}% 
 \contentsline {section}{\numberline {3.3\relax .\leavevmode@ifvmode \kern .5em }Narz\IeC {\k e}dzia}{12}% 
 \contentsline {chapter}{\numberline {4\relax .\leavevmode@ifvmode \kern .5em }Dokumentacja techniczna aplikacji do zarz\IeC {\k a}dzania bud\IeC {\.z}etem i predykcji wydatk\IeC {\'o}w}{13}% 

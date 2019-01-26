@@ -3,49 +3,59 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: main.aux
 The style file: plain.bst
 Database file #1: sample.bib
+Warning--entry type for "wagner_wenzel_latham_onderka_2016" isn't style-file defined
+--line 23 of file sample.bib
 Too many commas in name 1 of "Małgorzata Lebiedź, Agnieszka Weinstok, Ewelina Wolska, Karolina Zyskowska" for entry wielowymiarowymodelregresjiliniowej2014
 while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "James Gosling, Bill Joy, Guy Steele, Gilad Bracha, Alex Buckley" for entry jamesgoslingbilljoyguysteelegiladbrachaalexbuckley2015
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "James Gosling, Bill Joy, Guy Steele, Gilad Bracha, Alex Buckley" for entry jamesgoslingbilljoyguysteelegiladbrachaalexbuckley2015
+while executing---line 1049 of file plain.bst
+Too many commas in name 1 of "James Gosling, Bill Joy, Guy Steele, Gilad Bracha, Alex Buckley" for entry jamesgoslingbilljoyguysteelegiladbrachaalexbuckley2015
+while executing---line 1090 of file plain.bst
+Too many commas in name 1 of "James Gosling, Bill Joy, Guy Steele, Gilad Bracha, Alex Buckley" for entry jamesgoslingbilljoyguysteelegiladbrachaalexbuckley2015
+while executing---line 1090 of file plain.bst
 Too many commas in name 1 of "Małgorzata Lebiedź, Agnieszka Weinstok, Ewelina Wolska, Karolina Zyskowska" for entry wielowymiarowymodelregresjiliniowej2014
 while executing---line 1090 of file plain.bst
-You've used 5 entries,
+You've used 7 entries,
             2118 wiz_defined-function locations,
-            524 strings with 4628 characters,
-and the built_in function-call counts, 1230 in all, are:
-= -- 103
-> -- 62
+            533 strings with 4915 characters,
+and the built_in function-call counts, 1613 in all, are:
+= -- 138
+> -- 65
 < -- 0
-+ -- 26
++ -- 30
 - -- 20
-* -- 64
-:= -- 217
-add.period$ -- 13
-call.type$ -- 5
-change.case$ -- 22
+* -- 71
+:= -- 287
+add.period$ -- 20
+call.type$ -- 7
+change.case$ -- 25
 chr.to.int$ -- 0
-cite$ -- 5
-duplicate$ -- 50
-empty$ -- 111
+cite$ -- 7
+duplicate$ -- 79
+empty$ -- 155
 format.name$ -- 20
-if$ -- 254
+if$ -- 337
 int.to.chr$ -- 0
-int.to.str$ -- 5
-missing$ -- 6
-newline$ -- 26
-num.names$ -- 10
-pop$ -- 47
+int.to.str$ -- 7
+missing$ -- 12
+newline$ -- 37
+num.names$ -- 14
+pop$ -- 60
 preamble$ -- 1
-purify$ -- 20
+purify$ -- 24
 quote$ -- 0
-skip$ -- 34
+skip$ -- 44
 stack$ -- 0
-substring$ -- 26
-swap$ -- 5
+substring$ -- 38
+swap$ -- 7
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 14
+type$ -- 16
 warning$ -- 0
-while$ -- 10
-width$ -- 6
-write$ -- 48
-(There were 2 error messages)
+while$ -- 14
+width$ -- 8
+write$ -- 70
+(There were 6 error messages)
