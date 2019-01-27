@@ -5,33 +5,55 @@ Martina Bremer.
 \newblock {\em Math 261A}.
 \newblock SAN JOSÉ STATE UNIVERSITY, 2012.
 
-\bibitem{davidflanaganyukihiromatsimoto2008}
-Yukihiro~Matsimoto David~Flanagan.
-\newblock {\em The Ruby Programming Language: Everything You Need to Know}.
-\newblock O'Reilly Media, Inc., 2008.
+\bibitem{microsoftdotnet}
+Microsoft Corporation.
+\newblock What is {.NET}?
+\newblock \url{https://dotnet.microsoft.com/learn/dotnet/what-is-dotnet}, 2019.
+\newblock [dostęp 27.01.2019].
 
 \bibitem{davidflanagan2006}
 David Flanagan.
 \newblock {\em Javascript: The Definitive Guide. Fifth Edition.}
 \newblock O'Reilly Media, Inc., 2006.
 
+\bibitem{davidflanaganyukihiromatsimoto2008}
+David Flanagan and Yukihiro Matsimoto.
+\newblock {\em The Ruby Programming Language: Everything You Need to Know}.
+\newblock O'Reilly Media, Inc., 2008.
+
 \bibitem{jamesgoslingbilljoyguysteelegiladbrachaalexbuckley2015}
-Guy Steele Gilad Bracha Alex~Buckley James~Gosling, Bill~Joy.
+James Gosling, Bill Joy, Guy Steele, Gilad Bracha, and Alex Buckley.
 \newblock {\em The Java® Language Specification. Java SE 8 Edition.}
 \newblock Oracle America, Inc, 2015.
 
 \bibitem{wielowymiarowymodelregresjiliniowej2014}
-Ewelina Wolska Karolina~Zyskowska Małgorzata~Lebiedź, Agnieszka~Weinstok.
-\newblock {\em Wielowymiarowy Model Regresji Liniowej}.
-\newblock Politechnika Gdańska, 2014.
+Małgorzata Lebiedź, Agnieszka Weinstok, Ewelina Wolska, and Karolina
+  Zyskowska.
+\newblock Wielowymiarowy model regresji liniowej.
+\newblock
+  \url{http://www.mif.pg.gda.pl/homepages/kdz/StatystykaII/Rozdzial7b.pdf},
+  2014.
+\newblock [dostęp 04.01.2019].
 
 \bibitem{bptstatystyka}
 Beata Pułaska-Turyna.
 \newblock {\em Statystyka dla ekonomistów. Wydanie III zmienione.}
 \newblock Difin SA, 2011.
 
+\bibitem{spring}
+Rossen Stoyanchev.
+\newblock Spring framework overview.
+\newblock
+  \url{https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/overview.html},
+  2019.
+\newblock [dostęp 27.01.2019].
+
 \bibitem{wagner_wenzel_latham_onderka_2016}
 Bill Wagner, Maira Wenzel, Luke Latham, and Petr Onderka.
-\newblock A tour of c\# - c\# guide, Aug 2016.
+\newblock A tour of {C\#} - {C\#} guide.
+\newblock
+  \url{https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/index},
+  2016.
+\newblock [dostęp 15.01.2019].
 
 \end{thebibliography}

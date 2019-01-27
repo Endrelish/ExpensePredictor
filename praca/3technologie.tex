@@ -8,17 +8,42 @@ Warstwa frontendu została zrealizowana w formie aplikacji mobilnej. Aplikacje t
 	\item Hybrydowe - połączenie aplikacji natywnej i webowej, posiadają zalety obu kategorii, nie są jednak tak szybkie, jak natywne. Ich interfejs stworzony jest w formie aplikacji webowej i jest interpretowany przez natywną aplikację dla konkretnego systemu. Pozwala to na tworzenie aplikacji, do których nie jest wymagana przeglądarka internetowa, posiadających dostęp do urządzenia na poziomie aplikacji natywnej. Aplikacje hybrydowe tworzone są przy pomocy takich technologii jak Xamarin Forms (C\#) i React Native (JavaScript).
 \end{itemize}
 \section{Języki programowania}
-%TODO: Hello World listing
-Język \textbf{Java} jest współbieżnym, opartym na klasach i zorientowanym obiektowo językiem ogólnego zastosowania. Jest zaprojektowany tak, aby być prostym i sprawdzonym językiem. Zapewnia automatyczne zarządzanie pamięcią przy użyciu odśmiecacza (ang. \textit{garbage collector}). Kod napisany w Javie jest kompilowany do tzw. kodu bajtowego Javy (ang. \textit{Java bytecode}), który jest interpretowany przez maszynę wirtualną Javy (ang. \textit{Java Virtual Machine, JVM}).\cite{jamesgoslingbilljoyguysteelegiladbrachaalexbuckley2015}
+Język \textbf{Java} jest współbieżnym, opartym na klasach i zorientowanym obiektowo językiem ogólnego zastosowania. Jest zaprojektowany tak, aby być prostym i sprawdzonym językiem. Zapewnia automatyczne zarządzanie pamięcią przy użyciu odśmiecacza (ang. \textit{garbage collector}). Kod napisany w Javie jest kompilowany do tzw. kodu bajtowego Javy (ang. \textit{Java bytecode}), który jest interpretowany przez maszynę wirtualną Javy (ang. \textit{Java Virtual Machine, JVM}), dzięki czemu jest wieloplatformowy (ang. \textit{cross-platform}).\cite{jamesgoslingbilljoyguysteelegiladbrachaalexbuckley2015}
+\lstinputlisting[caption={Kod w języku Java wyświetlający napis "Hello, World".}, captionpos=b]{listing/Example.java}
 
 \textbf{C\#} jest prostym, nowoczesnym i zorientowanym obiektowo językiem programowania, wywodzącym się z języka C. Posiada on szereg funkcjonalności usprawniających proces wytwarzania oprogramowania, takimi jak: odśmiecanie (ang. \textit{garbage collection}), bezpieczeństwo typologiczne (ang. \textit{type safety}) czy obsługa wyjątków (ang. \textit{exception handling}).\cite{wagner_wenzel_latham_onderka_2016}
+\lstinputlisting[caption={Kod w języku C\# wyświetlający napis "Hello, World".}, captionpos=b]{listing/Example.cs}
 
 \textbf{JavaScript} jest interpretowanym językiem programowania bez ścisłej kontroli typów posiadającego możliwości języka zorientowanego obiektowo. Syntaktycznie jest podobny do języków C lub C++.\cite{davidflanagan2006} Nadzbiorem języka JavaScript jest \textbf{TypeScript}, który pozwala na typowanie statyczne.
+\lstinputlisting[caption={Kod w języku JavaScript wyświetlający napis "Hello, World"}, captionpos=b]{listing/Example.js}
 
-\textbf{Ruby} jest językiem całkowicie zorientowanym obiektowo, co oznacza że każda wartość jest obiektem. Jest dynamicznym językiem z bogatym zasobem bibliotek. Podobny jest do takich języków jak List, Smalltalk czy Perl.\cite{davidflanaganyukihiromatsimoto2008}
+\textbf{Ruby} jest językiem całkowicie zorientowanym obiektowo, co oznacza że każda wartość jest obiektem. Jest dynamicznym językiem z bogatym zasobem bibliotek. Podobny jest do takich języków jak Lisp, Smalltalk czy Perl.\cite{davidflanaganyukihiromatsimoto2008}
+\lstinputlisting[caption={Kod w języku Ruby wyświetlający napis "Hello, World"}, captionpos=b]{listing/Example.rb}
 \section{Platformy programistyczne (frameworki)}
+\textbf{Spring Framework} (\ref{spring_logo}) jest platformą ułatwiającą tworzenie aplikacji z użyciem technologii Java Enterprise Edition. Spring składa się z wielu modułów, u podstawy posiadających rozbudowane mechanizmy konfiguracji i wstrzykiwania zależności (ang. \textit{dependency injection}). Zapewnia wsparcie dla różnych architektur aplikacji.\cite{spring} Dzięki możliwości uruchomienia przy pomocy JVM jest technologią wieloplatformową.
+\begin{figure}[!ht]
+	\begin{center}
+		\includegraphics[width=2.5in]{img/logo/spring.png}
+		\caption{Logo Spring Framework (https://spring.io/img/spring-by-pivotal.png)}
+		\label{spring_logo}
+	\end{center}
+\end{figure}
 
+\textbf{.NET} (\ref{dotnet_logo}) jest darmową, otwartoźródłową platformą programistyczną służącą do wytwarzania różnych typów aplikacji. Platforma .NET jest dostępna dla języków C\#, F\# oraz Visual Basic. Zaletą platformy .NET jest bogaty zasób bibliotek dostępnych dla wszystkich frameworków wchodzących w skład .NET-u\cite{microsoftdotnet}:
+\begin{itemize}
+	\item\textbf{.NET Standard} jest wspólnym dla wszystkich platform .NET zestawem \textbf{interfejsów programowania aplikacji (ang. \textit{application programming interface, API})} i bibliotek. Ułatwia to pracę z różnymi frameworkami .NET poprzez zastosowanie tych samych narzędzi.
+	\item\textbf{.NET Core} jest wieloplatformowym frameworkiem używanym do tworzenia stron internetowych, serwerów lub aplikacji konsolowych na systemy Windows, Linux i macOS.
+	\item\textbf{.NET Framework} jest implementacją platformy .NET wymagającą do uruchomienia systemu Windows i przystosowaną do niego. Dzięki temu wzbogacona jest o biblioteki specyficzne dla tego systemu, jak na przykład narzędzia pozwalające na dostęp do rejestru systemu Windows.
+	\item\textbf{Xamarin} implementuje platformę .NET i pozwala na tworzenie aplikacji mobilnych na systemy Android, iOS oraz Windows Phone.
+\end{itemize}
+\begin{figure}[!ht]
+\begin{center}
+	\includegraphics[width=2.5in]{img/logo/dotnet.png}
+	\caption{Logo .NET (https://docs.microsoft.com/en-us/dotnet/images/hub/net.svg)}
+	\label{dotnet_logo}
+\end{center}
+\end{figure}
 
 \section{Narzędzia}
 
-%TODO: MVC, REST, SWAGGER, LIBRARIES, EF CORE, DEPENDENCY INJECTION
+%TODO: MVC, REST, SWAGGER, LIBRARIES, EF CORE, DEPENDENCY INJECTION, LINQ

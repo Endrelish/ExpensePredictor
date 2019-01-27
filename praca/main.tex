@@ -52,6 +52,7 @@
 \usepackage{afterpage}
 \usepackage{backref}
 \usepackage{listings}
+\usepackage{url}
 
 \renewcommand*{\backref}[1]{}
 \renewcommand*{\backrefalt}[4]{%
@@ -62,6 +63,7 @@
     \fi}
 \renewcommand*{\backreftwosep}{ i~}%
 \renewcommand*{\backreflastsep}{ i~}%
+\renewcommand*{\lstlistlistingname}{Spis listingów}
 
 \hyphenpenalty=10000
 \clubpenalty=10000	
@@ -109,7 +111,11 @@
 \linespread{1.5}
 
 \begin{document}
-\lstset{language=csh}
+\lstset{
+	language=csh,
+	showstringspaces=false,	
+	basicstyle=\footnotesize\ttfamily,
+}
 \setcounter{page}{1}
 \pagestyle{plain}
 \begin{titlepage}
@@ -152,4 +158,5 @@
 \bibliography{sample.bib}
 \listoffigures
 \listoftables
+\lstlistoflistings
 \end{document}
