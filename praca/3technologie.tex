@@ -15,42 +15,49 @@ Język \textbf{Java} jest współbieżnym, opartym na klasach i zorientowanym ob
 \lstinputlisting[caption={Kod w języku C\# wyświetlający napis "Hello, World".}, captionpos=b]{listing/Example.cs}
 
 \textbf{JavaScript} jest interpretowanym językiem programowania bez ścisłej kontroli typów posiadającego możliwości języka zorientowanego obiektowo. Syntaktycznie jest podobny do języków C lub C++.\cite{davidflanagan2006} Nadzbiorem języka JavaScript jest \textbf{TypeScript}, który pozwala na typowanie statyczne.
-\lstinputlisting[caption={Kod w języku JavaScript wyświetlający napis "Hello, World"}, captionpos=b]{listing/Example.js}
+\lstinputlisting[caption={Kod w języku JavaScript wyświetlający napis "Hello, World".}, captionpos=b]{listing/Example.js}
 
 \textbf{Ruby} jest językiem całkowicie zorientowanym obiektowo, co oznacza że każda wartość jest obiektem. Jest dynamicznym językiem z bogatym zasobem bibliotek. Podobny jest do takich języków jak Lisp, Smalltalk czy Perl.\cite{davidflanaganyukihiromatsimoto2008}
-\lstinputlisting[caption={Kod w języku Ruby wyświetlający napis "Hello, World"}, captionpos=b]{listing/Example.rb}
+\lstinputlisting[caption={Kod w języku Ruby wyświetlający napis "Hello, World".}, captionpos=b]{listing/Example.rb}
 
 \textbf{Swift} to język programowania ogólnego użytku stworzony przez firmę Apple Inc. Jest zaprojektowany jako następca języków wywodzących się od C (C, C++, Objective-C) o porównywalnej wydajności. Jest to główny język tworzenia aplikacji mobilnych na system iOS.\cite{swift}
-\lstinputlisting[caption={Kod w języku Swift wyświetlający napis "Hello, World"}, captionpos=b]{listing/Example.swift}
+\lstinputlisting[caption={Kod w języku Swift wyświetlający napis "Hello, World".}, captionpos=b]{listing/Example.swift}
 
 \textbf{Kotlin} jest statycznie typowanym, wieloplatformowym i darmowym językiem programowania ogólnego użytku rozwijanym przez JetBrains.\cite{kotlin} Kotlin jest oficjalnie wspierany przez Google jako język tworzenia aplikacji mobilnych na system Android.\cite{kotlingoogle}
-\lstinputlisting[caption={Kod w języku Kotlin wyświetlający napis "Hello, World"}, captionpos=b]{listing/Example.kt}
+\lstinputlisting[caption={Kod w języku Kotlin wyświetlający napis "Hello, World".}, captionpos=b]{listing/Example.kt}
 \section{Platformy programistyczne (frameworki)}
-\textbf{Spring Framework} (\ref{spring_logo}) jest platformą ułatwiającą tworzenie aplikacji z użyciem technologii Java Enterprise Edition. Spring składa się z wielu modułów, u podstawy posiadających rozbudowane mechanizmy konfiguracji i wstrzykiwania zależności (ang. \textit{dependency injection}). Zapewnia wsparcie dla różnych architektur aplikacji.\cite{spring} Dzięki możliwości uruchomienia przy pomocy JVM jest technologią wieloplatformową.
+\textbf{Spring Framework} (rys. \ref{spring_logo}) jest platformą ułatwiającą tworzenie aplikacji z użyciem technologii Java Enterprise Edition. Spring składa się z wielu modułów, u podstawy posiadających rozbudowane mechanizmy konfiguracji i wstrzykiwania zależności (ang. \textit{dependency injection}). Zapewnia wsparcie dla różnych architektur aplikacji.\cite{spring} Dzięki możliwości uruchomienia przy pomocy JVM jest technologią wieloplatformową.
 \begin{figure}[!ht]
 	\begin{center}
-		\includegraphics[width=3in]{img/logo/spring.png}
+		\includegraphics[width=3.5in]{img/logo/spring.png}
 		\caption{Logo Spring Framework (https://spring.io/img/spring-by-pivotal.png)}
 		\label{spring_logo}
 	\end{center}
 \end{figure}
 
-\textbf{.NET} (\ref{dotnet_logo}) jest darmową, otwartoźródłową platformą programistyczną służącą do wytwarzania różnych typów aplikacji. Platforma .NET jest dostępna dla języków C\#, F\# oraz Visual Basic. Zaletą platformy .NET jest bogaty zasób bibliotek dostępnych dla wszystkich frameworków wchodzących w skład .NET-u\cite{microsoftdotnet}:
+\textbf{.NET} (rys. \ref{dotnet_logo}) jest darmową, otwartoźródłową platformą programistyczną służącą do wytwarzania różnych typów aplikacji. Platforma .NET jest dostępna dla języków C\#, F\# oraz Visual Basic. Zaletą platformy .NET jest bogaty zasób bibliotek dostępnych dla wszystkich frameworków wchodzących w jej skład:
 \begin{itemize}
 	\item\textbf{.NET Standard} jest wspólnym dla wszystkich platform .NET zestawem \textbf{interfejsów programowania aplikacji (ang. \textit{application programming interface, API})} i bibliotek. Ułatwia to pracę z różnymi frameworkami .NET poprzez zastosowanie tych samych narzędzi.
 	\item\textbf{.NET Core} jest wieloplatformowym frameworkiem używanym do tworzenia stron internetowych, serwerów lub aplikacji konsolowych na systemy Windows, Linux i macOS.
 	\item\textbf{.NET Framework} jest implementacją platformy .NET wymagającą do uruchomienia systemu Windows i przystosowaną do niego. Dzięki temu wzbogacona jest o biblioteki specyficzne dla tego systemu, jak na przykład narzędzia pozwalające na dostęp do rejestru systemu Windows.
-	\item\textbf{Xamarin} implementuje platformę .NET i pozwala na tworzenie aplikacji mobilnych na systemy Android, iOS oraz Windows Phone.
+	\item\textbf{Xamarin} implementuje platformę .NET i pozwala na tworzenie aplikacji mobilnych na systemy Android, iOS oraz Windows Phone.\cite{microsoftdotnet}
 \end{itemize}
 \begin{figure}[!ht]
 \begin{center}
-	\includegraphics[width=3in]{img/logo/dotnet.png}
+	\includegraphics[width=2in]{img/logo/dotnet.png}
 	\caption{Logo .NET (https://docs.microsoft.com/en-us/dotnet/images/hub/net.svg)}
 	\label{dotnet_logo}
 \end{center}
 \end{figure}
 
-\textbf{ASP .NET, ASP .NET Core} to technologie pozwalające na budowę nowoczesnych aplikacji internetowych i usług sieciowych. Bazują one odpowiednio na .NET Framework i .NET Core, co dyktuje ich dostępność na różnych systemach operacyjnych oraz dostępne biblioteki.
+\textbf{ASP .NET i ASP .NET Core} to technologie pozwalające na budowę nowoczesnych aplikacji internetowych i usług sieciowych. Bazują one odpowiednio na .NET Framework i .NET Core, co dyktuje ich dostępność na różnych systemach operacyjnych oraz dostępne biblioteki.
+\begin{figure}[!ht]
+	\begin{center}
+		\includegraphics[width=2in]{img/logo/aspdotnet.png}
+		\caption{Logo ASP .NET (https://secure.gravatar.com/avatar/46c8189d84092927e2a78b63c37e7734)}
+		\label{aspdotnet_logo}
+	\end{center}
+\end{figure}
 \section{Narzędzia}
 
-%TODO: MVC, REST, SWAGGER, LIBRARIES, EF CORE, DEPENDENCY INJECTION, LINQ
+%TODO: MVC, REST, SWAGGER, LIBRARIES, EF CORE, DEPENDENCY INJECTION, LINQ, VISUAL STUDIO, RESHARPER
