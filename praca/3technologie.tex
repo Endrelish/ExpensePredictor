@@ -40,7 +40,7 @@ Język \textbf{Java} jest współbieżnym, opartym na klasach i zorientowanym ob
 	\item\textbf{.NET Standard} jest wspólnym dla wszystkich platform .NET zestawem \textbf{interfejsów programowania aplikacji (ang. \textit{application programming interface, API})} i bibliotek. Ułatwia to pracę z różnymi frameworkami .NET poprzez zastosowanie tych samych narzędzi.
 	\item\textbf{.NET Core} jest wieloplatformowym frameworkiem używanym do tworzenia stron internetowych, serwerów lub aplikacji konsolowych na systemy Windows, Linux i macOS.
 	\item\textbf{.NET Framework} jest implementacją platformy .NET wymagającą do uruchomienia systemu Windows i przystosowaną do niego. Dzięki temu wzbogacona jest o biblioteki specyficzne dla tego systemu, jak na przykład narzędzia pozwalające na dostęp do rejestru systemu Windows.
-	\item\textbf{Xamarin} implementuje platformę .NET i pozwala na tworzenie aplikacji mobilnych na systemy Android, iOS oraz Windows Phone.\cite{microsoftdotnet}
+	\item\textbf{Xamarin Forms} implementuje platformę .NET i pozwala na tworzenie aplikacji mobilnych na systemy Android, iOS oraz Windows Phone współdzielących w dużym stopniu swój kod oraz zachowujących wygląd aplikacji natywnych dla każdego systemu.\cite{microsoftdotnet}
 \end{itemize}
 \begin{figure}[!ht]
 \begin{center}
@@ -58,6 +58,46 @@ Język \textbf{Java} jest współbieżnym, opartym na klasach i zorientowanym ob
 		\label{aspdotnet_logo}
 	\end{center}
 \end{figure}
-\section{Narzędzia}
 
-%TODO: MVC, REST, SWAGGER, LIBRARIES, EF CORE, DEPENDENCY INJECTION, LINQ, VISUAL STUDIO, RESHARPER
+System wykonany na potrzeby niniejszej pracy stworzony został przy użyciu platform ASP .NET Core (backend) oraz Xamarin Forms (frontend). Obie te platformy wykorzystują język C\# oraz dysponują zestawem narzędzi zapewnionym przez .NET Standard. Umożliwia to współdzielenie części kodu między tymi dwiema platformami oraz usprawnia proces wytwarzania oprogramowania.\\
+Zastosowanie Xamarin Forms w stworzeniu warstwy interfejsu użytkownika umożliwia łatwe rozszerzenie aplikacji aby możliwe było jej uruchomienie na systemach mobilnych innych niż Android.
+\section{Narzędzia i wzorce projektowe}
+\textbf{Microsoft Visual Studio} (rys. \ref{vs_interfejs}) jest to profesjonalne środowisko programistyczne (ang. \textit{integrated development environment, IDE}) stworzone przez firmę Microsoft Corporation, służące do tworzenia aplikacji desktopowych, mobilnych oraz sieciowych. Dzięki dostępności zaawansowanych narzędzi usprawnia proces programowania.\cite{visualstudio}
+\begin{figure}[!ht]
+	\begin{center}
+		\includegraphics[width=6in]{img/aplikacje/vs_interfejs.png}
+		\caption{Interfejs środowiska Microsoft Visual Studio}
+		\label{vs_interfejs}
+	\end{center}
+\end{figure}
+
+\textbf{ReSharper} (rys. \ref{resharper_interfejs}) jest narzędziem rozszerzającym środowisko Microsoft Visual Studio autorstwa JestBrains. Usprawnia ono proces wytwarzania oprogramowania poprzez automatyzację wielu procesów związanych z pisaniem wysokiej jakości kodu. Zapewnia ciągłą analizę kodu, co ułatwia wykrycie wielu błędów.\cite{resharper}
+\begin{figure}[!ht]
+	\begin{center}
+		\includegraphics[width=6in]{img/aplikacje/resharper_interfejs.png}
+		\caption{Przykładowe funkcjonalności rozszerzenia ReSharper}
+		\label{resharper_interfejs}
+	\end{center}
+\end{figure}
+
+\textbf{Postman} to aplikacja zapewniająca interfejs użytkownika służący do tworzenia i wysyłania zapytań do aplikacji internetowej. Zawiera ona kompleksowe narzędzia umożliwiające przegląd i analizę zapytań HTTP. \cite{postman}
+\begin{figure}[!ht]
+	\begin{center}
+		\includegraphics[width=6in]{img/aplikacje/postman_interfejs.png}
+		\caption{Interfejs aplikacji Postman}
+		\label{postman_interfejs}
+	\end{center}
+\end{figure}
+
+\textbf{Swagger} (rys. \ref{swagger_interfejs}) jest narzędziem służącym do automatycznej dokumentacji kodu oraz zapewniającym konfigurowalny graficzny interfejs obrazujący stworzone API. Z poziomu wygenerowanego interfejsu możliwe jest proste konstruowanie zapytań zgodnych ze stworzoną aplikacją.\cite{swagger}
+\begin{figure}[!ht]
+	\begin{center}
+		\includegraphics[width=6in]{img/aplikacje/swagger_interfejs.png}
+		\caption{Interfejs wygenerowany przy użyciu narzędzia Swagger}
+		\label{swagger_interfejs}
+	\end{center}
+\end{figure}
+\section{Biblioteki}
+%tutaj cos o nugecie też napisać chbya
+
+%TODO: MVC, REST, LIBRARIES, EF CORE, DEPENDENCY INJECTION, LINQ
