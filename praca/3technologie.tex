@@ -97,7 +97,44 @@ Zastosowanie Xamarin Forms w stworzeniu warstwy interfejsu użytkownika umożliw
 		\label{swagger_interfejs}
 	\end{center}
 \end{figure}
+
+\textbf{REST (Representational State Transfer)} jest stylem projektowania systemów. Nie jest on standardem, lecz zbiorem reguł, takich jak bezstanowość, relacja klient - serwer oraz jednolity interfejs.\cite{rest}
+
+\textbf{MVC (Model-View-Controller)} (rys. \ref{mvc}) to wzorzec projektowy polegający na podzieleniu projektu aplikacji na warstwy modelu danych, widoku, czyli interfejsu użytkownika oraz kontrolera, który reaguje na akcje wykonane przez użytkownika w warstwie widoku oraz odczytuje i modyfikuje dane z warstwy modelu.\cite{mvc}
+\begin{figure}[!ht]
+	\begin{center}
+		\includegraphics[width=5in]{img/diagram/mvc.png}
+		\caption{Diagram przedstawiający wzorzec MVC (https://developer.chrome.com/static/images/mvc.png)}
+		\label{mvc}
+	\end{center}
+\end{figure}
+
+\textbf{Odwrócenie sterowania (ang. \textit{inversion of control})} jest techniką pozwalającą na skonstruowanie zależności w aplikacji zgodnie z kierunkiem abstrakcji, zamiast implementacji. W wielu aplikacjach zależności między klasami skonstruowane są na podstawie kolejności ich wykonania (rys. \ref{direct_dependency}).
+\begin{figure}[!ht]
+	\begin{center}
+		\includegraphics[width=6in]{img/diagram/direct_dependency.png}
+		\caption{Diagram przedstawiający zależność bezpośrednią (https://docs.microsoft.com/en-us/dotnet/standard/modern-web-apps-azure-architecture/media/image4-1.png)}
+		\label{direct_dependency}
+	\end{center}
+\end{figure}
+Odwrócenie sterowania polega na skonstruowaniu zależności w taki sposób, aby szczegółowa implementacja zależała od abstrakcyjnego komponentu (rys. \ref{inverted_dependency}).\cite{inversionofcontrol}
+
+	\begin{figure}[!ht]
+		\begin{center}
+			\includegraphics[width=6in]{img/diagram/inverted_dependency.png}
+			\caption{Diagram przedstawiający zależność odwróconą (https://docs.microsoft.com/en-us/dotnet/standard/modern-web-apps-azure-architecture/media/image4-2.png)}
+			\label{inverted_dependency}
+		\end{center}
+	\end{figure}
+\textbf{Wstrzykiwanie zależności (ang. \textit{dependency injection})} jest wzorcem projektowym, który pozwala na osiągnięcie odwrócenia sterowania pomiędzy klasą a jej zależnościami poprzez przeniesienie odpowiedzialności za wybór implementacji abstrakcyjnego elementu na zewnętrzny kontener.\cite{dependencyinjection}
+
+\textbf{Entity Framework Core} jest narzędziem realizującym mapowanie relacyjno-obiektowe (ang. \textit{object-relational mapping}) i oferującym możliwość odczytu i modyfikacji danych znajdujących się w bazie danych za pomocą klas reprezentujących encje w tej bazie.\cite{efcore}
+
+\textbf{Language Integrated Query (LINQ)} to zbiór technologii których zadaniem jest zintegrowanie możliwości wykonywania zapytań na danych z językiem C\#. Zapewnia on jednolitą składnię tworzenia zapytań dla wielu źródeł danych, jak np. SQL, XML.\cite{linq}\\
+Przyjmując, że kolekcja \textit{Users} i bazodanowa tabela o tej samej nazwie odnoszą się do tego samego zbioru danych, zapytanie LINQ (listing \ref{linqquery}) oraz zapytanie SQL (listing \ref{sqlquery}) zwróciłyby taki sam wynik.
+\lstinputlisting[label={linqquery}, caption={Zapytanie LINQ.}, captionpos=b]{listing/query.cs}
+\lstinputlisting[label={sqlquery}, caption={Zapytanie SQL.}, captionpos=b]{listing/query.sql}
 \section{Biblioteki}
 %tutaj cos o nugecie też napisać chbya
 
-%TODO: MVC, REST, LIBRARIES, EF CORE, DEPENDENCY INJECTION, LINQ
+%TODO: LIBRARIES, EF CORE

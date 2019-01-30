@@ -18,3 +18,9 @@
 \backcite {resharper}{{15}{3.3}{}}
 \backcite {postman}{{16}{3.3}{}}
 \backcite {swagger}{{17}{3.3}{}}
+\backcite {rest}{{17}{3.3}{}}
+\backcite {mvc}{{18}{3.3}{}}
+\backcite {inversionofcontrol}{{18}{3.3}{}}
+\backcite {dependencyinjection}{{18}{3.3}{}}
+\backcite {efcore}{{18}{3.3}{}}
+\backcite {linq}{{18}{3.3}{}}

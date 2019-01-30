@@ -4,3 +4,5 @@
 \contentsline {lstlisting}{\numberline {3.4}Kod w j\IeC {\k e}zyku Ruby wy\IeC {\'s}wietlaj\IeC {\k a}cy napis "Hello, World".}{13}% 
 \contentsline {lstlisting}{\numberline {3.5}Kod w j\IeC {\k e}zyku Swift wy\IeC {\'s}wietlaj\IeC {\k a}cy napis "Hello, World".}{13}% 
 \contentsline {lstlisting}{\numberline {3.6}Kod w j\IeC {\k e}zyku Kotlin wy\IeC {\'s}wietlaj\IeC {\k a}cy napis "Hello, World".}{13}% 
+\contentsline {lstlisting}{\numberline {3.7}Zapytanie LINQ.}{19}% 
+\contentsline {lstlisting}{\numberline {3.8}Zapytanie SQL.}{19}% 
