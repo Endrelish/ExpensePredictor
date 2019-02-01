@@ -113,19 +113,19 @@ Zastosowanie Xamarin Forms w stworzeniu warstwy interfejsu użytkownika umożliw
 \begin{figure}[!ht]
 	\begin{center}
 		\includegraphics[width=6in]{img/diagram/direct_dependency.png}
-		\caption{Diagram przedstawiający zależność bezpośrednią (https://docs.microsoft.com/en-us/dotnet/standard/modern-web-apps-azure-architecture/media/image4-1.png)}
+		\caption{Diagram przedstawiający zależność bezpośrednią (https://docs.microsoft.com/en-us/dotnet/standard/ modern-web-apps-azure-architecture/media/image4-1.png)}
 		\label{direct_dependency}
 	\end{center}
 \end{figure}
 Odwrócenie sterowania polega na skonstruowaniu zależności w taki sposób, aby szczegółowa implementacja zależała od abstrakcyjnego komponentu (rys. \ref{inverted_dependency}).\cite{inversionofcontrol}
 
-	\begin{figure}[!ht]
-		\begin{center}
-			\includegraphics[width=6in]{img/diagram/inverted_dependency.png}
-			\caption{Diagram przedstawiający zależność odwróconą (https://docs.microsoft.com/en-us/dotnet/standard/modern-web-apps-azure-architecture/media/image4-2.png)}
-			\label{inverted_dependency}
-		\end{center}
-	\end{figure}
+\begin{figure}[!ht]
+	\begin{center}
+		\includegraphics[width=6in]{img/diagram/inverted_dependency.png}
+		\caption{Diagram przedstawiający zależność odwróconą (https://docs.microsoft.com/en-us/dotnet/standard/ modern-web-apps-azure-architecture/media/image4-2.png)}
+		\label{inverted_dependency}
+	\end{center}
+\end{figure}
 \textbf{Wstrzykiwanie zależności (ang. \textit{dependency injection})} jest wzorcem projektowym, który pozwala na osiągnięcie odwrócenia sterowania pomiędzy klasą a jej zależnościami poprzez przeniesienie odpowiedzialności za wybór implementacji abstrakcyjnego elementu na zewnętrzny kontener.\cite{dependencyinjection}
 
 \textbf{Entity Framework Core} jest narzędziem realizującym mapowanie relacyjno-obiektowe (ang. \textit{object-relational mapping}) i oferującym możliwość odczytu i modyfikacji danych znajdujących się w bazie danych za pomocą klas reprezentujących encje w tej bazie.\cite{efcore}
@@ -135,6 +135,32 @@ Przyjmując, że kolekcja \textit{Users} i bazodanowa tabela o tej samej nazwie 
 \lstinputlisting[label={linqquery}, caption={Zapytanie LINQ.}, captionpos=b]{listing/query.cs}
 \lstinputlisting[label={sqlquery}, caption={Zapytanie SQL.}, captionpos=b]{listing/query.sql}
 \section{Biblioteki}
-%tutaj cos o nugecie też napisać chbya
+Dla środowiska .NET istnieje wiele zewnętrznych bibliotek. Dostępne są one poprzez system zarządzania pakietami NuGet. Narzędzie to pozwala na tworzenie oraz używanie bibliotek znajdujących się w repozytorium. W większości przypadków pakiety pobierane są z globalnego repozytorium dostępnego pod adresem \url{https://www.nuget.org}, jednakże istnieje możliwość tworzenia własnych repozytoriów i konfiguracji klienta NuGet do współpracy z nimi. W niniejszym podrozdziale opisane zostały jedynie biblioteki niewchodzące w skład frameworków Xamarin czy ASP .NET Core.
 
+\textbf{AutoMapper} jest biblioteką umożliwiającą proste mapowanie jednego obiektu na drugi.\cite{automapper} Biblioteka ta pozwala na wzajemną konwersję dwóch typów poprzez przypisanie polom jednego obiektu wartości pól drugiego o takich samych nazwach. Taki zabieg jest konieczny np. przy mapowaniu obiektu klasy encyjnej na obiekt transferu danych (ang. \textit{data transfer object, DTO}).\\
+Jeżeli pola obu typów mają takie same nazwy i nie wymagane jest żadne mapowanie między polami o różnych nazwach, definicja mapy sprowadza się do zdefiniowania typów, między jakimi ma powstać mapa (listing \ref{mapper_createmap}).
+\begin{lstlisting}[label={mapper_createmap}, caption={Definiowanie mapowania między dwoma typami.}, captionpos=b]
+mapperConfiguration.CreateMap<User, UserDto>();
+mapperConfiguration.CreateMap<Expense, ExpenseDto>();
+\end{lstlisting}
+Przy tak zdefiniowanej mapie proces mapowania obiektów przebiega w sposób przedstawiony na listingu \ref{mapper_map}.
+\begin{lstlisting}[label={mapper_map}, caption={Mapowanie jednego obiektu na drugi.}, captionpos=b]
+User user = GetUser();
+UserDto userDto = mapper.Map<UserDto>(user);
+\end{lstlisting}
+
+\textbf{MathNet.Numerics} jest biblioteką dostarczającą metody i algorytmy służące do wykonywania obliczeń i operacji numerycznych, m.in. algebry liniowej, modeli prawdopodobieństwa, interpolacji czy zagadnień optymalizacji.\cite{mathnetnumerics} W niniejszym projekcie biblioteka ta została wykorzystana w zakresie wykonywania operacji na macierzach (listing \ref{mathnetnumerics})
+\begin{lstlisting}[label={mathnetnumerics}, caption={Operacje na macierzach przy użyciu biblioteki MathNet.Numerics.}, captionpos=b]
+var predictors = ExtractPredictorsMatrix(dataSet);
+var targets = ExtractTargetsMatrix(dataSet);
+var predictorsTransposed = predictors.Transpose();
+
+var coefficients = predictorsTransposed
+.Multiply(predictors)
+.Inverse()
+.Multiply(predictorsTransposed)
+.Multiply(targets);
+\end{lstlisting}
+
+\textbf{Newtonsoft.Json} to biblioteka służącą do obsługi danych w formacie JSON. Jest to wydajne narzędzie pozwalające między innymi na serializację i deserializację obiektów, stosowanie LINQ do ekstrakcji danych z formatu JSON oraz konwersję między JSON a XML.\cite{newtonsoft} Biblioteka ta jest najczęściej pobieranym pakietem z globalnego repozytorium NuGet.\cite{nugetstats}
 %TODO: LIBRARIES, EF CORE

@@ -77,8 +77,26 @@ y_n
 \vdots \\
 \epsilon_n
 \end{bmatrix} \) - macierz reszt. \cite{martinabremer2012}
+\subsection{Regresja nieparametryczna}
+\textbf{Regresja nieparametryczna}, w odróżnieniu od regresji parametrycznej (np. \ref{regresja}), nie uwzględnia ścisłego matematycznego modelu regresji, ale próbuje oszacować postać zależności między predyktorami \(X\) oraz zmienną zależną \(Y\). Dzięki tej cesze regresja nieparametryczna znajduje zastosowanie w przypadkach, w których postać zależności między predyktorami a zmienną zależną nie jest ściśle określona.\cite{nonparametricregression}
+Przykładem regresji nieparametrycznej jest metoda \textbf{k najmniejszych kwadratów}. Polega ona na przybliżeniu wartości zmiennej zależnej jako średniej wartości \(k\) najbliższych rekordów znanych danych.
+\[f(x)=\sum_{i = 1}^{n}w_i(x)y_i \]
+gdzie:\\
+\(n\) - liczba próbek,\\[10pt]
+\(w_i(x) = \left\{\begin{array}{ll}
+1/k\;je\dot{z}eli\;x_i\;jest\;jednym\;z\;k\;najbli\dot{z}szych\;do\;x\;rekord\dot{o}w,\\
+0\;w\;przeciwnym\;wypadku,
+\end{array}
+\right. \)\\[10pt]
+\(y_i\) - wartość \(i\)-tej zmiennej zależnej.\cite{ryantibshirani}
+
+\textbf{Odległość rekordów} definiuje się za pomocą metryk, np. metryki euklidesowej. Określa się ją jako:
+\[d(x,y)=\sqrt{\sum_{i=1}^{n}(x_i-y_i)^2} \],
+gdzie:\\
+\(x, y\) - dwa zbiory danych,
+\(x_i, y_i\) - \(i\)-ta cecha zbioru \(x\) lub \(y\).\\
 \subsection{Metoda najmniejszych kwadratów}\label{najmniejsze_kwadraty}
-Idea \textbf{metody najmniejszych kwadratów} polega na znalezieniu takich współczynników równania regresji, aby zminimalizować rozrzut między wartościami rzeczywistymi i odpowiadającymi im wartościami teoretycznymi zmiennej, czyli zminimalizować sumę kwadratów reszt.\cite{bptstatystyka}
+\textbf{Metoda najmniejszych kwadratów} jest metodą wyznaczenia współczynników regresji parametrycznej polegającą na znalezieniu takich ich wartości, aby zminimalizować rozrzut między wartościami rzeczywistymi i odpowiadającymi im wartościami teoretycznymi zmiennej, czyli zminimalizować sumę kwadratów reszt.\cite{bptstatystyka}
 
 W najlepszym wypadku różnica między wartościami rzeczywistymi i teoretycznymi wynosi 0, zatem reszta \(\epsilon\) dla każdego rekordu danych jest równa 0. W takim wypadku model regresji można zapisać następująco: 
 \[Y = X\beta\]
@@ -99,6 +117,8 @@ Przedstawione operacje na macierzach \(X^T\) i \(X^{-1}\) to odpowiednio \textit
 \fi
 \section{Wykorzystanie metod analizy danych do predykcji wydatków}
 Predykcja wydatków w stworzonej aplikacji wiąże się z tzw. \textbf{wydatkami głównymi}. Są to wydatki, które generują dodatkowe, występujące przez kilka następnych miesięcy, koszta. Użytkownik, po wprowadzeniu kategorii oraz wielkości wydatku głównego, na podstawie danych o wydatkach wszystkich użytkowników, dostaje predykcję kosztów związanych ze wspomnianym wydatkiem w miesiącach po nim następujących.
+
+W niniejszej pracy użyta została parametryczna regresja wieloraka (\ref{regresja}) wraz z metodą najmniejszych kwadratów (\ref{najmniejsze_kwadraty}). Metody te zostały wybrane, gdyż zbiór danych, na których dokonujemy predykcji jest ściśle ustrukturyzowany oraz możliwe jest określenie matematycznego modelu opisującego zależności w nim występujące.
 
 Model regresji skonstruowany na potrzeby predykcji posiada trzy predyktory: miesięczny dochód użytkownika, wielkość wydatku dla którego wykonywana jest predykcja oraz suma wydatków z prognozowanej kategorii. Współczynniki regresji wyznaczane są przy pomocy metody najmniejszych kwadratów opisanej w rozdziale \ref{najmniejsze_kwadraty}. Dla prognozy na każdy kolejny miesiąc tworzony jest model regresji, koszta w każdym miesiącu obliczane są przy użyciu innych współczynników regresji.
 
