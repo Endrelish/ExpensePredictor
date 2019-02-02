@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -15,18 +16,15 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
 {
     public class ExpenseService : IExpenseService
     {
-        private readonly IApplicationRepository<ExpenseCategory> _categoryRepository;
+        private readonly IApplicationRepository<Income> _incomeRepository;
         private readonly IApplicationRepository<Expense> _expenseRepository;
         private readonly IMapper _mapper;
-        private readonly UserManager<User> _userManager;
 
-        public ExpenseService(IApplicationRepository<Expense> expenseRepository, IMapper mapper,
-            UserManager<User> userManager, IApplicationRepository<ExpenseCategory> categoryRepository)
+        public ExpenseService(IApplicationRepository<Expense> expenseRepository, IMapper mapper, IApplicationRepository<Income> incomeRepository)
         {
             _expenseRepository = expenseRepository;
             _mapper = mapper;
-            _userManager = userManager;
-            _categoryRepository = categoryRepository;
+            _incomeRepository = incomeRepository;
         }
 
         public async Task<ExpenseDto> AddExpenseAsync(ExpenseDto expenseDto, string userId)
@@ -37,6 +35,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
                 expense.Id = null;
                 expense.Date = expense.Date.Date;
                 expense.UserId = userId;
+                expense.Main = await IsExpenseMain(expenseDto, userId);
                 await _expenseRepository.CreateAsync(expense);
                 await _expenseRepository.SaveAsync();
                 return _mapper.Map<ExpenseDto>(expense);
@@ -46,6 +45,16 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
                 throw new ExpenseException("Cannot add expense", e, 500);
             }
             
+        }
+
+        private async Task<bool> IsExpenseMain(ExpenseDto expenseDto, string userId)
+        {
+            var incomes = (await _incomeRepository.FindByConditionAsync(i => i.UserId == userId &&
+                                                                            i.Date.Month == expenseDto.Date
+                                                                                .AddMonths(-1).Month &&
+                                                                            i.Date.Year == expenseDto.Date.AddMonths(-1)
+                                                                                .Year)).Sum(i => i.Value);
+            return expenseDto.Value >= 0.9d * incomes;
         }
 
         public async Task<ExpenseDto> EditExpenseAsync(ExpenseDto expenseDto, string userId)
@@ -86,20 +95,8 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
                                                              e.Date >= from &&
                                                              e.Date <= to;
 
-            var expenses = await _expenseRepository.FindByConditionAync(condition);
+            var expenses = await _expenseRepository.FindByConditionAsync(condition);
             return _mapper.Map<IEnumerable<ExpenseDto>>(expenses);
-        }
-
-        public async Task<IEnumerable<ExpenseDto>> GetLinkedExpensesAsync(string expenseId, string userId)
-        {
-            var expense = await _expenseRepository.FindByIdAsync(expenseId);
-            if (!string.Equals(expense.UserId, userId))
-            {
-                throw new ExpenseException("Cannot find expense", 400);
-            }
-
-            var linkedExpenses = await _expenseRepository.FindByConditionAync(e => e.LinkedExpenseId == expenseId);
-            return _mapper.Map<IEnumerable<ExpenseDto>>(linkedExpenses);
         }
     }
 }

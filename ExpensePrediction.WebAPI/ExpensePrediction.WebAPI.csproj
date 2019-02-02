@@ -15,9 +15,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\SwaggerApiDescription.xml</DocumentationFile>
+    <NoWarn>1701;1702;1597;1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='BackendRelease|AnyCPU'">
     <DocumentationFile>bin\SwaggerApiDescription.xml</DocumentationFile>
+    <NoWarn>1701;1702;1597;1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="wwwroot\" />

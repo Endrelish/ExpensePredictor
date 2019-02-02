@@ -37,12 +37,17 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         public async Task<TokenDto> GetTokenAsync(LoginDto loginData)
         {
             var user = await _userManager.FindByNameAsync(loginData.Username);
-            if (user == null) throw new AuthException("Username or password incorrect", 400);
-            var result = _hasher.VerifyHashedPassword(user, user.PasswordHash, loginData.Password);
-
-            if (result == PasswordVerificationResult.Success)
+            if (user != null)
             {
-                return await GenerateJwtTokenAsync(user);
+                var result = _hasher.VerifyHashedPassword(user, user.PasswordHash, loginData.Password);
+
+                if ((await _userManager.GetRolesAsync(user)).Any())
+                {
+                    if (result == PasswordVerificationResult.Success)
+                    {
+                        return await GenerateJwtTokenAsync(user);
+                    }
+                }
             }
 
             throw new AuthException("Username or password incorrect", 400);

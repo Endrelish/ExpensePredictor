@@ -68,7 +68,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         //TODO Delet dis
         public async Task ResetPassAsync(string userId)
         {
-            var user = (await repo.FindByConditionAync(u => u.UserName == userId)).FirstOrDefault();
+            var user = (await repo.FindByConditionAsync(u => u.UserName == userId)).FirstOrDefault();
             if (user == null)
             {
                 return;

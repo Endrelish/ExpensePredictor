@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpensePrediction.WebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20181213112327_init")]
+    [Migration("20190107185807_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,7 +50,7 @@ namespace ExpensePrediction.WebAPI.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("LinkedExpenseId");
+                    b.Property<bool>("Main");
 
                     b.Property<string>("UserId");
 
@@ -59,8 +59,6 @@ namespace ExpensePrediction.WebAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("LinkedExpenseId");
 
                     b.HasIndex("UserId");
 
@@ -91,7 +89,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                         },
                         new
                         {
-                            Id = "9def9750-e74a-4115-bdb7-e81bdccef26b",
+                            Id = "5e2e41b3-f5fb-4d10-8685-9e45f8d480d8",
                             Name = "Samochód"
                         });
                 });
@@ -122,54 +120,54 @@ namespace ExpensePrediction.WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "336fe191-4041-43c1-ad99-f23b50f90240",
+                            Id = "37cf4f76-587e-4544-8135-4503b4c73f97",
                             CategoryId = "fb9d333d-5e85-484b-bb35-ef307fd06379",
-                            Date = new DateTime(2018, 12, 8, 12, 23, 27, 497, DateTimeKind.Local).AddTicks(3545),
+                            Date = new DateTime(2019, 1, 2, 19, 58, 6, 918, DateTimeKind.Local).AddTicks(2205),
                             Description = "Spadek po cioci",
                             UserId = "830f0d08-6a56-4a57-83c9-329c094f184b",
                             Value = 2345.6700000000001
                         },
                         new
                         {
-                            Id = "a91a0e86-dbde-4d14-bfb2-420a2d832f67",
+                            Id = "63970621-cfbc-4e7c-9db2-c8dc4ff75b05",
                             CategoryId = "fb9d333d-5e85-484b-bb35-ef307fd06379",
-                            Date = new DateTime(2018, 11, 8, 12, 23, 27, 504, DateTimeKind.Local).AddTicks(2297),
+                            Date = new DateTime(2018, 12, 2, 19, 58, 6, 920, DateTimeKind.Local).AddTicks(8900),
                             Description = "Spadek po cioci",
                             UserId = "830f0d08-6a56-4a57-83c9-329c094f184b",
                             Value = 2345.6700000000001
                         },
                         new
                         {
-                            Id = "165f9d5b-f38c-4b7d-8017-d6b686064311",
+                            Id = "c1d647a4-ca6f-4786-80b0-e1ac786d32fd",
                             CategoryId = "fb9d333d-5e85-484b-bb35-ef307fd06379",
-                            Date = new DateTime(2018, 10, 8, 12, 23, 27, 504, DateTimeKind.Local).AddTicks(2325),
+                            Date = new DateTime(2018, 11, 2, 19, 58, 6, 920, DateTimeKind.Local).AddTicks(8932),
                             Description = "Spadek po cioci",
                             UserId = "830f0d08-6a56-4a57-83c9-329c094f184b",
                             Value = 2345.6700000000001
                         },
                         new
                         {
-                            Id = "aaad10d5-c189-4e4d-9f27-1947ff724404",
+                            Id = "0bdb265d-95bd-4de9-bd17-fc2ec894c80f",
                             CategoryId = "fb9d333d-5e85-484b-bb35-ef307fd06379",
-                            Date = new DateTime(2018, 9, 8, 12, 23, 27, 504, DateTimeKind.Local).AddTicks(2330),
+                            Date = new DateTime(2018, 10, 2, 19, 58, 6, 920, DateTimeKind.Local).AddTicks(8942),
                             Description = "Spadek po cioci",
                             UserId = "830f0d08-6a56-4a57-83c9-329c094f184b",
                             Value = 2345.6700000000001
                         },
                         new
                         {
-                            Id = "3aa151cd-0418-4624-8fc3-409fb5b45c3c",
+                            Id = "9af37949-de7d-4a3d-80f1-6f4eeee670c3",
                             CategoryId = "fb9d333d-5e85-484b-bb35-ef307fd06379",
-                            Date = new DateTime(2018, 8, 8, 12, 23, 27, 504, DateTimeKind.Local).AddTicks(2334),
+                            Date = new DateTime(2018, 9, 2, 19, 58, 6, 920, DateTimeKind.Local).AddTicks(8946),
                             Description = "Spadek po cioci",
                             UserId = "830f0d08-6a56-4a57-83c9-329c094f184b",
                             Value = 2345.6700000000001
                         },
                         new
                         {
-                            Id = "affc972b-9cbe-448a-a499-e27f38b48ee8",
+                            Id = "e61e224f-1a7f-40e1-b1b9-4351ecf3f71f",
                             CategoryId = "fb9d333d-5e85-484b-bb35-ef307fd06379",
-                            Date = new DateTime(2018, 7, 8, 12, 23, 27, 504, DateTimeKind.Local).AddTicks(2339),
+                            Date = new DateTime(2018, 8, 2, 19, 58, 6, 920, DateTimeKind.Local).AddTicks(9030),
                             Description = "Spadek po cioci",
                             UserId = "830f0d08-6a56-4a57-83c9-329c094f184b",
                             Value = 2345.6700000000001
@@ -227,14 +225,14 @@ namespace ExpensePrediction.WebAPI.Migrations
                         new
                         {
                             Id = "2fdbec88-4aa9-430c-8359-8b27756cf1ca",
-                            ConcurrencyStamp = "b7fabdd2-5d83-4b6a-8ba2-848a5e0ad5a6",
+                            ConcurrencyStamp = "0c7939be-0205-4aee-9d94-2d0625ea49df",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "307d5d07-87cf-49a0-9cd4-b925b5380963",
-                            ConcurrencyStamp = "72b27c14-1474-4155-bf1a-bb181fd1b662",
+                            ConcurrencyStamp = "6f2affcc-e521-48ed-a546-74a7fa49c8ad",
                             Name = "user",
                             NormalizedName = "USER"
                         });
@@ -299,7 +297,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                         {
                             Id = "830f0d08-6a56-4a57-83c9-329c094f184b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2d042db9-0a07-468f-86ed-1774dab5931a",
+                            ConcurrencyStamp = "7efd49b6-c3f9-45b2-843c-d9a172afec4e",
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "User",
@@ -425,10 +423,6 @@ namespace ExpensePrediction.WebAPI.Migrations
                     b.HasOne("ExpensePrediction.DataAccessLayer.Entities.ExpenseCategory", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId");
-
-                    b.HasOne("ExpensePrediction.DataAccessLayer.Entities.Expense", "LinkedExpense")
-                        .WithMany()
-                        .HasForeignKey("LinkedExpenseId");
 
                     b.HasOne("ExpensePrediction.DataAccessLayer.Entities.User", "User")
                         .WithMany()

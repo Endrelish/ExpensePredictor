@@ -26,7 +26,7 @@ namespace ExpensePrediction.Frontend.Pages
             await ActivityIndicatorPage.ToggleIndicator(true);
             if (Password != PasswordConfirm)
             {
-                await DisplayAlert("", "Passwords don't match", "");
+                await DisplayAlert("Error", "Passwords don't match", "OK");
             }
 
             var registerDto = new RegisterDto
@@ -50,7 +50,7 @@ namespace ExpensePrediction.Frontend.Pages
             }
             catch (RestException re)
             {
-                await DisplayAlert("", re.Message, "");
+                await DisplayAlert("Error", re.Message, "OK");
             }
             finally
             {

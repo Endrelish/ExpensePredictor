@@ -40,7 +40,7 @@ namespace ExpensePrediction.Frontend.Pages
             }
             catch (RestException re)
             {
-                await DisplayAlert("Error", re.Message, "");
+                await DisplayAlert("Error", re.Message, "OK");
             }
             finally
             {

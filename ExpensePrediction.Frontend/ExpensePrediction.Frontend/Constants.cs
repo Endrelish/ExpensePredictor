@@ -5,8 +5,8 @@ namespace ExpensePrediction.Frontend
 {
     public static class Constants
     {
-        //private static readonly string BaseUri = "http://10.0.2.2:50458/api/";
-        private static readonly string BaseUri = "https://expensepredictionwebapi.azurewebsites.net/api/";
+        private static readonly string BaseUri = "http://10.0.2.2:50458/api/";
+        //private static readonly string BaseUri = "https://expensepredictionwebapi.azurewebsites.net/api/";
 
         #region storageKeys
 
@@ -55,7 +55,7 @@ namespace ExpensePrediction.Frontend
 
         #region expense
 
-        public static readonly string ExpenseControllerUri = BaseUri + "expense/";
+        private static readonly string ExpenseControllerUri = BaseUri + "expense/";
 
         public static string GetExpensesUri(DateTime from, DateTime to)
         {
@@ -78,7 +78,7 @@ namespace ExpensePrediction.Frontend
 
         #region income
 
-        public static readonly string IncomeControllerUri = BaseUri + "income/";
+        private static readonly string IncomeControllerUri = BaseUri + "income/";
 
         public static string GetIncomesUri(DateTime from, DateTime to)
         {
@@ -91,6 +91,13 @@ namespace ExpensePrediction.Frontend
         {
             return IncomeControllerUri + id;
         }
+        #endregion
+
+        #region prediction
+
+        private static readonly string PredictionControllerUri = BaseUri + "prediction/";
+        public static readonly string PredictionUri = PredictionControllerUri;
+
         #endregion
     }
 }

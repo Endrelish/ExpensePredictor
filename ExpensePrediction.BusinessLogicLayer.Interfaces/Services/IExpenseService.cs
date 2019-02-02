@@ -11,6 +11,5 @@ namespace ExpensePrediction.BusinessLogicLayer.Interfaces.Services
         Task<IEnumerable<ExpenseDto>> GetExpensesAsync(string userId, DateTime from, DateTime to);
         Task<ExpenseDto> AddExpenseAsync(ExpenseDto expense, string userId);
         Task<ExpenseDto> EditExpenseAsync(ExpenseDto expense, string userId);
-        Task<IEnumerable<ExpenseDto>> GetLinkedExpensesAsync(string expenseId, string userId);
     }
 }

@@ -114,15 +114,16 @@ namespace ExpensePrediction.WebAPI
         private void AddServices(IServiceCollection services)
         {
             //===============================Services===============================
-            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-            services.AddScoped(typeof(IApplicationRepository<>), typeof(ApplicationRepository<>));
+            services.AddTransient<IPasswordHasher<User>, PasswordHasher<User>>();
+            services.AddTransient(typeof(IApplicationRepository<>), typeof(ApplicationRepository<>));
 
-            services.AddScoped(typeof(ICategoryService<>), typeof(CategoryService<>));
-            services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IExpenseService, ExpenseService>();
-            services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IIncomeService, IncomeService>();
-            services.AddScoped<IPredictionService, PredictionService>();
+            services.AddTransient(typeof(ICategoryService<>), typeof(CategoryService<>));
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IExpenseService, ExpenseService>();
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IIncomeService, IncomeService>();
+            services.AddTransient<IPredictionService, PredictionService>();
+            services.AddHostedService<HostedRegressionService>();
 
             services.AddSingleton(MapperService.Mapper);
         }

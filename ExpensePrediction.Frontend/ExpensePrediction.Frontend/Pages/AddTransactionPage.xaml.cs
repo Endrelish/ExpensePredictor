@@ -1,5 +1,6 @@
 ﻿using ExpensePrediction.DataTransferObjects;
 using ExpensePrediction.DataTransferObjects.Category;
+using ExpensePrediction.Exceptions;
 using ExpensePrediction.Frontend.Service;
 using Rg.Plugins.Popup.Services;
 using System;
@@ -53,18 +54,27 @@ namespace ExpensePrediction.Frontend.Pages
                 Date = Date.Date,
                 CategoryId = ((CategoryDto)Category.SelectedItem).Id
             };
-
-            switch(_type)
+            try
             {
-                case CategoryType.IncomeCategory:
-                    await _incomeService.AddIncomeAsync(dto);
-                    break;
-                case CategoryType.ExpenseCategory:
-                    await _expenseService.AddExpenseAsync(dto);
-                    break;
+                switch (_type)
+                {
+                    case CategoryType.IncomeCategory:
+                        await _incomeService.AddIncomeAsync(dto);
+                        break;
+                    case CategoryType.ExpenseCategory:
+                        await _expenseService.AddExpenseAsync(dto);
+                        break;
+                }
             }
-            await ActivityIndicatorPage.ToggleIndicator(false);
-            await Close();
+            catch (RestException re)
+            {
+                await DisplayAlert("Error", re.Message, "OK");
+            }
+            finally
+            {
+                await ActivityIndicatorPage.ToggleIndicator(false);
+                await Close();
+            }
         }
 
         private async void CancelClicked(object sender, EventArgs e)
