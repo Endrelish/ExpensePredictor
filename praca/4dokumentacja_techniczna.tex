@@ -113,7 +113,7 @@ var coefficients = predictorsTransposed
 
 Proces predykcji wydatków na określony cel polega na pobraniu od użytkownika kosztu wydatku głównego oraz jego kategorii, a następnie na podstawie jego miesięcznych przychodów, wydatków z wybranej kategorii oraz podanego kosztu wydatku przy użyciu wyznaczonych współczynników modelu regresji wyznaczane są koszta związane z określonym wydatkiem.
 \section{Warstwa interfejsu użytkownika - aplikacja mobilna}
-Warstwa interfejsu użytkownika zrealizowana jest w postaci aplikacji mobilnej. Składa się ona ze stron wyświetlanych na ekranie urządzenia. Klasy wchodzące w skład części aplikacji odpowiadającej za obsługę wydatków przedstawione są na diagramie \ref{xamarinexpenses}.
+Warstwa interfejsu użytkownika zrealizowana jest w postaci aplikacji mobilnej. Składa się ona ze stron wyświetlanych na ekranie urządzenia. Diagram klas wchodzących w skład części aplikacji odpowiadającej za obsługę wydatków przedstawiony jest na Rys. \ref{xamarinexpenses}. Analogicznie ustrukturyzowane są moduły aplikacji odpowiadające za pozostałe funkcjonalności systemu.
 \begin{figure}[!ht]
 	\begin{center}
 		\includegraphics[width=6in]{img/diagram/interface_diagram.png}
@@ -121,3 +121,7 @@ Warstwa interfejsu użytkownika zrealizowana jest w postaci aplikacji mobilnej. 
 		\label{xamarinexpenses}
 	\end{center}
 \end{figure}
+
+Aplikacja obsługuje wszystkie akcje użytkownika wykonywane na stronach aplikacji przy użyciu serwisów, których zadaniem jest odczytanie danych wprowadzonych przez użytkownika i skonstruowanie zapytania do części serwerowej. Każde wysyłane zapytanie oprócz zapytań dotyczących rejestracji i logowania posiada dołączony nagłówek \lstinline|Authorization|, który zawiera token uwierzytelniający wygenerowany w części serwerowej aplikacji.
+
+Dzięki zastosowaniu do komunikacji z częścią serwerową metod asynchronicznych interfejs użytkownika jest responsywny i podczas, gdy serwer przetwarza zapytanie wyświetlany jest stosowny wskaźnik oczekiwania.
