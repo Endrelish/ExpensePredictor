@@ -14,19 +14,13 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
     public class AccountService : IAccountService
     {
         private readonly IMapper _mapper;
-
-        //TODO Delet dis
-        private readonly IPasswordHasher<User> _passwordHasher;
         private readonly UserManager<User> _userManager;
-        private readonly IApplicationRepository<User> repo;
 
         public AccountService(UserManager<User> userManager, IMapper mapper, IPasswordHasher<User> passwordHasher,
             IApplicationRepository<User> repo)
         {
             _userManager = userManager;
             _mapper = mapper;
-            _passwordHasher = passwordHasher;
-            this.repo = repo;
         }
 
         public async Task ChangePasswordAsync(PasswordChangeDto passwordChangeDto, string userId)
@@ -63,19 +57,6 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
         {
             var user = await _userManager.FindByIdAsync(userId);
             return _mapper.Map<UserDataDto>(user);
-        }
-
-        //TODO Delet dis
-        public async Task ResetPassAsync(string userId)
-        {
-            var user = (await repo.FindByConditionAsync(u => u.UserName == userId)).FirstOrDefault();
-            if (user == null)
-            {
-                return;
-            }
-
-            user.PasswordHash = _passwordHasher.HashPassword(user, user.UserName + "pass");
-            await repo.SaveAsync();
         }
     }
 }
