@@ -9,5 +9,6 @@ namespace ExpensePrediction.BusinessLogicLayer.Interfaces.Services
     public interface IPredictionService
     {
         Task<PredictionResultDto> Prediction(ExpenseDto expenseDto, string userId);
+        Task SetModels(string categoryId);
     }
 }

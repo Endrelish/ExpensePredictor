@@ -1,35 +1,57 @@
-﻿using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.BusinessLogicLayer.Regression;
 using ExpensePrediction.BusinessLogicLayer.Regression.Model;
 using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataAccessLayer.Interfaces;
 using ExpensePrediction.DataTransferObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ExpensePrediction.Exceptions;
 
 namespace ExpensePrediction.BusinessLogicLayer.Services
 {
     public class PredictionService : IPredictionService
     {
+        private static readonly Dictionary<string, RegressionModel[]> Coefficients;
         private readonly IApplicationRepository<Expense> _expenseRepository;
         private readonly IApplicationRepository<Income> _incomeRepository;
 
-        public PredictionService(IApplicationRepository<Expense> expenseRepository, IApplicationRepository<Income> incomeRepository)
+        static PredictionService()
+        {
+            Coefficients = new Dictionary<string, RegressionModel[]>();
+        }
+
+        public PredictionService(IApplicationRepository<Expense> expenseRepository,
+            IApplicationRepository<Income> incomeRepository)
         {
             _expenseRepository = expenseRepository;
             _incomeRepository = incomeRepository;
         }
-        public async Task<PredictionResultDto> Prediction(ExpenseDto expenseDto, string userId)
+
+        public async Task SetModels(string categoryId)
         {
             var models = new RegressionModel[3];
-            for(int i = 0; i < 3; i++)
+            for (var i = 0; i < 3; i++)
             {
                 models[i] = new RegressionModel(3);
             }
-            
-            await CalculateModels(models);
+
+
+            if (await CalculateModels(models, categoryId))
+            {
+                Coefficients.Add(categoryId, models);
+            }
+        }
+
+        public async Task<PredictionResultDto> Prediction(ExpenseDto expenseDto, string userId)
+        {
+            var modelComputed = Coefficients.TryGetValue(expenseDto.CategoryId, out var models);
+            if (!modelComputed)
+            {
+                throw new RegressionException("Regression model not computed yet.");
+            }
 
             var result = new PredictionResultDto();
             var expensePredictors = await GetPredictorsForExpense(expenseDto, userId);
@@ -51,40 +73,54 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             return predictors;
         }
 
-        private async Task CalculateModels(RegressionModel[] models)
+        private async Task<bool> CalculateModels(RegressionModel[] models, string categoryId)
         {
-            var expenses = (await _expenseRepository.FindByConditionAsync(e => e.Main && e.Date.AddMonths(4).CompareTo(DateTime.Now) <= 0)).ToList();
+            var expenses = (await _expenseRepository.FindByConditionAsync(e =>
+                e.Main && e.Date.AddMonths(4).CompareTo(DateTime.Now) <= 0 && e.CategoryId == categoryId)).ToList();
+            if (expenses.Count == 0)
+            {
+                return false;
+            }
+
             const int coefficients = 3;
             var predictors = new List<double[]>();
 
-            foreach(var expense in expenses)
+            foreach (var expense in expenses)
             {
                 var predictorsValues = new double[coefficients];
                 var previousMonth = expense.Date.AddMonths(-1);
                 predictorsValues[0] = await GetMonthlyIncome(expense.UserId, previousMonth);
-                predictorsValues[1] = await GetMonthlyExpensesOfCategory(expense.UserId, previousMonth, expense.CategoryId);
+                predictorsValues[1] =
+                    await GetMonthlyExpensesOfCategory(expense.UserId, previousMonth, expense.CategoryId);
                 predictorsValues[2] = expense.Value;
                 predictors.Add(predictorsValues);
             }
-            
 
-            for(int i = 0; i < models.Length; i++)
+
+            for (var i = 0; i < models.Length; i++)
             {
                 var index = i;
                 await CalculateModel(models[index], expenses, predictors, index + 1);
             }
+
+            return true;
         }
 
-        private async Task CalculateModel(RegressionModel model, List<Expense> expenses, List<double[]> predictors, int month)
+        private async Task CalculateModel(RegressionModel model, List<Expense> expenses, List<double[]> predictors,
+            int month)
         {
             var targets = new List<double?>();
-            foreach(var expense in expenses)
+            foreach (var expense in expenses)
             {
                 var target =
                     await GetMonthlyExpensesOfCategory(expense.UserId, expense.Date.AddMonths(month),
                         expense.CategoryId) -
                     await GetMonthlyExpensesOfCategory(expense.UserId, expense.Date.AddMonths(-1), expense.CategoryId);
-                if (target < 0.0d) target = 0.0d;
+                if (target < 0.0d)
+                {
+                    target = 0.0d;
+                }
+
                 targets.Add(target);
             }
 
@@ -99,13 +135,14 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
                                                                             i.Date.Month == date.Month);
             return incomes.Sum(i => i.Value);
         }
+
         private async Task<double> GetMonthlyExpensesOfCategory(string userId, DateTime date, string categoryId)
         {
             var expenses = await _expenseRepository.FindByConditionAsync(e => e.UserId == userId &&
-                                                                                e.Date.Year == date.Year &&
-                                                                                e.Date.Month == date.Month &&
-                                                                                e.CategoryId == categoryId &&
-                                                                                !e.Main);
+                                                                              e.Date.Year == date.Year &&
+                                                                              e.Date.Month == date.Month &&
+                                                                              e.CategoryId == categoryId &&
+                                                                              !e.Main);
             return expenses.Sum(e => e.Value);
         }
     }

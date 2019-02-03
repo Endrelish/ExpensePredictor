@@ -14,6 +14,8 @@ namespace ExpensePrediction.BusinessLogicLayer.Regression.Model
 
         public DataSet(double?[] targets, double[][] predictorSets)
         {
+            if (predictorSets.GetLength(0) == 0) return;
+            if (targets.Length == 0) return;
             if (targets.Length != predictorSets.Length)
                 throw new RegressionException("Number of targets does not equal the number of predictor sets.");
             var tuples = new List<DataTuple>();
