@@ -40,7 +40,7 @@ Język \textbf{Java} jest współbieżnym, opartym na klasach i zorientowanym ob
 	\item\textbf{.NET Standard} jest wspólnym dla wszystkich platform .NET zestawem \textbf{interfejsów programowania aplikacji (ang. \textit{application programming interface, API})} i bibliotek. Ułatwia to pracę z różnymi frameworkami .NET poprzez zastosowanie tych samych narzędzi.
 	\item\textbf{.NET Core} jest wieloplatformowym frameworkiem używanym do tworzenia stron internetowych, serwerów lub aplikacji konsolowych na systemy Windows, Linux i macOS.
 	\item\textbf{.NET Framework} jest implementacją platformy .NET wymagającą do uruchomienia systemu Windows i przystosowaną do niego. Dzięki temu wzbogacona jest o biblioteki specyficzne dla tego systemu, jak na przykład narzędzia pozwalające na dostęp do rejestru systemu Windows.
-	\item\textbf{Xamarin Forms} implementuje platformę .NET i pozwala na tworzenie aplikacji mobilnych na systemy Android, iOS oraz Windows Phone współdzielących w dużym stopniu swój kod oraz zachowujących wygląd aplikacji natywnych dla każdego systemu.\cite{microsoftdotnet}
+	\item\textbf{Xamarin Forms} implementuje platformę .NET i pozwala na tworzenie aplikacji mobilnych na systemy Android, iOS oraz Windows Phone współdzielących w dużym stopniu swój kod oraz zachowujących wygląd aplikacji natywnych dla każdego systemu.\cite{microsoftdotnet} Pozwala na definiowanie niezależnych od systemu operacyjnego interfejsów użytkownika w języku XAML.
 \end{itemize}
 \begin{figure}[!ht]
 \begin{center}
@@ -151,15 +151,13 @@ UserDto userDto = mapper.Map<UserDto>(user);
 
 \textbf{MathNet.Numerics} jest biblioteką dostarczającą metody i algorytmy służące do wykonywania obliczeń i operacji numerycznych, m.in. algebry liniowej, modeli prawdopodobieństwa, interpolacji czy zagadnień optymalizacji.\cite{mathnetnumerics} W niniejszym projekcie biblioteka ta została wykorzystana w zakresie wykonywania operacji na macierzach (listing \ref{mathnetnumerics})
 \begin{lstlisting}[label={mathnetnumerics}, caption={Operacje na macierzach przy użyciu biblioteki MathNet.Numerics.}, captionpos=b]
-var predictors = ExtractPredictorsMatrix(dataSet);
-var targets = ExtractTargetsMatrix(dataSet);
-var predictorsTransposed = predictors.Transpose();
+Matrix firstMatrix = GetFirstMatrix();
+Matrix secondMatrix = GetSecondMatrix();
+Matrix thirdMatrix = GetThirdMatrix();
 
-var coefficients = predictorsTransposed
-.Multiply(predictors)
-.Inverse()
-.Multiply(predictorsTransposed)
-.Multiply(targets);
+var resultMatrix = firstMatrix
+.Multiply(secondMatrix)
+.Add(thirdMatrix);
 \end{lstlisting}
 
 \textbf{Newtonsoft.Json} to biblioteka służącą do obsługi danych w formacie JSON. Jest to wydajne narzędzie pozwalające między innymi na serializację i deserializację obiektów, stosowanie LINQ do ekstrakcji danych z formatu JSON oraz konwersję między JSON a XML.\cite{newtonsoft} Biblioteka ta jest najczęściej pobieranym pakietem z globalnego repozytorium NuGet.\cite{nugetstats}

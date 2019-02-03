@@ -1,6 +1,6 @@
 \chapter{Dokumentacja techniczna aplikacji do zarządzania budżetem i predykcji wydatków}
 \section{Opis wymagań funkcjonalnych aplikacji}
-Wymagania funkcjonalne, które stworzony system ma spełniać uwzględniają czynności z zakresu zarządzania własnymi danymi, rejestracji przychodów i wydatków oraz predykcji wydatków:
+Wymagania funkcjonalne, które stworzony system ma spełniać uwzględniają czynności z zakresu zarządzania własnymi danymi, rejestracji przychodów i wydatków oraz predykcji wydatków są przedstawione na diagramie przypadków użycia (Rys. \ref{usecases}) oraz opisane poniżej:
 \begin{itemize}
 	\item\textbf{rejestracja} - utworzenie nowego konta przez niezalogowanego użytkownika, 
 	\item\textbf{logowanie} - proces generowania tokenu pozwalającego na dostęp do aplikacji ,
@@ -17,8 +17,17 @@ Wymagania funkcjonalne, które stworzony system ma spełniać uwzględniają czy
 	\item\textbf{dodanie przychodu} - dodanie nowego przychodu dla aktualnie zalogowanego użytkownika,
 	\item\textbf{edycja przychodu} - zmiana kwoty, daty, kategorii i opisu istniejącego przychodu,
 	\item\textbf{usunięcie przychodu} - usunięcie wybranego przychodu z listy przychodów aktualnie zalogowanego użytkownika,
-	\item\textbf{predykcja wydatków} - wykonanie prognozy wielkości wydatków powiązanych z wydatkiem głównym na nadchodzące miesiące.
+	\item\textbf{predykcja wydatków} - wykonanie prognozy wielkości wydatków powiązanych z wydatkiem głównym na nadchodzące miesiące,
+	\item\textbf{dodanie kategorii wydatków lub przychodów} - dodanie przez administratora kategorii, do której użytkownicy mogą przypisywać swoje wydatki lub przychody,
+	\item\textbf{edycja kategorii wydatków lub przychodów} - zmiana przez administratora opisu istniejącej kategorii wydatków lub przychodów.
 \end{itemize}
+\begin{figure}[!ht]
+	\begin{center}
+		\includegraphics[width=6in]{img/diagram/use_cases.png}
+		\caption{Diagram przypadków użycia}
+		\label{usecases}
+	\end{center}
+\end{figure}
 \section{Opis wymagań niefunkcjonalnych aplikacji}
 Wymagania niefunkcjonalne uwzględniają ograniczenia systemu z zakresu bezpieczeństwa lub optymalizacji:
 \begin{itemize}
@@ -69,8 +78,7 @@ Dodatkowo w warstwie modelu danych znajduje się klasa \lstinline|DataInitialize
 \end{figure}
 \section{Warstwa logiki biznesowej}
 Na warstwę logiki biznesowej składają się klasy realizujące logikę przypadków użycia, typy definiujące DTO i wyjątki aplikacyjne oraz klasy kontrolerów, pozwalających na dostęp do części serwerowej z poziomu aplikacji klienckiej.\\
-W warstwie tej można wydzielić cztery moduły: moduł danych użytkownika, moduł wydatków, moduł przychodów oraz moduł predykcji. Moduły te mają podobną strukturę klas.\\
-Na Rys. \ref{expensediagram} przedstawiony jest diagram zależności typów modułu wydatków. Klasa \lstinline|ExpenseController| odpowiedzialna jest za obsługę zapytań aplikacji klienckiej. Po otrzymaniu zapytania, klasa \lstinline|ExpenseService| implementująca interfejs \lstinline|IExpenseService| przy pomocy repozytorium znajdującego się w warstwie modelu danych obsługuje zapytanie użytkownika oraz zwraca jego wynik przy użyciu typu implementującego \lstinline|IDataTransferObject|. Mapowanie klasy encyjnej na typ DAO jest zdefiniowane w klasie \lstinline|MappingProfile|.
+W warstwie tej można wydzielić cztery moduły: moduł danych użytkownika, moduł wydatków, moduł przychodów oraz moduł predykcji. Na Rys. \ref{expensediagram} przedstawiony jest diagram klas modułu wydatków, pozostałe moduły posiadają analogiczną strukturę.
 \begin{figure}[!ht]
 	\begin{center}
 		\includegraphics[width=6in]{img/diagram/expense_diagram.png}
@@ -78,4 +86,38 @@ Na Rys. \ref{expensediagram} przedstawiony jest diagram zależności typów modu
 		\label{expensediagram}
 	\end{center}
 \end{figure}
+
+Wszystkie operacje poza logowaniem oraz rejestracją wymagają od użytkownika podania tokenu uwierzytelniającego. Następnie przebiega weryfikacja tokenu, czyli sprawdzenie podpisu cyfrowego w celu stwierdzenia, czy nie został on zmieniony bądź wygenerowany w inny sposób niż przy procesie logowania lub rejestracji oraz zweryfikowanie, czy użytkownik posiada role wymagane do wykonania danej operacji.
+
+W celu rejestracji, po otrzymaniu danych o nowym koncie od użytkownika, przy pomocy zapewnionej przez ASP .NET Core klasy \lstinline|UserManager| tworzony jest nowe konto. Po utworzeniu użytkownika przypisywane są do niego role początkowe. Jeżeli proces rejestracji przebiegł pomyślnie, generowany jest token oraz zwracany użytkownikowi, przez co po rejestracji logowanie przebiega automatycznie.\\
+Logowanie istniejącego użytkownika polega na wygenerowaniu dla niego tokenu uwierzytelniającego go w systemie. Po otrzymaniu danych w postaci loginu oraz hasła, są one weryfikowane. Przy pomyślnej weryfikacji odczytywane są z bazy danych wszystkie role przypisane do użytkownika i wraz z innymi danymi o użytkowniku zapisywane tokenie. Wygenerowany token jest podpisywany cyfrowo, co pozwala na jego weryfikację przy próbie uwierzytelnienia i odrzucenie w razie wykrycia jakiejkolwiek ingerencji w jego zawartość.\\
+
+Zmiana hasła użytkownika wymaga podania starego oraz nowego hasła. Po weryfikacji poprawności dotychczasowego hasła generowany jest skrót nowego hasła, który zastępuje istniejący skrót. Oprócz zmiany hasła użytkownik może także zmienić swoje dane osobowe.
+
+Dodawanie i edycja kategorii są dostępne jedynie dla użytkownika posiadającego rolę "admin". Operacje te sprowadzają się do zmodyfikowania bądź stworzenia rekordu w bazie danych zawierającego opis danej kategorii. Raz stworzonej kategorii nie można usunąć z powodu powiązanych z nią wydatków bądź dochodów użytkowników.
+
+Dodawanie wydatku lub przychodu użytkownika jest procesem, który dodaje nowy rekord z wydatkiem lub przychodem powiązanego z użytkownikiem pobranym z tokenu uwierzytelniającego. Przy dodawaniu nowego wydatku, w zależności od jego wielkości w porównaniu z miesięcznymi przychodami użytkownika, jest ustawiana flaga oznaczająca, że wydatek jest wydatkiem głównym.
+
+W momencie uruchomienia części serwerowej systemu wyliczane są współczynniki modelu regresji dla każdej kategorii wydatków oraz co określony czas są one aktualizowane. Dla każdego modelu dane o wydatkach i przychodach są ekstrahowane i zapisywane w postaci macierzy predyktorów i wartości zależnych. Następnie, według metody najmniejszych kwadratów opisanej w rozdziale \ref{najmniejsze_kwadraty} obliczane są współczynniki modelu regresji. Operacje te przedstawione są na listingu \ref{regression_matrices}. W ten sposób obliczone dla każdej kategorii wydatków współczynniki zapisywane są następnie w statycznej kolekcji.
+\begin{lstlisting}[label={regression_matrices}, caption={Operacje na macierzach przy użyciu biblioteki MathNet.Numerics.}, captionpos=b]
+var predictors = ExtractPredictorsMatrix(dataSet);
+var targets = ExtractTargetsMatrix(dataSet);
+var predictorsTransposed = predictors.Transpose();
+
+var coefficients = predictorsTransposed
+.Multiply(predictors)
+.Inverse()
+.Multiply(predictorsTransposed)
+.Multiply(targets);
+\end{lstlisting}
+
+Proces predykcji wydatków na określony cel polega na pobraniu od użytkownika kosztu wydatku głównego oraz jego kategorii, a następnie na podstawie jego miesięcznych przychodów, wydatków z wybranej kategorii oraz podanego kosztu wydatku przy użyciu wyznaczonych współczynników modelu regresji wyznaczane są koszta związane z określonym wydatkiem.
 \section{Warstwa interfejsu użytkownika - aplikacja mobilna}
+Warstwa interfejsu użytkownika zrealizowana jest w postaci aplikacji mobilnej. Składa się ona ze stron wyświetlanych na ekranie urządzenia. Klasy wchodzące w skład części aplikacji odpowiadającej za obsługę wydatków przedstawione są na diagramie \ref{xamarinexpenses}.
+\begin{figure}[!ht]
+	\begin{center}
+		\includegraphics[width=6in]{img/diagram/interface_diagram.png}
+		\caption{Diagram zależności typów warstwy logiki biznesowej dla modułu wydatków.}
+		\label{xamarinexpenses}
+	\end{center}
+\end{figure}

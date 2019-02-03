@@ -9,3 +9,4 @@
 \contentsline {lstlisting}{\numberline {3.9}Definiowanie mapowania mi\IeC {\k e}dzy dwoma typami.}{20}% 
 \contentsline {lstlisting}{\numberline {3.10}Mapowanie jednego obiektu na drugi.}{21}% 
 \contentsline {lstlisting}{\numberline {3.11}Operacje na macierzach przy u\IeC {\.z}yciu biblioteki MathNet.Numerics.}{21}% 
+\contentsline {lstlisting}{\numberline {4.1}Operacje na macierzach przy u\IeC {\.z}yciu biblioteki MathNet.Numerics.}{28}% 
