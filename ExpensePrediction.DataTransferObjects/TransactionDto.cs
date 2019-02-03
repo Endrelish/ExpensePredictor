@@ -2,7 +2,7 @@ using System;
 
 namespace ExpensePrediction.DataTransferObjects
 {
-    public class TransactionDto
+    public class TransactionDto : IDataTransferObject
     {
         public string Id { get; set; }
         public double Value { get; set; }

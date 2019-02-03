@@ -1,6 +1,6 @@
 namespace ExpensePrediction.DataTransferObjects.User
 {
-    public class UserEditDto
+    public class UserEditDto : IDataTransferObject
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

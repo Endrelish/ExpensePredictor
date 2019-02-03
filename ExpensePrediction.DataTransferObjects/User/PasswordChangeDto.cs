@@ -1,6 +1,6 @@
 namespace ExpensePrediction.DataTransferObjects.User
 {
-    public class PasswordChangeDto
+    public class PasswordChangeDto : IDataTransferObject
     {
         public string CurrentPassword { get; set; }
         public string NewPassword { get; set; }

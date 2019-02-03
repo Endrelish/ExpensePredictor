@@ -61,11 +61,11 @@ namespace ExpensePrediction.WebAPI
             services.AddIdentity<User, Role>(options =>
                 {
                     var pass = options.Password;
-                    pass.RequireDigit = false;
-                    pass.RequiredLength = 4;
-                    pass.RequireLowercase = false;
-                    pass.RequireNonAlphanumeric = false;
-                    pass.RequireUppercase = false;
+                    pass.RequireDigit = true;
+                    pass.RequiredLength = 8;
+                    pass.RequireLowercase = true;
+                    pass.RequireNonAlphanumeric = true;
+                    pass.RequireUppercase = true;
                 }).AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 

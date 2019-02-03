@@ -66,18 +66,5 @@ namespace ExpensePrediction.WebAPI.Controllers
             await _accountService.ChangePasswordAsync(passwordChangeDto, User.Identity.Name);
             return Ok();
         }
-
-        //TODO Delet dis
-        /// <summary>
-        ///     Resets the password.
-        /// </summary>
-        /// <param name="userName">Name of the user.</param>
-        /// <returns></returns>
-        [HttpGet("reset-pass/{userName}")]
-        public async Task<IActionResult> ResetPassword([FromRoute] string userName)
-        {
-            await _accountService.ResetPassAsync(userName);
-            return Ok();
-        }
     }
 }
