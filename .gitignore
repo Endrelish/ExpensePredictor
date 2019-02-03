@@ -3,6 +3,14 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+#LaTeX
+praca/main.aux
+praca/main.bbl
+praca/main.blg
+praca/main.lof
+praca/main.lot
+praca/main.toc
+
 # User-specific files
 *.suo
 *.user

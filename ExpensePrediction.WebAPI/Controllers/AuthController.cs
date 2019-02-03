@@ -54,17 +54,5 @@ namespace ExpensePrediction.WebAPI.Controllers
             var token = await _authService.GetTokenAsync(loginDto);
             return Ok(token);
         }
-
-        //----------ENDPOINTS BELOW JUST FOR TESTING----------//
-
-        /// <summary>
-        ///     Hahas this instance.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("haha")]
-        public IActionResult Haha()
-        {
-            return Ok(new { Haha = "hehe", Hehe = "haha", Hoho = "huhu", Huhu = "hoho" });
-        }
     }
 }
