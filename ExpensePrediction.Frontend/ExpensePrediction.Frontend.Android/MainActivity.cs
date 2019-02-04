@@ -1,4 +1,6 @@
-﻿using Android.App;
+﻿using System;
+using System.Threading.Tasks;
+using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
@@ -22,6 +24,11 @@ namespace ExpensePrediction.Frontend.Droid
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
+        }
+
+        private static void TaskSchedulerOnUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs unobservedTaskExceptionEventArgs)
+        {
+            Console.WriteLine(unobservedTaskExceptionEventArgs.Exception.Message);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions,

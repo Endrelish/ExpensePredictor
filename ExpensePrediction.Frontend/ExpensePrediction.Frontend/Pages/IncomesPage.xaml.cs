@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using ExpensePrediction.DataTransferObjects.Category;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -27,7 +27,8 @@ namespace ExpensePrediction.Frontend.Pages
         {
             await ActivityIndicatorPage.ToggleIndicator(true);
             var incomes = await _incomeService.GetIncomesAsync(DateFrom.Date, DateTo.Date);
-            IncomesList.ItemsSource = incomes.OrderByDescending(i => i.Date);
+            IncomesList.ItemsSource = incomes.OrderByDescending(i => i.Date)
+                .Select(i => new {i.Description, Value = i.Value.ToString("F2") + " zł", i.Date, i.Id, i.CategoryId});
             await ActivityIndicatorPage.ToggleIndicator(false);
         }
         private void AddIncome(TransactionDto transaction)
@@ -47,5 +48,34 @@ namespace ExpensePrediction.Frontend.Pages
             await ActivityIndicatorPage.ToggleIndicator(false);
             await Navigation.PushAsync(page);
         }
-    }
+
+	    private async void IncomeClicked(object sender, ItemTappedEventArgs e)
+	    {
+	        var action = await DisplayActionSheet("Options", "Back", null, new[] {"Edit", "Delete"});
+	        dynamic item = e.Item;
+	        var dto = new TransactionDto()
+	        {
+	            CategoryId = item.CategoryId,
+	            Date = item.Date,
+	            Description = item.Description,
+	            Id = item.Id,
+	            Value = double.Parse(item.Value.Substring(0, item.Value.Length - 3))
+	        };
+	        switch (action)
+	        {
+                case "Edit":
+                    //TODO
+                    await ActivityIndicatorPage.ToggleIndicator(true);
+                    var page = new EditTransactionPage(CategoryType.IncomeCategory, dto);
+                    await page.Initialize();
+                    await ActivityIndicatorPage.ToggleIndicator(false);
+                    await Navigation.PushAsync(page);
+                    break;
+                case "Delete":
+                    var choice = await DisplayAlert("Delete", "Are you sure?", "Yes", "No");
+                    if (choice); //TODO
+                    break;
+	        }
+	    }
+	}
 }
