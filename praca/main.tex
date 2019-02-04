@@ -55,6 +55,7 @@
 \usepackage{url}
 \usepackage{subcaption}
 \captionsetup{compatibility=false}
+\usepackage{textpos}
 
 \renewcommand*{\backref}[1]{}
 \renewcommand*{\backrefalt}[4]{%
@@ -119,32 +120,48 @@
 }
 \setcounter{page}{1}
 \pagestyle{plain}
-%\begin{titlepage}
-%	\begin{center}
-%		\textbf{PRACA DYPLOMOWA INŻYNIERSKA}
-%		\vspace*{1cm}
-%		
-%		\textbf{SYSTEM PLANOWANIA BUDŻETU DOMOWEGO Z ASPEKTEM SPOŁECZNOŚCIOWYM}
-%		
-%		\vspace{2cm}
-%		
-%		\vfill
-%		
-%		
-%		\vspace{0.8cm}
-%		
-%	\end{center}
-%	Wydział Fizyki Technicznej, Informatyki i Matematyki Stosowanej\newline
-%	Promotor: dr inż. Łukasz Chomątek\newline
-%	Dyplomant: Paweł Purgat\newline
-%	Nr albumu: 203975\newline
-%	Kierunek: informatyka\newline
-%	Specjalność: Inżynieria Oprogramowania i Analiza Danych
-%	\begin{center}
-%		Łódź, data
-%	\end{center}
-%		
-%\end{titlepage}
+
+
+\author{Paweł Purgat}
+\title{System planowania budżetu domowego z aspektem społecznościowym}
+\begin{titlepage}
+	\thispagestyle{empty}
+	\begin{textblock}{1}(-2.65,-1.65)
+		\includegraphics{img/tytulowa_pusta_mgrinz.pdf}
+	\end{textblock}
+	\vspace{7.3cm}
+	\begin{center}
+		\fontfamily{ptm}
+		\selectfont
+		\Huge
+		System planowania budżetu domowego z aspektem społecznościowym
+	\end{center}
+	\begin{center}
+		\fontfamily{ptm}
+		\selectfont
+		Praca dyplomowa inżynierska
+	\end{center}
+	\vspace{7.9cm}
+	\begin{center}
+		\fontfamily{ptm}
+		\selectfont
+		\hspace{-1cm}
+		\begin{tabular}{l}
+			Wydział Fizyki Technicznej, Informatyki i Matematyki Stosowanej\\
+			Promotor: dr inż. Łukasz Chomątek\\
+			Dyplomant: Paweł Purgat\\
+			Nr albumu: 203975
+		\end{tabular}
+	\end{center}
+	\vspace{-.5cm}
+	\begin{center}
+		\fontfamily{ptm}
+		\selectfont
+		\begin{textblock}{13}(0,0.4)
+			Łódź, 2019
+		\end{textblock}
+	\end{center}
+\end{titlepage}
 
 
 \tableofcontents

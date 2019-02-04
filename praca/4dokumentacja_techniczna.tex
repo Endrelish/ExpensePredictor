@@ -1,6 +1,6 @@
 \chapter{Dokumentacja techniczna aplikacji ExpensePredictor}
 \section{Opis wymagań funkcjonalnych aplikacji}
-Wymagania funkcjonalne, które stworzony system ma spełniać uwzględniają czynności z zakresu zarządzania własnymi danymi, rejestracji przychodów i wydatków oraz predykcji wydatków są przedstawione na diagramie przypadków użycia (Rys. \ref{usecases}) oraz opisane poniżej:
+Wymagania funkcjonalne, które stworzony system ma spełniać uwzględniają czynności z zakresu zarządzania własnymi danymi, rejestracji przychodów i wydatków oraz predykcji wydatków, są przedstawione na diagramie przypadków użycia (Rys. \ref{usecases}) oraz opisane poniżej:
 \begin{itemize}
 	\item\textbf{rejestracja} - utworzenie nowego konta przez niezalogowanego użytkownika, 
 	\item\textbf{logowanie} - proces generowania tokenu pozwalającego na dostęp do aplikacji ,
@@ -40,7 +40,7 @@ Wymagania niefunkcjonalne uwzględniają ograniczenia systemu z zakresu bezpiecz
 	\item\textbf{obsługa błędów} - wyświetlenie użytkownikowi komunikatu z opisem błędu w razie jego wystąpienia.
 \end{itemize}
 \section{Warstwa modelu danych}
-Na warstwę modelu danych składa się baza danych, klasy encyjne oraz klasy zapewniające podstawowe operacje na danych.
+Warstwa modelu danych składa się z bazy danych, klas encyjnych oraz klas zapewniających podstawowe operacje na danych.
 
 Dane w bazie danych (Rys. \ref{db_diagram}) podzielone są na siedem tabel:
 \begin{itemize}
@@ -89,8 +89,9 @@ W warstwie tej można wydzielić cztery moduły: moduł danych użytkownika, mod
 
 Wszystkie operacje poza logowaniem oraz rejestracją wymagają od użytkownika podania tokenu uwierzytelniającego. Następnie przebiega weryfikacja tokenu, czyli sprawdzenie podpisu cyfrowego w celu stwierdzenia, czy nie został on zmieniony bądź wygenerowany w inny sposób niż przy procesie logowania lub rejestracji oraz zweryfikowanie, czy użytkownik posiada role wymagane do wykonania danej operacji.
 
-W celu rejestracji, po otrzymaniu danych o nowym koncie od użytkownika, przy pomocy zapewnionej przez ASP .NET Core klasy \lstinline|UserManager| tworzony jest nowe konto. Po utworzeniu użytkownika przypisywane są do niego role początkowe. Jeżeli proces rejestracji przebiegł pomyślnie, generowany jest token oraz zwracany użytkownikowi, przez co po rejestracji logowanie przebiega automatycznie.\\
-Logowanie istniejącego użytkownika polega na wygenerowaniu dla niego tokenu uwierzytelniającego go w systemie. Po otrzymaniu danych w postaci loginu oraz hasła, są one weryfikowane. Przy pomyślnej weryfikacji odczytywane są z bazy danych wszystkie role przypisane do użytkownika i wraz z innymi danymi o użytkowniku zapisywane tokenie. Wygenerowany token jest podpisywany cyfrowo, co pozwala na jego weryfikację przy próbie uwierzytelnienia i odrzucenie w razie wykrycia jakiejkolwiek ingerencji w jego zawartość.\\
+W celu rejestracji, po otrzymaniu danych o nowym koncie od użytkownika, przy pomocy zapewnionej przez ASP .NET Core klasy \lstinline|UserManager| tworzony jest nowe konto. Po utworzeniu użytkownika przypisywane są do niego role początkowe. Jeżeli proces rejestracji przebiegł pomyślnie, generowany jest token oraz zwracany użytkownikowi, przez co po rejestracji logowanie przebiega automatycznie.
+
+Logowanie istniejącego użytkownika polega na wygenerowaniu dla niego tokenu uwierzytelniającego go w systemie. Po otrzymaniu danych w postaci loginu oraz hasła, są one weryfikowane. Przy pomyślnej weryfikacji odczytywane są z bazy danych wszystkie role przypisane do użytkownika i wraz z innymi danymi o użytkowniku zapisywane tokenie. Wygenerowany token jest podpisywany cyfrowo, co pozwala na jego weryfikację przy próbie uwierzytelnienia i odrzucenie w razie wykrycia jakiejkolwiek ingerencji w jego zawartość.
 
 Zmiana hasła użytkownika wymaga podania starego oraz nowego hasła. Po weryfikacji poprawności dotychczasowego hasła generowany jest skrót nowego hasła, który zastępuje istniejący skrót. Oprócz zmiany hasła użytkownik może także zmienić swoje dane osobowe.
 
@@ -98,8 +99,8 @@ Dodawanie i edycja kategorii są dostępne jedynie dla użytkownika posiadające
 
 Dodawanie wydatku lub przychodu użytkownika jest procesem, który dodaje nowy rekord z wydatkiem lub przychodem powiązanego z użytkownikiem pobranym z tokenu uwierzytelniającego. Przy dodawaniu nowego wydatku, w zależności od jego wielkości w porównaniu z miesięcznymi przychodami użytkownika, jest ustawiana flaga oznaczająca, że wydatek jest wydatkiem głównym.
 
-W momencie uruchomienia części serwerowej systemu wyliczane są współczynniki modelu regresji dla każdej kategorii wydatków oraz co określony czas są one aktualizowane. Dla każdego modelu dane o wydatkach i przychodach są ekstrahowane i zapisywane w postaci macierzy predyktorów i wartości zależnych. Następnie, według metody najmniejszych kwadratów opisanej w rozdziale \ref{najmniejsze_kwadraty} obliczane są współczynniki modelu regresji. Operacje te przedstawione są na listingu \ref{regression_matrices}. W ten sposób obliczone dla każdej kategorii wydatków współczynniki zapisywane są następnie w statycznej kolekcji.
-\begin{lstlisting}[label={regression_matrices}, caption={Operacje na macierzach przy użyciu biblioteki MathNet.Numerics.}, captionpos=b]
+W momencie uruchomienia części serwerowej systemu wyznaczane są współczynniki modelu regresji dla każdej kategorii wydatków oraz co określony czas są one aktualizowane. Dla każdego modelu dane o wydatkach i przychodach są ekstrahowane i zapisywane w postaci macierzy predyktorów i wartości zależnych. Następnie, według metody najmniejszych kwadratów opisanej w rozdziale \ref{najmniejsze_kwadraty} obliczane są współczynniki modelu regresji. Operacje te przedstawione są na listingu \ref{regression_matrices}. W ten sposób obliczone dla każdej kategorii wydatków współczynniki zapisywane są następnie w statycznej kolekcji.
+\begin{lstlisting}[label={regression_matrices}, caption={Operacje wyznaczania współczynników modelu regresji.}, captionpos=b]
 var predictors = ExtractPredictorsMatrix(dataSet);
 var targets = ExtractTargetsMatrix(dataSet);
 var predictorsTransposed = predictors.Transpose();
