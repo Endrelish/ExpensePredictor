@@ -1,4 +1,4 @@
-\chapter{Dokumentacja techniczna aplikacji do zarządzania budżetem i predykcji wydatków}
+\chapter{Dokumentacja techniczna aplikacji ExpensePredictor}
 \section{Opis wymagań funkcjonalnych aplikacji}
 Wymagania funkcjonalne, które stworzony system ma spełniać uwzględniają czynności z zakresu zarządzania własnymi danymi, rejestracji przychodów i wydatków oraz predykcji wydatków są przedstawione na diagramie przypadków użycia (Rys. \ref{usecases}) oraz opisane poniżej:
 \begin{itemize}
@@ -33,7 +33,7 @@ Wymagania niefunkcjonalne uwzględniają ograniczenia systemu z zakresu bezpiecz
 \begin{itemize}
 	\item\textbf{bezpieczne hasło} - nałożenie ograniczeń, które ciąg znaków musi spełniać, aby mógł być użyty jako hasło: minimalna długość to osiem znaków, ciąg musi zawierać co najmniej jedną małą i dużą literę, liczbę oraz znak specjalny,
 	\item\textbf{dostęp do systemu dla uwierzytelnionych użytkowników} - możliwość skorzystania z funkcjonalności systemu (z kilkoma wyjątkami) jest dostępna jedynie dla uwierzytelnionych użytkowników,
-	\item\textbf{dostęp do funkcjonalności ograniczony rolami} - dostęp do funkcjonalności jest ograniczony poprzez role przypisane do konta użytkownika, np. edycję kategorii wykonać może jedynie użytkownik, który posiada rolę "admin",
+	\item\textbf{dostęp do funkcjonalności ograniczony rolami} - dostęp do funkcjonalności jest ograniczony poprzez role przypisane do konta użytkownika, na przykład edycję kategorii wykonać może jedynie użytkownik, który posiada rolę "admin",
 	\item\textbf{użycie tokenu} - wykorzystanie do uwierzytelniania i autoryzacji tokenu, który przechowuje informacje na temat tożsamości użytkownika oraz jego ról po stronie aplikacji klienckiej,
 	\item\textbf{przechowywanie hasła w postaci jego skrótu} - wykorzystanie funkcji skrótu (ang. \textit{hash function}), aby nie przechowywać hasła w bazie danych w postaci jawnej,
 	\item\textbf{tworzenie modelu regresji przy starcie aplikacji} - wyznaczenie współczynników regresji przed skorzystaniem z funkcjonalności predykcji przez użytkownika, gdyż operacja ta jest czasochłonna przy dużej ilości danych,
