@@ -97,5 +97,19 @@ namespace ExpensePrediction.WebAPI.Controllers
             var result = await _expenseService.EditExpenseAsync(expenseDto, User.Identity.Name);
             return Ok(result);
         }
+
+        /// <summary>
+        ///     Deletes the expense.
+        /// </summary>
+        /// <param name="expenseId">The expense id.</param>
+        [HttpDelete("{expenseId}")]
+        [Authorize("DeleteExpense")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(typeof(string), 400)]
+        public async Task<IActionResult> DeleteExpense([FromRoute]string expenseId)
+        {
+            await _expenseService.DeleteExpenseAsync(expenseId, User.Identity.Name);
+            return NoContent();
+        }
     }
 }

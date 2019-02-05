@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataAccessLayer.Interfaces;
 using ExpensePrediction.DataTransferObjects;
 using ExpensePrediction.Exceptions;
-using Microsoft.AspNetCore.Identity;
-using ApplicationException = System.ApplicationException;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace ExpensePrediction.BusinessLogicLayer.Services
 {
@@ -42,9 +40,8 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             }
             catch (RepositoryException e)
             {
-                throw new ExpenseException("Cannot add expense", e, 500);
+                throw new ExpenseException("Cannot add expense", e, 400);
             }
-            
         }
 
         private async Task<bool> IsExpenseMain(ExpenseDto expenseDto, string userId)
@@ -62,9 +59,9 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             var expense = await _expenseRepository.FindByIdAsync(expenseDto.Id);
             if (!expense.UserId.Equals(userId, StringComparison.OrdinalIgnoreCase))
             {
-                throw new ExpenseException("Cannot find expense", 400);
+                throw new ExpenseException("Cannot find expense", 404);
             }
-            
+
             expense.Value = expenseDto.Value;
             expense.Date = expenseDto.Date;
             expense.CategoryId = expenseDto.CategoryId;
@@ -72,7 +69,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             var result = await _expenseRepository.SaveAsync();
             if (result < 1)
             {
-                throw new ExpenseException("Cannot edit expense", 500);
+                throw new ExpenseException("Cannot edit expense", 400);
             }
 
             return _mapper.Map<ExpenseDto>(expense);
@@ -86,7 +83,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
                 return _mapper.Map<ExpenseDto>(expense);
             }
 
-            throw new ExpenseException("Cannot find expense", 400);
+            throw new ExpenseException("Cannot find expense", 404);
         }
 
         public async Task<IEnumerable<ExpenseDto>> GetExpensesAsync(string userId, DateTime from, DateTime to)
@@ -97,6 +94,19 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
 
             var expenses = await _expenseRepository.FindByConditionAsync(condition);
             return _mapper.Map<IEnumerable<ExpenseDto>>(expenses);
+        }
+
+        public async Task DeleteExpenseAsync(string expenseId, string userId)
+        {
+            var expense = await _expenseRepository.FindByIdAsync(expenseId);
+            if (expense != null && expense.UserId == userId)
+            {
+                _expenseRepository.Delete(expense);
+                await _expenseRepository.SaveAsync();
+                return;
+            }
+
+            throw new ExpenseException("Cannot find expense", 404);
         }
     }
 }

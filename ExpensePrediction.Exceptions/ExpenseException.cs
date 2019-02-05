@@ -4,7 +4,7 @@ namespace ExpensePrediction.Exceptions
 {
     public class ExpenseException : ServiceException
     {
-        private static readonly string ErrorCode = "account_exception";
+        private static readonly string ErrorCode = "expense_exception";
 
         public ExpenseException(int htmlCode) : base(ErrorCode)
         {
