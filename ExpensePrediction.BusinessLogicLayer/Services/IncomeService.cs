@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ExpensePrediction.BusinessLogicLayer.Interfaces.Services;
 using ExpensePrediction.DataAccessLayer.Entities;
 using ExpensePrediction.DataAccessLayer.Interfaces;
 using ExpensePrediction.DataTransferObjects;
 using ExpensePrediction.Exceptions;
 using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace ExpensePrediction.BusinessLogicLayer.Services
 {
@@ -39,14 +39,27 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             return _mapper.Map<IncomeDto>(income);
         }
 
+        public async Task DeleteIncomeAsync(string incomeId, string userId)
+        {
+            var income = await _incomeRepository.FindByIdAsync(incomeId);
+            if (income != null && income.UserId == userId)
+            {
+                _incomeRepository.Delete(income);
+                await _incomeRepository.SaveAsync();
+                return;
+            }
+
+            throw new IncomeException("Cannot find income", 404);
+        }
+
         public async Task<IncomeDto> EditIncomeAsync(IncomeDto incomeDto, string userId)
         {
             var income = await _incomeRepository.FindByIdAsync(incomeDto.Id);
             if (!income.UserId.Equals(userId, StringComparison.OrdinalIgnoreCase))
             {
-                throw new IncomeException("Cannot find income", 400);
+                throw new IncomeException("Cannot find income", 404);
             }
-            
+
             income.Value = incomeDto.Value;
             income.Date = incomeDto.Date;
             income.CategoryId = incomeDto.CategoryId;
@@ -69,7 +82,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
                 return _mapper.Map<IncomeDto>(income);
             }
 
-            throw new IncomeException("Income not found", 400);
+            throw new IncomeException("Income not found", 404);
         }
 
         public async Task<IEnumerable<IncomeDto>> GetIncomesAsync(string userId, DateTime from, DateTime to)

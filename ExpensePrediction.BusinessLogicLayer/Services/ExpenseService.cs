@@ -40,7 +40,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             }
             catch (RepositoryException e)
             {
-                throw new ExpenseException("Cannot add expense", e, 500);
+                throw new ExpenseException("Cannot add expense", e, 400);
             }
         }
 
@@ -59,7 +59,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             var expense = await _expenseRepository.FindByIdAsync(expenseDto.Id);
             if (!expense.UserId.Equals(userId, StringComparison.OrdinalIgnoreCase))
             {
-                throw new ExpenseException("Cannot find expense", 400);
+                throw new ExpenseException("Cannot find expense", 404);
             }
 
             expense.Value = expenseDto.Value;
@@ -69,7 +69,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             var result = await _expenseRepository.SaveAsync();
             if (result < 1)
             {
-                throw new ExpenseException("Cannot edit expense", 500);
+                throw new ExpenseException("Cannot edit expense", 400);
             }
 
             return _mapper.Map<ExpenseDto>(expense);
@@ -83,7 +83,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
                 return _mapper.Map<ExpenseDto>(expense);
             }
 
-            throw new ExpenseException("Cannot find expense", 400);
+            throw new ExpenseException("Cannot find expense", 404);
         }
 
         public async Task<IEnumerable<ExpenseDto>> GetExpensesAsync(string userId, DateTime from, DateTime to)
@@ -96,7 +96,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             return _mapper.Map<IEnumerable<ExpenseDto>>(expenses);
         }
 
-        public async Task DeleteExpense(string expenseId, string userId)
+        public async Task DeleteExpenseAsync(string expenseId, string userId)
         {
             var expense = await _expenseRepository.FindByIdAsync(expenseId);
             if (expense != null && expense.UserId == userId)
@@ -106,7 +106,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
                 return;
             }
 
-            throw new ExpenseException("Cannot find expense", 400);
+            throw new ExpenseException("Cannot find expense", 404);
         }
     }
 }

@@ -15,6 +15,6 @@ namespace ExpensePrediction.BusinessLogicLayer.Interfaces.Services
 
         Task<ExpenseDto> EditExpenseAsync(ExpenseDto expense, string userId);
 
-        Task DeleteExpense(string expenseId, string userId);
+        Task DeleteExpenseAsync(string expenseId, string userId);
     }
 }

@@ -94,5 +94,19 @@ namespace ExpensePrediction.WebAPI.Controllers
             var result = await _incomeService.EditIncomeAsync(incomeDto, User.Identity.Name);
             return Ok(result);
         }
+
+        /// <summary>
+        ///     Deletes the income.
+        /// </summary>
+        /// <param name="incomeId">The income id.</param>
+        [HttpDelete("{incomeId}")]
+        [Authorize("DeleteIncome")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(typeof(string), 400)]
+        public async Task<IActionResult> DeleteIncome([FromRoute]string incomeId)
+        {
+            await _incomeService.DeleteIncomeAsync(incomeId, User.Identity.Name);
+            return NoContent();
+        }
     }
 }
