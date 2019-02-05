@@ -87,7 +87,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                         },
                         new
                         {
-                            Id = "5e2e41b3-f5fb-4d10-8685-9e45f8d480d8",
+                            Id = "87e0dc0a-8c6c-4773-b295-e32a78c4fc7f",
                             Name = "Samochód"
                         });
                 });
@@ -118,54 +118,54 @@ namespace ExpensePrediction.WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "37cf4f76-587e-4544-8135-4503b4c73f97",
+                            Id = "91fff8c5-72d9-4928-8135-0e0d972f25fa",
                             CategoryId = "fb9d333d-5e85-484b-bb35-ef307fd06379",
-                            Date = new DateTime(2019, 1, 2, 19, 58, 6, 918, DateTimeKind.Local).AddTicks(2205),
+                            Date = new DateTime(2019, 1, 31, 12, 46, 43, 973, DateTimeKind.Local).AddTicks(7819),
                             Description = "Spadek po cioci",
                             UserId = "830f0d08-6a56-4a57-83c9-329c094f184b",
                             Value = 2345.6700000000001
                         },
                         new
                         {
-                            Id = "63970621-cfbc-4e7c-9db2-c8dc4ff75b05",
+                            Id = "7c154df8-01fa-49e7-a14b-7398ae1f0711",
                             CategoryId = "fb9d333d-5e85-484b-bb35-ef307fd06379",
-                            Date = new DateTime(2018, 12, 2, 19, 58, 6, 920, DateTimeKind.Local).AddTicks(8900),
+                            Date = new DateTime(2018, 12, 31, 12, 46, 43, 979, DateTimeKind.Local).AddTicks(973),
                             Description = "Spadek po cioci",
                             UserId = "830f0d08-6a56-4a57-83c9-329c094f184b",
                             Value = 2345.6700000000001
                         },
                         new
                         {
-                            Id = "c1d647a4-ca6f-4786-80b0-e1ac786d32fd",
+                            Id = "e032ae84-1b11-4d60-8312-a417f17eae06",
                             CategoryId = "fb9d333d-5e85-484b-bb35-ef307fd06379",
-                            Date = new DateTime(2018, 11, 2, 19, 58, 6, 920, DateTimeKind.Local).AddTicks(8932),
+                            Date = new DateTime(2018, 11, 30, 12, 46, 43, 979, DateTimeKind.Local).AddTicks(997),
                             Description = "Spadek po cioci",
                             UserId = "830f0d08-6a56-4a57-83c9-329c094f184b",
                             Value = 2345.6700000000001
                         },
                         new
                         {
-                            Id = "0bdb265d-95bd-4de9-bd17-fc2ec894c80f",
+                            Id = "5e96d9d1-cf7c-481c-b8b1-79c61d5130cd",
                             CategoryId = "fb9d333d-5e85-484b-bb35-ef307fd06379",
-                            Date = new DateTime(2018, 10, 2, 19, 58, 6, 920, DateTimeKind.Local).AddTicks(8942),
+                            Date = new DateTime(2018, 10, 31, 12, 46, 43, 979, DateTimeKind.Local).AddTicks(1003),
                             Description = "Spadek po cioci",
                             UserId = "830f0d08-6a56-4a57-83c9-329c094f184b",
                             Value = 2345.6700000000001
                         },
                         new
                         {
-                            Id = "9af37949-de7d-4a3d-80f1-6f4eeee670c3",
+                            Id = "1e364cc0-c1fd-416e-8a6c-f2ce00ba973f",
                             CategoryId = "fb9d333d-5e85-484b-bb35-ef307fd06379",
-                            Date = new DateTime(2018, 9, 2, 19, 58, 6, 920, DateTimeKind.Local).AddTicks(8946),
+                            Date = new DateTime(2018, 9, 30, 12, 46, 43, 979, DateTimeKind.Local).AddTicks(1007),
                             Description = "Spadek po cioci",
                             UserId = "830f0d08-6a56-4a57-83c9-329c094f184b",
                             Value = 2345.6700000000001
                         },
                         new
                         {
-                            Id = "e61e224f-1a7f-40e1-b1b9-4351ecf3f71f",
+                            Id = "3eba73e5-bf1a-4e26-97d8-25aa10d7eaa6",
                             CategoryId = "fb9d333d-5e85-484b-bb35-ef307fd06379",
-                            Date = new DateTime(2018, 8, 2, 19, 58, 6, 920, DateTimeKind.Local).AddTicks(9030),
+                            Date = new DateTime(2018, 8, 31, 12, 46, 43, 979, DateTimeKind.Local).AddTicks(1012),
                             Description = "Spadek po cioci",
                             UserId = "830f0d08-6a56-4a57-83c9-329c094f184b",
                             Value = 2345.6700000000001
@@ -223,14 +223,14 @@ namespace ExpensePrediction.WebAPI.Migrations
                         new
                         {
                             Id = "2fdbec88-4aa9-430c-8359-8b27756cf1ca",
-                            ConcurrencyStamp = "0c7939be-0205-4aee-9d94-2d0625ea49df",
+                            ConcurrencyStamp = "07adaea7-ca24-4e34-b750-5d9638eaa334",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "307d5d07-87cf-49a0-9cd4-b925b5380963",
-                            ConcurrencyStamp = "6f2affcc-e521-48ed-a546-74a7fa49c8ad",
+                            ConcurrencyStamp = "8f08ab37-ee17-436b-b2f8-1878e978bfa9",
                             Name = "user",
                             NormalizedName = "USER"
                         });
@@ -295,7 +295,7 @@ namespace ExpensePrediction.WebAPI.Migrations
                         {
                             Id = "830f0d08-6a56-4a57-83c9-329c094f184b",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7efd49b6-c3f9-45b2-843c-d9a172afec4e",
+                            ConcurrencyStamp = "11cb73c5-ac99-4500-af9d-6b1f29ce298f",
                             Email = "user@user.com",
                             EmailConfirmed = false,
                             FirstName = "User",

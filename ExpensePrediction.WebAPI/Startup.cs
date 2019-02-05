@@ -123,7 +123,7 @@ namespace ExpensePrediction.WebAPI
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IIncomeService, IncomeService>();
             services.AddTransient<IPredictionService, PredictionService>();
-            services.AddHostedService<HostedRegressionService>();
+            //services.AddHostedService<HostedRegressionService>();
 
             services.AddSingleton(MapperService.Mapper);
         }
@@ -159,7 +159,7 @@ namespace ExpensePrediction.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            
+
             SetUpDbContext(services);
             SetUpSecurity(services);
             SetUpLogging(services);
