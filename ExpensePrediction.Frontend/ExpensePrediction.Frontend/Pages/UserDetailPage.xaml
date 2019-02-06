@@ -3,19 +3,78 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ExpensePrediction.Frontend.Pages.UserDetailPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label x:Name="Username"
+        <Grid Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   FontSize="Large"
+                   Text="Username:"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Start"/>
+            <Label Grid.Row="1"
+                   Grid.Column="0"
+                   FontSize="Large"
+                   Text="First name:"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Start"/>
+            <Label Grid.Row="2"
+                   Grid.Column="0"
+                   FontSize="Large"
+                   Text="Last name:"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Start"/>
+            <Label Grid.Row="3"
+                   Grid.Column="0"
+                   FontSize="Large"
+                   Text="Phone number:"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Start"/>
+            <Label Grid.Row="0"
+                   Grid.Column="1"
+                   FontSize="Large"
+                   x:Name="Username"
+                 VerticalOptions="Start"
+                HorizontalOptions="Start" />
+            <Label Grid.Row="1"
+                   Grid.Column="1"
+                   FontSize="Large"
+                   x:Name="FirstName"
                 VerticalOptions="Start"
-                HorizontalOptions="Fill" />
-            <Label x:Name="FirstName"
+                HorizontalOptions="Start" />
+            <Label Grid.Row="2"
+                   Grid.Column="1"
+                   FontSize="Large"
+                   x:Name="LastName"
                 VerticalOptions="Start"
-                HorizontalOptions="Fill" />
-            <Label x:Name="LastName"
+                HorizontalOptions="Start" />
+            <Label Grid.Row="3"
+                   Grid.Column="1"
+                   FontSize="Large"
+                   x:Name="PhoneNumber"
                 VerticalOptions="Start"
-                HorizontalOptions="Fill" />
-            <Label x:Name="PhoneNumber"
-                VerticalOptions="Start"
-                HorizontalOptions="Fill" />
-        </StackLayout>
+                HorizontalOptions="Start" />
+            <Button Text="Change password"
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    HorizontalOptions="Start"
+                    VerticalOptions="End"
+                    Clicked="PassClicked"/>
+            <Button Text="Edit"
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    HorizontalOptions="End"
+                    VerticalOptions="End"
+                    Clicked="EditClicked"/>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

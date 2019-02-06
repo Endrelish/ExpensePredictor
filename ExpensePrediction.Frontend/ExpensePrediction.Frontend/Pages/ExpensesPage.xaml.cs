@@ -27,7 +27,8 @@ namespace ExpensePrediction.Frontend.Pages
         {
             await ActivityIndicatorPage.ToggleIndicator(true);
             var expenses = await _expenseService.GetExpenses(DateFrom.Date, DateTo.Date);
-            ExpensesList.ItemsSource = expenses.OrderByDescending(ex => ex.Date);
+            ExpensesList.ItemsSource = expenses.OrderByDescending(ex => ex.Date)
+                .Select(i => new {i.Description, Value = i.Value.ToString("F2") + " zł", i.Date});
             await ActivityIndicatorPage.ToggleIndicator(false);
         }
 

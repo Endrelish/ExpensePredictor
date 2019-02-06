@@ -24,9 +24,11 @@ namespace ExpensePrediction.Frontend.Pages
         private async void SignUpClicked(object sender, EventArgs e)
         {
             await ActivityIndicatorPage.ToggleIndicator(true);
-            if (Password != PasswordConfirm)
+            if (!Password.Text.Equals(PasswordConfirm.Text, StringComparison.InvariantCulture))
             {
                 await DisplayAlert("Error", "Passwords don't match", "OK");
+                await ActivityIndicatorPage.ToggleIndicator(false);
+                return;
             }
 
             var registerDto = new RegisterDto

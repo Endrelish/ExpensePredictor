@@ -1,10 +1,10 @@
 \chapter{Technologie użyte w projekcie}
-System stworzony na potrzeby niniejszej pracy składa się z dwóch komponentów: warstwy logiki (ang. \textit{backend}) oraz warstwy interfejsu użytkownika (ang. \textit{frontend}).\\
-Obecnie istnieje na rynku wiele technologii umożliwiających realizację warstwy backendu, jak np. Spring (Java), ASP .NET (C\#), ASP .NET Core (C\#). Technologie te różnią się wymaganiami oraz dostępnymi narzędziami.\\
-Warstwa frontendu została zrealizowana w formie aplikacji mobilnej. Aplikacje te można podzielić na trzy kategorie:
+System stworzony na potrzeby niniejszej pracy składa się z dwóch aplikacji: części serwerowej (ang. \textit{backend}) oraz aplikacji klienckiej (ang. \textit{frontend}).\\
+Obecnie istnieje na rynku wiele technologii umożliwiających realizację części serwerowej, jak na przykład Spring (Java), ASP .NET (C\#), ASP .NET Core (C\#). Technologie te różnią się wymaganiami oraz dostępnymi narzędziami.\\
+Interfejs użytkownika został zrealizowany w formie aplikacji mobilnej. Aplikacje te można podzielić na trzy kategorie:
 \begin{itemize}
-	\item Natywne - zbudowane dla konkretnej platformy i napisane w języku dla niej odpowiednim, np. Swift dla iOS lub Kotlin dla Androida. Tak wykonane aplikacje cechują się szybkością oraz dostępem do funkcji urządzenia, takich jak akcelerometr czy czytnik linii papilarnych. Aplikacja natywna jest powiązana z konkretnym systemem operacyjnym, przez co proces tworzenia takowej dla różnych platform wiąże się z pisaniem odrębnych aplikacji.
-	\item  Webowe - dostęp do nich odbywa się poprzez przeglądarkę internetową. Nie mają dostępu do urządzenia na takim poziomie, jak aplikacje natywne, są jednak niezależne od systemu operacyjnego, przez co mniej kosztowne w produkcji. Popularne technologie tworzenia aplikacji webowych to np. Ruby on Rails (Ruby), Angular (TypeScript).
+	\item Natywne - zbudowane dla konkretnej platformy i napisane w języku dla niej odpowiednim, na przykład Swift dla iOS lub Kotlin dla Androida. Tak wykonane aplikacje cechują się szybkością oraz dostępem do funkcji urządzenia, takich jak akcelerometr czy czytnik linii papilarnych. Aplikacja natywna jest powiązana z konkretnym systemem operacyjnym, przez co proces tworzenia takowej dla różnych platform wiąże się z pisaniem odrębnych aplikacji.
+	\item  Webowe - dostęp do nich odbywa się poprzez przeglądarkę internetową. Nie mają dostępu do urządzenia na takim poziomie, jak aplikacje natywne, są jednak niezależne od systemu operacyjnego, przez co mniej kosztowne w produkcji. Popularne technologie tworzenia aplikacji webowych to na przykład Ruby on Rails (Ruby), Angular (TypeScript).
 	\item Hybrydowe - połączenie aplikacji natywnej i webowej, posiadają zalety obu kategorii, nie są jednak tak szybkie, jak natywne. Ich interfejs stworzony jest w formie aplikacji webowej i jest interpretowany przez natywną aplikację dla konkretnego systemu. Pozwala to na tworzenie aplikacji, do których nie jest wymagana przeglądarka internetowa, posiadających dostęp do urządzenia na poziomie aplikacji natywnej. Aplikacje hybrydowe tworzone są przy pomocy takich technologii jak Xamarin Forms (C\#) i React Native (JavaScript).
 \end{itemize}
 \section{Języki programowania}
@@ -26,43 +26,23 @@ Język \textbf{Java} jest współbieżnym, opartym na klasach i zorientowanym ob
 \textbf{Kotlin} jest statycznie typowanym, wieloplatformowym i darmowym językiem programowania ogólnego użytku rozwijanym przez JetBrains.\cite{kotlin} Kotlin jest oficjalnie wspierany przez Google jako język tworzenia aplikacji mobilnych na system Android.\cite{kotlingoogle}
 \lstinputlisting[caption={Kod w języku Kotlin wyświetlający napis "Hello, World".}, captionpos=b]{listing/Example.kt}
 \section{Platformy programistyczne (frameworki)}
-\textbf{Spring Framework} (rys. \ref{spring_logo}) jest platformą ułatwiającą tworzenie aplikacji z użyciem technologii Java Enterprise Edition. Spring składa się z wielu modułów, u podstawy posiadających rozbudowane mechanizmy konfiguracji i wstrzykiwania zależności (ang. \textit{dependency injection}). Zapewnia wsparcie dla różnych architektur aplikacji.\cite{spring} Dzięki możliwości uruchomienia przy pomocy JVM jest technologią wieloplatformową.
-\begin{figure}[!ht]
-	\begin{center}
-		\includegraphics[width=3.5in]{img/logo/spring.png}
-		\caption{Logo Spring Framework (https://spring.io/img/spring-by-pivotal.png)}
-		\label{spring_logo}
-	\end{center}
-\end{figure}
+\textbf{Spring Framework} jest platformą ułatwiającą tworzenie aplikacji z użyciem języka Java. Spring składa się z wielu modułów, u podstawy posiadających rozbudowane mechanizmy konfiguracji i wstrzykiwania zależności (ang. \textit{dependency injection}). Zapewnia wsparcie dla różnych architektur aplikacji.\cite{spring} Dzięki możliwości uruchomienia przy pomocy JVM jest technologią wieloplatformową.
 
-\textbf{.NET} (rys. \ref{dotnet_logo}) jest darmową, otwartoźródłową platformą programistyczną służącą do wytwarzania różnych typów aplikacji. Platforma .NET jest dostępna dla języków C\#, F\# oraz Visual Basic. Zaletą platformy .NET jest bogaty zasób bibliotek dostępnych dla wszystkich frameworków wchodzących w jej skład:
+\textbf{.NET} jest darmową, otwartoźródłową platformą programistyczną służącą do wytwarzania różnych typów aplikacji. Platforma .NET jest dostępna dla języków C\#, F\# oraz Visual Basic. Zaletą platformy .NET jest bogaty zasób bibliotek dostępnych dla wszystkich frameworków wchodzących w jej skład:
 \begin{itemize}
 	\item\textbf{.NET Standard} jest wspólnym dla wszystkich platform .NET zestawem \textbf{interfejsów programowania aplikacji (ang. \textit{application programming interface, API})} i bibliotek. Ułatwia to pracę z różnymi frameworkami .NET poprzez zastosowanie tych samych narzędzi.
-	\item\textbf{.NET Core} jest wieloplatformowym frameworkiem używanym do tworzenia stron internetowych, serwerów lub aplikacji konsolowych na systemy Windows, Linux i macOS.
+	\item\textbf{.NET Core} jest darmowym i otwartoźródłowym, wieloplatformowym frameworkiem używanym do tworzenia wszelkiego rodzaju aplikacji na systemy Windows, Linux i macOS.
 	\item\textbf{.NET Framework} jest implementacją platformy .NET wymagającą do uruchomienia systemu Windows i przystosowaną do niego. Dzięki temu wzbogacona jest o biblioteki specyficzne dla tego systemu, jak na przykład narzędzia pozwalające na dostęp do rejestru systemu Windows.
-	\item\textbf{Xamarin Forms} implementuje platformę .NET i pozwala na tworzenie aplikacji mobilnych na systemy Android, iOS oraz Windows Phone współdzielących w dużym stopniu swój kod oraz zachowujących wygląd aplikacji natywnych dla każdego systemu.\cite{microsoftdotnet}
+	\item\textbf{Xamarin Forms} implementuje platformę .NET i pozwala na tworzenie aplikacji mobilnych na systemy Android, iOS oraz Windows Phone współdzielących w dużym stopniu swój kod oraz zachowujących wygląd aplikacji natywnych dla każdego systemu.\cite{microsoftdotnet} Pozwala na definiowanie niezależnych od systemu operacyjnego interfejsów użytkownika w języku XAML.
 \end{itemize}
-\begin{figure}[!ht]
-\begin{center}
-	\includegraphics[width=2in]{img/logo/dotnet.png}
-	\caption{Logo .NET (https://docs.microsoft.com/en-us/dotnet/images/hub/net.svg)}
-	\label{dotnet_logo}
-\end{center}
-\end{figure}
 
 \textbf{ASP .NET i ASP .NET Core} to technologie pozwalające na budowę nowoczesnych aplikacji internetowych i usług sieciowych. Bazują one odpowiednio na .NET Framework i .NET Core, co dyktuje ich dostępność na różnych systemach operacyjnych oraz dostępne biblioteki.
-\begin{figure}[!ht]
-	\begin{center}
-		\includegraphics[width=2in]{img/logo/aspdotnet.png}
-		\caption{Logo ASP .NET (https://secure.gravatar.com/avatar/46c8189d84092927e2a78b63c37e7734)}
-		\label{aspdotnet_logo}
-	\end{center}
-\end{figure}
 
 System wykonany na potrzeby niniejszej pracy stworzony został przy użyciu platform ASP .NET Core (backend) oraz Xamarin Forms (frontend). Obie te platformy wykorzystują język C\# oraz dysponują zestawem narzędzi zapewnionym przez .NET Standard. Umożliwia to współdzielenie części kodu między tymi dwiema platformami oraz usprawnia proces wytwarzania oprogramowania.\\
+Spring jest sprawdzoną, powszechnie używaną platformą do tworzenia aplikacji internetowych. ASP .NET Core jest nowszą i nie aż tak dobrze przetestowanym frameworkiem, jak Spring, ale zawiera narzędzia, których brak w Springu. Bardzo przydatnym narzędziami dostępnymi w .NET Core jest LINQ, który pozwala na konstruowanie zapytań wykonywanych na danych różnych formatów oraz wsparcie programowania asynchronicznego przez biblioteki wchodzące w skład tej platformy. Dodatkową zaletą frameworków z rodziny .NET jest ścisła integracja ze środowiskiem Microsoft Visual Studio.
 Zastosowanie Xamarin Forms w stworzeniu warstwy interfejsu użytkownika umożliwia łatwe rozszerzenie aplikacji aby możliwe było jej uruchomienie na systemach mobilnych innych niż Android.
 \section{Narzędzia i wzorce projektowe}
-\textbf{Microsoft Visual Studio} (rys. \ref{vs_interfejs}) jest to profesjonalne środowisko programistyczne (ang. \textit{integrated development environment, IDE}) stworzone przez firmę Microsoft Corporation, służące do tworzenia aplikacji desktopowych, mobilnych oraz sieciowych. Dzięki dostępności zaawansowanych narzędzi usprawnia proces programowania.\cite{visualstudio}
+\textbf{Microsoft Visual Studio} (Rys. \ref{vs_interfejs}) jest to profesjonalne środowisko programistyczne (ang. \textit{integrated development environment, IDE}) stworzone przez firmę Microsoft Corporation, służące do tworzenia aplikacji desktopowych, mobilnych oraz sieciowych. Dzięki dostępności zaawansowanych narzędzi usprawnia proces programowania.\cite{visualstudio}
 \begin{figure}[!ht]
 	\begin{center}
 		\includegraphics[width=6in]{img/aplikacje/vs_interfejs.png}
@@ -71,7 +51,7 @@ Zastosowanie Xamarin Forms w stworzeniu warstwy interfejsu użytkownika umożliw
 	\end{center}
 \end{figure}
 
-\textbf{ReSharper} (rys. \ref{resharper_interfejs}) jest narzędziem rozszerzającym środowisko Microsoft Visual Studio autorstwa JestBrains. Usprawnia ono proces wytwarzania oprogramowania poprzez automatyzację wielu procesów związanych z pisaniem wysokiej jakości kodu. Zapewnia ciągłą analizę kodu, co ułatwia wykrycie wielu błędów.\cite{resharper}
+\textbf{ReSharper} (Rys. \ref{resharper_interfejs}) jest narzędziem rozszerzającym środowisko Microsoft Visual Studio autorstwa JestBrains. Usprawnia ono proces wytwarzania oprogramowania poprzez automatyzację wielu procesów związanych z pisaniem wysokiej jakości kodu. Zapewnia ciągłą analizę kodu, co ułatwia wykrycie wielu błędów.\cite{resharper}
 \begin{figure}[!ht]
 	\begin{center}
 		\includegraphics[width=6in]{img/aplikacje/resharper_interfejs.png}
@@ -89,7 +69,7 @@ Zastosowanie Xamarin Forms w stworzeniu warstwy interfejsu użytkownika umożliw
 	\end{center}
 \end{figure}
 
-\textbf{Swagger} (rys. \ref{swagger_interfejs}) jest narzędziem służącym do automatycznej dokumentacji kodu oraz zapewniającym konfigurowalny graficzny interfejs obrazujący stworzone API. Z poziomu wygenerowanego interfejsu możliwe jest proste konstruowanie zapytań zgodnych ze stworzoną aplikacją.\cite{swagger}
+\textbf{Swagger} (Rys. \ref{swagger_interfejs}) jest narzędziem służącym do automatycznej dokumentacji kodu oraz zapewniającym konfigurowalny graficzny interfejs obrazujący stworzone API. Z poziomu wygenerowanego interfejsu możliwe jest proste konstruowanie zapytań zgodnych ze stworzoną aplikacją.\cite{swagger}
 \begin{figure}[!ht]
 	\begin{center}
 		\includegraphics[width=6in]{img/aplikacje/swagger_interfejs.png}
@@ -100,7 +80,7 @@ Zastosowanie Xamarin Forms w stworzeniu warstwy interfejsu użytkownika umożliw
 
 \textbf{REST (Representational State Transfer)} jest stylem projektowania systemów. Nie jest on standardem, lecz zbiorem reguł, takich jak bezstanowość, relacja klient - serwer oraz jednolity interfejs.\cite{rest}
 
-\textbf{MVC (Model-View-Controller)} (rys. \ref{mvc}) to wzorzec projektowy polegający na podzieleniu projektu aplikacji na warstwy modelu danych, widoku, czyli interfejsu użytkownika oraz kontrolera, który reaguje na akcje wykonane przez użytkownika w warstwie widoku oraz odczytuje i modyfikuje dane z warstwy modelu.\cite{mvc}
+\textbf{MVC (Model-View-Controller)} (Rys. \ref{mvc}) to wzorzec projektowy polegający na podzieleniu projektu aplikacji na warstwy modelu danych, widoku, czyli interfejsu użytkownika oraz kontrolera, który reaguje na akcje wykonane przez użytkownika w warstwie widoku oraz odczytuje i modyfikuje dane z warstwy modelu.\cite{mvc}
 \begin{figure}[!ht]
 	\begin{center}
 		\includegraphics[width=5in]{img/diagram/mvc.png}
@@ -109,7 +89,7 @@ Zastosowanie Xamarin Forms w stworzeniu warstwy interfejsu użytkownika umożliw
 	\end{center}
 \end{figure}
 
-\textbf{Odwrócenie sterowania (ang. \textit{inversion of control})} jest techniką pozwalającą na skonstruowanie zależności w aplikacji zgodnie z kierunkiem abstrakcji, zamiast implementacji. W wielu aplikacjach zależności między klasami skonstruowane są na podstawie kolejności ich wykonania (rys. \ref{direct_dependency}).
+\textbf{Odwrócenie sterowania (ang. \textit{inversion of control})} jest techniką pozwalającą na skonstruowanie zależności w aplikacji zgodnie z kierunkiem abstrakcji, zamiast implementacji. W wielu aplikacjach zależności między klasami skonstruowane są na podstawie kolejności ich wykonania (Rys. \ref{direct_dependency}).
 \begin{figure}[!ht]
 	\begin{center}
 		\includegraphics[width=6in]{img/diagram/direct_dependency.png}
@@ -117,7 +97,7 @@ Zastosowanie Xamarin Forms w stworzeniu warstwy interfejsu użytkownika umożliw
 		\label{direct_dependency}
 	\end{center}
 \end{figure}
-Odwrócenie sterowania polega na skonstruowaniu zależności w taki sposób, aby szczegółowa implementacja zależała od abstrakcyjnego komponentu (rys. \ref{inverted_dependency}).\cite{inversionofcontrol}
+Odwrócenie sterowania polega na skonstruowaniu zależności w taki sposób, aby szczegółowa implementacja zależała od abstrakcyjnego komponentu (Rys. \ref{inverted_dependency}).\cite{inversionofcontrol}
 
 \begin{figure}[!ht]
 	\begin{center}
@@ -130,14 +110,14 @@ Odwrócenie sterowania polega na skonstruowaniu zależności w taki sposób, aby
 
 \textbf{Entity Framework Core} jest narzędziem realizującym mapowanie relacyjno-obiektowe (ang. \textit{object-relational mapping}) i oferującym możliwość odczytu i modyfikacji danych znajdujących się w bazie danych za pomocą klas reprezentujących encje w tej bazie.\cite{efcore}
 
-\textbf{Language Integrated Query (LINQ)} to zbiór technologii których zadaniem jest zintegrowanie możliwości wykonywania zapytań na danych z językiem C\#. Zapewnia on jednolitą składnię tworzenia zapytań dla wielu źródeł danych, jak np. SQL, XML.\cite{linq}\\
+\textbf{Language Integrated Query (LINQ)} to zbiór technologii których zadaniem jest zintegrowanie możliwości wykonywania zapytań na danych z językiem C\#. Zapewnia on jednolitą składnię tworzenia zapytań dla wielu źródeł danych, jak na przykład SQL, XML.\cite{linq}\\
 Przyjmując, że kolekcja \textit{Users} i bazodanowa tabela o tej samej nazwie odnoszą się do tego samego zbioru danych, zapytanie LINQ (listing \ref{linqquery}) oraz zapytanie SQL (listing \ref{sqlquery}) zwróciłyby taki sam wynik.
 \lstinputlisting[label={linqquery}, caption={Zapytanie LINQ.}, captionpos=b]{listing/query.cs}
 \lstinputlisting[label={sqlquery}, caption={Zapytanie SQL.}, captionpos=b]{listing/query.sql}
 \section{Biblioteki}
 Dla środowiska .NET istnieje wiele zewnętrznych bibliotek. Dostępne są one poprzez system zarządzania pakietami NuGet. Narzędzie to pozwala na tworzenie oraz używanie bibliotek znajdujących się w repozytorium. W większości przypadków pakiety pobierane są z globalnego repozytorium dostępnego pod adresem \url{https://www.nuget.org}, jednakże istnieje możliwość tworzenia własnych repozytoriów i konfiguracji klienta NuGet do współpracy z nimi. W niniejszym podrozdziale opisane zostały jedynie biblioteki niewchodzące w skład frameworków Xamarin czy ASP .NET Core.
 
-\textbf{AutoMapper} jest biblioteką umożliwiającą proste mapowanie jednego obiektu na drugi.\cite{automapper} Biblioteka ta pozwala na wzajemną konwersję dwóch typów poprzez przypisanie polom jednego obiektu wartości pól drugiego o takich samych nazwach. Taki zabieg jest konieczny np. przy mapowaniu obiektu klasy encyjnej na obiekt transferu danych (ang. \textit{data transfer object, DTO}).\\
+\textbf{AutoMapper} jest biblioteką umożliwiającą proste mapowanie jednego obiektu na drugi.\cite{automapper} Biblioteka ta pozwala na wzajemną konwersję dwóch typów poprzez przypisanie polom jednego obiektu wartości pól drugiego o takich samych nazwach. Taki zabieg jest konieczny na przykład przy mapowaniu obiektu klasy encyjnej na obiekt transferu danych (ang. \textit{data transfer object, DTO}).\\
 Jeżeli pola obu typów mają takie same nazwy i nie wymagane jest żadne mapowanie między polami o różnych nazwach, definicja mapy sprowadza się do zdefiniowania typów, między jakimi ma powstać mapa (listing \ref{mapper_createmap}).
 \begin{lstlisting}[label={mapper_createmap}, caption={Definiowanie mapowania między dwoma typami.}, captionpos=b]
 mapperConfiguration.CreateMap<User, UserDto>();
@@ -151,15 +131,13 @@ UserDto userDto = mapper.Map<UserDto>(user);
 
 \textbf{MathNet.Numerics} jest biblioteką dostarczającą metody i algorytmy służące do wykonywania obliczeń i operacji numerycznych, m.in. algebry liniowej, modeli prawdopodobieństwa, interpolacji czy zagadnień optymalizacji.\cite{mathnetnumerics} W niniejszym projekcie biblioteka ta została wykorzystana w zakresie wykonywania operacji na macierzach (listing \ref{mathnetnumerics})
 \begin{lstlisting}[label={mathnetnumerics}, caption={Operacje na macierzach przy użyciu biblioteki MathNet.Numerics.}, captionpos=b]
-var predictors = ExtractPredictorsMatrix(dataSet);
-var targets = ExtractTargetsMatrix(dataSet);
-var predictorsTransposed = predictors.Transpose();
+Matrix firstMatrix = GetFirstMatrix();
+Matrix secondMatrix = GetSecondMatrix();
+Matrix thirdMatrix = GetThirdMatrix();
 
-var coefficients = predictorsTransposed
-.Multiply(predictors)
-.Inverse()
-.Multiply(predictorsTransposed)
-.Multiply(targets);
+var resultMatrix = firstMatrix
+.Multiply(secondMatrix)
+.Add(thirdMatrix);
 \end{lstlisting}
 
 \textbf{Newtonsoft.Json} to biblioteka służącą do obsługi danych w formacie JSON. Jest to wydajne narzędzie pozwalające między innymi na serializację i deserializację obiektów, stosowanie LINQ do ekstrakcji danych z formatu JSON oraz konwersję między JSON a XML.\cite{newtonsoft} Biblioteka ta jest najczęściej pobieranym pakietem z globalnego repozytorium NuGet.\cite{nugetstats}

@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:ExpensePrediction.Frontend"
              x:Class="ExpensePrediction.Frontend.MainPage">
 
-    <StackLayout>
+    <StackLayout Margin="20">
         <Button Text="Sign up" HorizontalOptions="Fill"
                 VerticalOptions="Start"
                 Clicked="SignUp" />

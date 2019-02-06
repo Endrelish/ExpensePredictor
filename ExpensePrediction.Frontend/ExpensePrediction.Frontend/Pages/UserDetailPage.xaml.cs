@@ -39,5 +39,17 @@ namespace ExpensePrediction.Frontend.Pages
             SetUserData(data);
             await ActivityIndicatorPage.ToggleIndicator(false);
         }
+
+        private async void EditClicked(object sender, EventArgs e)
+        {
+            var page = new UserEditPage(FirstName.Text, LastName.Text, PhoneNumber.Text);
+            await Navigation.PushAsync(page);
+        }
+
+        private async void PassClicked(object sender, EventArgs e)
+        {
+            var page = new PasswordChangePage();
+            await Navigation.PushAsync(page);
+        }
     }
 }
