@@ -36,9 +36,9 @@ namespace ExpensePrediction.Frontend.Pages
             SecondMonthLabel.Text = Date.Date.AddMonths(2).ToString("MMMM");
             ThirdMonthLabel.Text = Date.Date.AddMonths(3).ToString("MMMM");
 
-            FirstMonthValue.Text = dto.FirstMonthValue + " zł";
-            SecondMonthValue.Text = dto.SecondMonthValue + " zł";
-            ThirdMonthValue.Text = dto.ThirdMonthValue + " zł";
+            FirstMonthValue.Text = dto.FirstMonthValue.ToString("F2") + " zł";
+            SecondMonthValue.Text = dto.SecondMonthValue.ToString("F2") + " zł";
+            ThirdMonthValue.Text = dto.ThirdMonthValue.ToString("F2") + " zł";
 
             PredictionGrid.IsVisible = true;
         }

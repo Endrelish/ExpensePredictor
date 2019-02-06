@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExpensePrediction.Frontend.Pages.UserEditPage">
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+            <Entry x:Name="FirstName"
+                   Placeholder="First name"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Fill"
+                   Text="{Binding FirstNameText}" />
+            <Entry x:Name="LastName"
+                   Placeholder="Last name"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Fill"
+                   Text="{Binding LastNameText}" />
+            <Entry x:Name="Phone"
+                   Placeholder="Phone number"
+                   Keyboard="Numeric"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Fill"
+                   Text="{Binding PhoneText}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Text="Back"
+                        Grid.Column="0"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Center"
+                        Clicked="BackClicked" />
+                <Button Text="Submit"
+                        Grid.Column="1"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Center"
+                        Clicked="SubmitClicked" />
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
