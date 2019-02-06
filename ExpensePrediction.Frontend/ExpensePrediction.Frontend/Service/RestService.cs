@@ -79,5 +79,16 @@ namespace ExpensePrediction.Frontend.Service
             var content = await GetContentAsync<T>(response);
             return content;
         }
+
+        public static async Task DeleteAsync(string uri, bool authorize = true)
+        {
+            var response = await Client.SendAsync(await GetRequestAsync(uri, authorize, HttpMethod.Delete));
+
+            if(!response.IsSuccessStatusCode)
+            {
+                var error = await GetContentAsync<ErrorDto>(response);
+                throw new RestException(error.Message, error.ErrorCode);
+            }
+        }
     }
 }

@@ -65,6 +65,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             expense.Value = expenseDto.Value;
             expense.Date = expenseDto.Date;
             expense.CategoryId = expenseDto.CategoryId;
+            expense.Description = expenseDto.Description;
 
             var result = await _expenseRepository.SaveAsync();
             if (result < 1)

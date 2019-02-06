@@ -17,5 +17,15 @@ namespace ExpensePrediction.Frontend.Service
         {
             return await RestService.PostAsync<IncomeDto>(Constants.AddExpenseUri, dto);
         }
+
+        public async Task DeleteExpenseAsync(string dtoId)
+        {
+            await RestService.DeleteAsync(Constants.DeleteExpenseUri + dtoId);
+        }
+
+        public async Task EditExpense(TransactionDto dto)
+        {
+            await RestService.PostAsync<object>(Constants.EditExpenseUri, dto);
+        }
     }
 }

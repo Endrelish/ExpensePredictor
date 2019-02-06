@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExpensePrediction.DataTransferObjects.Category;
+using ExpensePrediction.Exceptions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -61,21 +62,36 @@ namespace ExpensePrediction.Frontend.Pages
 	            Id = item.Id,
 	            Value = double.Parse(item.Value.Substring(0, item.Value.Length - 3))
 	        };
-	        switch (action)
+	        try
 	        {
-                case "Edit":
-                    //TODO
-                    await ActivityIndicatorPage.ToggleIndicator(true);
-                    var page = new EditTransactionPage(CategoryType.IncomeCategory, dto);
-                    await page.Initialize();
-                    await ActivityIndicatorPage.ToggleIndicator(false);
-                    await Navigation.PushAsync(page);
-                    break;
-                case "Delete":
-                    var choice = await DisplayAlert("Delete", "Are you sure?", "Yes", "No");
-                    if (choice); //TODO
-                    break;
+	            switch (action)
+	            {
+	                case "Edit":
+	                    await ActivityIndicatorPage.ToggleIndicator(true);
+	                    var page = new EditTransactionPage(CategoryType.IncomeCategory, dto, () => GetIncomesClicked(null, null));
+	                    await page.Initialize();
+	                    await Navigation.PushAsync(page);
+	                    break;
+	                case "Delete":
+                        var choice = await DisplayAlert("Delete", "Are you sure?", "Yes", "No");
+	                    if (choice)
+	                    {
+	                        await ActivityIndicatorPage.ToggleIndicator(true);
+	                        await _incomeService.DeleteIncomeAsync(dto.Id);
+	                    }
+	                    break;
+	            }
+	                        GetIncomesClicked(sender, e);
 	        }
+	        catch (RestException exception)
+	        {
+	            await DisplayAlert("Error", exception.Message, "OK");
+	        }
+	        finally
+	        {
+	            await ActivityIndicatorPage.ToggleIndicator(false);
+	        }
+	        
 	    }
 	}
 }

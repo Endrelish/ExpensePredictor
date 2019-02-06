@@ -44,6 +44,7 @@ namespace ExpensePrediction.Frontend.Pages
         {
             var page = new UserEditPage(FirstName.Text, LastName.Text, PhoneNumber.Text);
             await Navigation.PushAsync(page);
+            await Initialize();
         }
 
         private async void PassClicked(object sender, EventArgs e)

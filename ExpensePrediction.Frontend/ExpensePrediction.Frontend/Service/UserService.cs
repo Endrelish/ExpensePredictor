@@ -24,5 +24,10 @@ namespace ExpensePrediction.Frontend.Service
         {
             _userData = await RestService.GetAsync<UserDataDto>(Constants.GetUserUri);
         }
+
+        public async Task EditUser(UserEditDto dto)
+        {
+            await RestService.PostAsync<UserEditDto>(Constants.EditUserUri, dto);
+        }
     }
 }

@@ -123,7 +123,7 @@ namespace ExpensePrediction.WebAPI
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IIncomeService, IncomeService>();
             services.AddTransient<IPredictionService, PredictionService>();
-            //services.AddHostedService<HostedRegressionService>();
+            services.AddHostedService<HostedRegressionService>();
 
             services.AddSingleton(MapperService.Mapper);
         }

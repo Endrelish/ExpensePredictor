@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using ExpensePrediction.Exceptions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -57,6 +57,10 @@ namespace ExpensePrediction.Frontend.Pages
             {
                 var result = await _predictionService.MakePrediction(dto);
                 ShowResult(result);
+            }
+            catch (RestException exc)
+            {
+                await DisplayAlert("Error", exc.Message, "OK");
             }
             finally
             {

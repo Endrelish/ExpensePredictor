@@ -63,6 +63,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
             income.Value = incomeDto.Value;
             income.Date = incomeDto.Date;
             income.CategoryId = incomeDto.CategoryId;
+            income.Description = incomeDto.Description;
 
             var result = await _incomeRepository.SaveAsync();
             if (result < 1)

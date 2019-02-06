@@ -16,10 +16,16 @@ namespace ExpensePrediction.Frontend.Pages
         private static readonly ActivityIndicatorPage _activityIndicatorPage = new ActivityIndicatorPage();
         public static async Task ToggleIndicator(bool state)
         {
-            if (state)
-                await PopupNavigation.Instance.PushAsync(_activityIndicatorPage, true);
-            else
-                await PopupNavigation.Instance.PopAllAsync();
+            try
+            {
+                if (state)
+                    await PopupNavigation.Instance.PushAsync(_activityIndicatorPage, true);
+                else
+                    await PopupNavigation.Instance.PopAllAsync();
+            }
+            catch (Exception)
+            {
+            }
         }
 		public ActivityIndicatorPage ()
 		{

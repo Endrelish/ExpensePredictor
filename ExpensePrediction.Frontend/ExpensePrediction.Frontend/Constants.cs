@@ -63,6 +63,7 @@ namespace ExpensePrediction.Frontend
         }
         public static readonly string AddExpenseUri = ExpenseControllerUri + "add";
         public static readonly string EditExpenseUri = ExpenseControllerUri + "edit";
+        public static readonly string DeleteExpenseUri = ExpenseControllerUri;
 
         public static string GetExpenseUri(string id)
         {
@@ -81,6 +82,7 @@ namespace ExpensePrediction.Frontend
         }
         public static readonly string AddIncomeUri = IncomeControllerUri + "add";
         public static readonly string EditIncomeUri = IncomeControllerUri + "edit";
+        public static readonly string DeleteIncomeUri = IncomeControllerUri;
 
         public static string GetIncomeUri(string id)
         {

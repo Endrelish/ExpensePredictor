@@ -8,6 +8,7 @@ using ExpensePrediction.DataAccessLayer.Interfaces;
 using ExpensePrediction.DataTransferObjects.User;
 using ExpensePrediction.Exceptions;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 
 namespace ExpensePrediction.BusinessLogicLayer.Services
 {
@@ -36,7 +37,7 @@ namespace ExpensePrediction.BusinessLogicLayer.Services
 
             if (!result.Succeeded)
             {
-                throw new AccountException("Unknown error", 500);
+                throw new AccountException(result.Errors.Select(e => e.Description).First(), 400);
             }
         }
 
